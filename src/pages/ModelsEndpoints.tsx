@@ -679,7 +679,7 @@ export default function ModelsEndpoints() {
                   <div className="text-center text-foreground-tertiary">
                     No credentials configured
                   </div>
-              <Button className="glass-button bg-primary hover:bg-primary/90" onClick={handleRunAllChecks}>
+              <Button className="glass-button bg-primary hover:bg-primary/90" onClick={handleAddCredential}>
                     <Plus className="w-4 h-4 mr-2" />
                     Add Credential
                   </Button>
