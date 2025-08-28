@@ -140,7 +140,7 @@ export default function Dashboard() {
   return (
     <div className="space-y-8">
       {/* Header */}
-      <div className="pb-2">
+      <div className="pb-4">
         <h1 className="text-3xl font-bold text-foreground flex items-center gap-3">
           <Bot className="w-8 h-8 text-primary" />
           OneAI Dashboard
@@ -153,7 +153,7 @@ export default function Dashboard() {
       {/* Key Metrics */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {stats.map((stat) => (
-          <div key={stat.label} className="p-6 bg-background/50 backdrop-blur-sm rounded-2xl hover:bg-background/70 transition-all duration-300">
+          <div key={stat.label} className="p-6 bg-card/80 backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-xl hover:bg-card/90 transition-all duration-300 border border-border/20">
             <div className="flex items-center justify-between">
               <div className="flex-1">
                 <p className="text-sm font-medium text-foreground-secondary">{stat.label}</p>
@@ -164,7 +164,7 @@ export default function Dashboard() {
                   <span className="text-xs text-foreground-tertiary ml-1">vs last month</span>
                 </div>
               </div>
-              <div className={`p-4 bg-primary/10 rounded-xl`}>
+              <div className={`p-4 bg-primary/10 rounded-xl shadow-sm`}>
                 <stat.icon className={`w-7 h-7 ${stat.color}`} />
               </div>
             </div>
@@ -173,17 +173,17 @@ export default function Dashboard() {
       </div>
 
       {/* System Health */}
-      <div className="p-6 bg-background/30 backdrop-blur-sm rounded-2xl">
+      <div className="p-6 bg-card/70 backdrop-blur-sm rounded-2xl shadow-lg border border-border/20">
         <div className="flex items-center justify-between mb-6">
           <h3 className="text-xl font-bold text-foreground">System Health</h3>
-          <Button variant="ghost" size="sm" onClick={() => navigate("/logs")} className="hover:bg-background/50">
+          <Button variant="ghost" size="sm" onClick={() => navigate("/logs")} className="hover:bg-background/50 shadow-sm">
             <Eye className="w-4 h-4 mr-2" />
             View Details
           </Button>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {systemHealth.map((item) => (
-            <div key={item.label} className="flex items-center gap-4 p-4 bg-background/40 rounded-xl">
+            <div key={item.label} className="flex items-center gap-4 p-4 bg-background/60 rounded-xl shadow-sm border border-border/10">
               <item.icon className={`w-6 h-6 ${getHealthColor(item.status)}`} />
               <div>
                 <p className="text-sm font-medium text-foreground-secondary">{item.label}</p>
@@ -195,10 +195,10 @@ export default function Dashboard() {
       </div>
 
       {/* Quick Actions */}
-      <div className="p-6 bg-background/30 backdrop-blur-sm rounded-2xl">
+      <div className="p-6 bg-card/70 backdrop-blur-sm rounded-2xl shadow-lg border border-border/20">
         <div className="flex items-center justify-between mb-6">
           <h3 className="text-xl font-bold text-foreground">Quick Actions</h3>
-          <Badge variant="secondary" className="text-sm font-medium bg-primary/20 text-primary">
+          <Badge variant="secondary" className="text-sm font-medium bg-primary/20 text-primary shadow-sm">
             {quickActions.length} available
           </Badge>
         </div>
@@ -207,10 +207,10 @@ export default function Dashboard() {
             <div 
               key={action.title}
               onClick={() => navigate(action.route)}
-              className="group p-5 bg-background/40 rounded-xl cursor-pointer hover:bg-background/60 transition-all duration-200"
+              className="group p-5 bg-background/60 rounded-xl cursor-pointer hover:bg-background/80 hover:shadow-md transition-all duration-200 border border-border/10"
             >
               <div className="flex items-start gap-4">
-                <div className={`p-3 rounded-xl ${action.color}`}>
+                <div className={`p-3 rounded-xl ${action.color} shadow-sm`}>
                   <action.icon className="w-6 h-6" />
                 </div>
                 <div className="flex-1">
@@ -232,19 +232,19 @@ export default function Dashboard() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Recent Activity */}
         <div className="lg:col-span-2">
-          <div className="p-6 bg-background/30 backdrop-blur-sm rounded-2xl">
+          <div className="p-6 bg-card/70 backdrop-blur-sm rounded-2xl shadow-lg border border-border/20">
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-xl font-bold text-foreground">Recent Activity</h3>
-              <Button variant="ghost" size="sm" onClick={() => navigate("/logs")} className="hover:bg-background/50">
+              <Button variant="ghost" size="sm" onClick={() => navigate("/logs")} className="hover:bg-background/50 shadow-sm">
                 View All
                 <ArrowRight className="w-4 h-4 ml-1" />
               </Button>
             </div>
             <div className="space-y-3">
               {recentActivity.map((activity, index) => (
-                <div key={index} className={`flex items-center justify-between p-4 rounded-xl ${getActivityColor(activity.type).replace('border-', '').replace('/20', '/10')}`}>
+                <div key={index} className={`flex items-center justify-between p-4 rounded-xl shadow-sm border border-border/10 ${getActivityColor(activity.type).replace('border-', '').replace('/20', '/10')}`}>
                   <div className="flex items-center gap-4">
-                    <div className={`w-3 h-3 rounded-full ${
+                    <div className={`w-3 h-3 rounded-full shadow-sm ${
                       activity.type === "success" ? "bg-green-500" :
                       activity.type === "warning" ? "bg-yellow-500" :
                       activity.type === "alert" ? "bg-red-500" : "bg-blue-500"
@@ -254,7 +254,7 @@ export default function Dashboard() {
                       <p className="text-xs text-foreground-secondary font-medium">{activity.user}</p>
                     </div>
                   </div>
-                  <Badge variant="outline" className="text-xs font-medium">
+                  <Badge variant="outline" className="text-xs font-medium shadow-sm">
                     {activity.time}
                   </Badge>
                 </div>
@@ -265,31 +265,31 @@ export default function Dashboard() {
 
         {/* Quick Stats */}
         <div className="space-y-4">
-          <div className="p-5 bg-background/30 backdrop-blur-sm rounded-2xl">
+          <div className="p-5 bg-card/70 backdrop-blur-sm rounded-2xl shadow-lg border border-border/20">
             <h4 className="font-bold text-foreground mb-4 text-lg">This Month</h4>
             <div className="space-y-4">
-              <div className="flex justify-between items-center">
+              <div className="flex justify-between items-center p-3 bg-background/50 rounded-lg">
                 <span className="text-sm font-medium text-foreground-secondary">Requests</span>
                 <span className="font-bold text-lg text-foreground">2.4M</span>
               </div>
-              <div className="flex justify-between items-center">
+              <div className="flex justify-between items-center p-3 bg-background/50 rounded-lg">
                 <span className="text-sm font-medium text-foreground-secondary">Cost</span>
                 <span className="font-bold text-lg text-foreground">$1,247</span>
               </div>
-              <div className="flex justify-between items-center">
+              <div className="flex justify-between items-center p-3 bg-background/50 rounded-lg">
                 <span className="text-sm font-medium text-foreground-secondary">Errors</span>
                 <span className="font-bold text-lg text-green-600 dark:text-green-400">0.02%</span>
               </div>
             </div>
           </div>
 
-          <div className="p-5 bg-background/30 backdrop-blur-sm rounded-2xl">
+          <div className="p-5 bg-card/70 backdrop-blur-sm rounded-2xl shadow-lg border border-border/20">
             <h4 className="font-bold text-foreground mb-4 text-lg">Quick Links</h4>
             <div className="space-y-2">
               <Button 
                 variant="ghost" 
                 size="sm" 
-                className="w-full justify-start hover:bg-background/50 font-medium"
+                className="w-full justify-start hover:bg-background/60 font-medium rounded-lg shadow-sm"
                 onClick={() => navigate("/admin/billing")}
               >
                 <DollarSign className="w-4 h-4 mr-3" />
@@ -298,7 +298,7 @@ export default function Dashboard() {
               <Button 
                 variant="ghost" 
                 size="sm" 
-                className="w-full justify-start hover:bg-background/50 font-medium"
+                className="w-full justify-start hover:bg-background/60 font-medium rounded-lg shadow-sm"
                 onClick={() => navigate("/settings")}
               >
                 <Settings className="w-4 h-4 mr-3" />
@@ -307,7 +307,7 @@ export default function Dashboard() {
               <Button 
                 variant="ghost" 
                 size="sm" 
-                className="w-full justify-start hover:bg-background/50 font-medium"
+                className="w-full justify-start hover:bg-background/60 font-medium rounded-lg shadow-sm"
                 onClick={() => navigate("/guardrails")}
               >
                 <Shield className="w-4 h-4 mr-3" />
