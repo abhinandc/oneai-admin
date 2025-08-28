@@ -14,9 +14,10 @@ import ModelHub from "./pages/ModelHub";
 import Logs from "./pages/Logs";
 import Guardrails from "./pages/Guardrails";
 import MCPServers from "./pages/tools/MCPServers";
+import Settings from "./pages/Settings";
 import Users from "./pages/admin/Users";
 import Billing from "./pages/admin/Billing";
-import Settings from "./pages/admin/Settings";
+import AdminSettings from "./pages/admin/Settings";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -39,9 +40,10 @@ const App = () => (
             <Route path="/logs" element={<Logs />} />
             <Route path="/guardrails" element={<Guardrails />} />
             <Route path="/tools/mcp-servers" element={<MCPServers />} />
+            <Route path="/settings" element={<Settings />} />
             <Route path="/admin/users" element={<Users />} />
             <Route path="/admin/billing" element={<Billing />} />
-            <Route path="/admin/settings" element={<Settings />} />
+            <Route path="/admin/settings" element={<AdminSettings />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

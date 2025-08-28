@@ -23,7 +23,8 @@ import {
   Shield,
   Wrench,
   FlaskConical,
-  Settings
+  Settings,
+  Database
 } from "lucide-react"
 
 const commands = [
@@ -37,7 +38,7 @@ const commands = [
   { id: "logs", label: "Logs", icon: FileBarChart, url: "/logs" },
   { id: "guardrails", label: "Guardrails", icon: Shield, url: "/guardrails" },
   { id: "tools", label: "Tools", icon: Wrench, url: "/tools" },
-  { id: "experimental", label: "Experimental", icon: FlaskConical, url: "/experimental" },
+  { id: "mcp-servers", label: "MCP Servers", icon: Database, url: "/tools/mcp-servers" },
   { id: "settings", label: "Settings", icon: Settings, url: "/settings" },
 ]
 

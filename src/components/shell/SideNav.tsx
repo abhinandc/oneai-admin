@@ -55,25 +55,10 @@ const expandableItems = [
       { title: "MCP Servers", url: "/tools/mcp-servers", icon: Database },
     ]
   },
-  { 
-    title: "Experimental", 
-    url: "/experimental", 
-    icon: FlaskConical, 
-    hasDropdown: true,
-    children: []
-  },
-  { 
-    title: "Settings", 
-    url: "/settings", 
-    icon: Settings, 
-    hasDropdown: true,
-    children: [
-      { title: "Router Settings", url: "/settings/router", icon: Route },
-      { title: "Logging & Alerts", url: "/settings/logging", icon: Bell },
-      { title: "Admin Settings", url: "/settings/admin", icon: UserCog },
-      { title: "UI Theme", url: "/settings/theme", icon: Palette },
-    ]
-  },
+]
+
+const settingsItems = [
+  { title: "Settings", url: "/settings", icon: Settings },
 ]
 
 export function SideNav() {
@@ -147,6 +132,24 @@ export function SideNav() {
                       ))}
                     </SidebarMenu>
                   )}
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+
+        {/* Settings */}
+        <SidebarGroup className="mt-6">
+          <SidebarGroupContent>
+            <SidebarMenu className="space-y-1">
+              {settingsItems.map((item) => (
+                <SidebarMenuItem key={item.title}>
+                  <SidebarMenuButton asChild>
+                    <NavLink to={item.url} className={getNavCls}>
+                      <item.icon className="w-4 h-4 flex-shrink-0" />
+                      {!isCollapsed && <span className="ml-3 font-medium">{item.title}</span>}
+                    </NavLink>
+                  </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
             </SidebarMenu>
