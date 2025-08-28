@@ -59,6 +59,7 @@
 
     /* Sidebar tokens */
     --sidebar-background: 0 0% 99%;
+    --sidebar-foreground: 0 0% 15%;
     --sidebar-border: 0 0% 92%;
     --sidebar-accent: 0 0% 96%;
     --sidebar-accent-foreground: 0 0% 15%;
@@ -120,6 +121,7 @@
 
     /* Dark sidebar */
     --sidebar-background: 0 0% 10%;
+    --sidebar-foreground: 0 0% 95%;
     --sidebar-border: 0 0% 18%;
     --sidebar-accent: 0 0% 16%;
     --sidebar-accent-foreground: 0 0% 95%;
