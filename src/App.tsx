@@ -11,6 +11,7 @@ import ModelsEndpoints from "./pages/ModelsEndpoints";
 import Usage from "./pages/Usage";
 import InternalUsers from "./pages/InternalUsers";
 import ModelHub from "./pages/ModelHub";
+import Logs from "./pages/Logs";
 import Users from "./pages/admin/Users";
 import Billing from "./pages/admin/Billing";
 import Settings from "./pages/admin/Settings";
@@ -33,6 +34,7 @@ const App = () => (
             <Route path="/usage" element={<Usage />} />
             <Route path="/internal-users" element={<InternalUsers />} />
             <Route path="/model-hub" element={<ModelHub />} />
+            <Route path="/logs" element={<Logs />} />
             <Route path="/admin/users" element={<Users />} />
             <Route path="/admin/billing" element={<Billing />} />
             <Route path="/admin/settings" element={<Settings />} />
