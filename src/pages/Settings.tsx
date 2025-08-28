@@ -15,6 +15,31 @@ import {
 export default function Settings() {
   const [activeTab, setActiveTab] = useState("security-settings")
 
+  const handleAddSSO = () => {
+    console.log("Adding SSO configuration")
+    // Navigate to SSO setup or open dialog
+  }
+
+  const handleAllowedIPs = () => {
+    console.log("Configuring allowed IPs")
+    // Navigate to IP allowlist or open dialog
+  }
+
+  const handleUIAccessControl = () => {
+    console.log("Configuring UI access control")
+    // Navigate to access control or open dialog
+  }
+
+  const handleConfigureSCIM = () => {
+    console.log("Configuring SCIM")
+    // Navigate to SCIM setup or open dialog
+  }
+
+  const handleOpenLink = (link: string) => {
+    console.log("Opening link:", link)
+    // Open external link or navigate
+  }
+
   return (
     <div className="flex flex-col min-h-screen">
       <main className="flex-1 p-6 space-y-6">
@@ -47,15 +72,15 @@ export default function Settings() {
 
                 {/* Security Action Buttons */}
                 <div className="flex flex-wrap gap-3">
-                  <Button className="glass-button bg-primary hover:bg-primary/90">
+                  <Button className="glass-button bg-primary hover:bg-primary/90" onClick={handleAddSSO}>
                     <Plus className="w-4 h-4 mr-2" />
                     Add SSO
                   </Button>
-                  <Button className="glass-button bg-primary hover:bg-primary/90">
+                  <Button className="glass-button bg-primary hover:bg-primary/90" onClick={handleAllowedIPs}>
                     <Globe className="w-4 h-4 mr-2" />
                     Allowed IPs
                   </Button>
-                  <Button className="glass-button bg-primary hover:bg-primary/90">
+                  <Button className="glass-button bg-primary hover:bg-primary/90" onClick={handleUIAccessControl}>
                     <Eye className="w-4 h-4 mr-2" />
                     UI Access Control
                   </Button>
@@ -90,7 +115,7 @@ export default function Settings() {
                 <p className="text-foreground-secondary max-w-md mx-auto">
                   System for Cross-domain Identity Management (SCIM) allows automatic user provisioning and deprovisioning.
                 </p>
-                <Button className="glass-button bg-primary hover:bg-primary/90">
+                <Button className="glass-button bg-primary hover:bg-primary/90" onClick={handleConfigureSCIM}>
                   <Plus className="w-4 h-4 mr-2" />
                   Configure SCIM
                 </Button>
@@ -109,15 +134,15 @@ export default function Settings() {
                   Quick access to important resources and documentation for administrators.
                 </p>
                 <div className="space-y-2">
-                  <Button variant="outline" className="glass-button w-full">
+                  <Button variant="outline" className="glass-button w-full" onClick={() => handleOpenLink("documentation")}>
                     <Globe className="w-4 h-4 mr-2" />
                     Documentation
                   </Button>
-                  <Button variant="outline" className="glass-button w-full">
+                  <Button variant="outline" className="glass-button w-full" onClick={() => handleOpenLink("security")}>
                     <Shield className="w-4 h-4 mr-2" />
                     Security Guidelines
                   </Button>
-                  <Button variant="outline" className="glass-button w-full">
+                  <Button variant="outline" className="glass-button w-full" onClick={() => handleOpenLink("api")}>
                     <Plus className="w-4 h-4 mr-2" />
                     API Reference
                   </Button>

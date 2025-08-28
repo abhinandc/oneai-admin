@@ -41,8 +41,28 @@ export default function TestKey() {
     if (message.trim()) {
       // Handle message sending logic here
       console.log("Sending message:", message)
+      console.log("Using configuration:", {
+        apiKeySource,
+        currentSession,
+        selectedModel,
+        endpointType,
+        tags,
+        mcpTool,
+        vectorStore,
+        guardrails
+      })
       setMessage("")
     }
+  }
+
+  const handleClearChat = () => {
+    console.log("Clearing chat history")
+    // Clear chat logic here
+  }
+
+  const handleGetCode = () => {
+    console.log("Generating code snippet")
+    // Generate and show code snippet
   }
 
   return (
@@ -193,11 +213,11 @@ export default function TestKey() {
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-xl font-semibold text-foreground">Chat Interface</h2>
               <div className="flex items-center gap-3">
-                <Button variant="outline" className="hover:bg-background/50">
+                <Button variant="outline" className="hover:bg-background/50" onClick={handleClearChat}>
                   <MessageCircle className="w-4 h-4 mr-2" />
                   Clear Chat
                 </Button>
-                <Button variant="outline" className="hover:bg-background/50">
+                <Button variant="outline" className="hover:bg-background/50" onClick={handleGetCode}>
                   <Code className="w-4 h-4 mr-2" />
                   Get Code
                 </Button>

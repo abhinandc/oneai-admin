@@ -72,10 +72,57 @@ const mockUsers: InternalUser[] = [
 ]
 
 export default function InternalUsers() {
-  const [users] = useState<InternalUser[]>(mockUsers)
+  const [users, setUsers] = useState<InternalUser[]>(mockUsers)
   const [searchTerm, setSearchTerm] = useState("")
   const [currentPage] = useState(1)
   const totalPages = 1
+
+  const handleInviteUser = () => {
+    console.log("Opening invite user dialog")
+    // Open invite dialog or navigate to invite page
+  }
+
+  const handleBulkInvite = () => {
+    console.log("Opening bulk invite dialog")
+    // Open bulk invite dialog
+  }
+
+  const handleSelectUsers = () => {
+    console.log("Toggling user selection mode")
+    // Toggle selection mode
+  }
+
+  const handleEditUser = (userId: string) => {
+    console.log("Editing user:", userId)
+    // Navigate to edit user page or open modal
+  }
+
+  const handleChangeRole = (userId: string) => {
+    console.log("Changing role for user:", userId)
+    // Open role change dialog
+  }
+
+  const handleManageKeys = (userId: string) => {
+    console.log("Managing keys for user:", userId)
+    // Navigate to user keys page
+  }
+
+  const handleRemoveUser = (userId: string) => {
+    if (confirm("Are you sure you want to remove this user?")) {
+      setUsers(users.filter(u => u.id !== userId))
+      console.log("Removed user:", userId)
+    }
+  }
+
+  const handleCopyUserId = (userId: string) => {
+    navigator.clipboard.writeText(userId)
+    console.log("Copied user ID:", userId)
+  }
+
+  const handleSaveDefaultSettings = () => {
+    console.log("Saving default user settings")
+    // Save settings logic
+  }
 
   const getRoleBadge = (role: string) => {
     if (role.includes("Admin")) {
@@ -106,15 +153,15 @@ export default function InternalUsers() {
           <TabsContent value="users" className="space-y-4">
             {/* Action Buttons */}
             <div className="flex items-center gap-3">
-              <Button className="glass-button bg-primary hover:bg-primary/90">
+              <Button className="glass-button bg-primary hover:bg-primary/90" onClick={handleInviteUser}>
                 <Plus className="w-4 h-4 mr-2" />
                 Invite User
               </Button>
-              <Button className="glass-button bg-primary hover:bg-primary/90">
+              <Button className="glass-button bg-primary hover:bg-primary/90" onClick={handleBulkInvite}>
                 <Plus className="w-4 h-4 mr-2" />
                 Bulk Invite Users
               </Button>
-              <Button variant="outline" className="glass-button">
+              <Button variant="outline" className="glass-button" onClick={handleSelectUsers}>
                 Select Users
               </Button>
             </div>
@@ -271,13 +318,13 @@ export default function InternalUsers() {
                         </TableCell>
                         <TableCell>
                           <div className="flex items-center gap-1">
-                            <Button variant="ghost" size="sm" className="h-8 w-8 p-0 glass-button">
+                            <Button variant="ghost" size="sm" className="h-8 w-8 p-0 glass-button" onClick={() => handleCopyUserId(user.id)}>
                               <Copy className="h-4 w-4" />
                             </Button>
-                            <Button variant="ghost" size="sm" className="h-8 w-8 p-0 glass-button">
+                            <Button variant="ghost" size="sm" className="h-8 w-8 p-0 glass-button" onClick={() => handleEditUser(user.id)}>
                               <Edit className="h-4 w-4" />
                             </Button>
-                            <Button variant="ghost" size="sm" className="h-8 w-8 p-0 glass-button">
+                            <Button variant="ghost" size="sm" className="h-8 w-8 p-0 glass-button" onClick={() => handleManageKeys(user.id)}>
                               <Key className="h-4 w-4" />
                             </Button>
                             <DropdownMenu>
@@ -287,19 +334,19 @@ export default function InternalUsers() {
                                 </Button>
                               </DropdownMenuTrigger>
                               <DropdownMenuContent align="end" className="glass-card bg-background/95 backdrop-blur-md border-card-border/50 z-50">
-                                <DropdownMenuItem className="glass-button">
+                                <DropdownMenuItem className="glass-button" onClick={() => handleEditUser(user.id)}>
                                   <Edit className="mr-2 h-4 w-4" />
                                   Edit User
                                 </DropdownMenuItem>
-                                <DropdownMenuItem className="glass-button">
+                                <DropdownMenuItem className="glass-button" onClick={() => handleChangeRole(user.id)}>
                                   <Crown className="mr-2 h-4 w-4" />
                                   Change Role
                                 </DropdownMenuItem>
-                                <DropdownMenuItem className="glass-button">
+                                <DropdownMenuItem className="glass-button" onClick={() => handleManageKeys(user.id)}>
                                   <Key className="mr-2 h-4 w-4" />
                                   Manage Keys
                                 </DropdownMenuItem>
-                                <DropdownMenuItem className="glass-button text-destructive">
+                                <DropdownMenuItem className="glass-button text-destructive" onClick={() => handleRemoveUser(user.id)}>
                                   <UserX className="mr-2 h-4 w-4" />
                                   Remove User
                                 </DropdownMenuItem>
@@ -382,7 +429,7 @@ export default function InternalUsers() {
                 </div>
 
                 <div className="flex justify-end">
-                  <Button className="glass-button bg-primary hover:bg-primary/90">
+                  <Button className="glass-button bg-primary hover:bg-primary/90" onClick={handleSaveDefaultSettings}>
                     Save Settings
                   </Button>
                 </div>

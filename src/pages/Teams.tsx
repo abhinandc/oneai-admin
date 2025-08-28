@@ -58,8 +58,35 @@ const mockTeamMembers: TeamMember[] = [
 ]
 
 export default function Teams() {
-  const [members] = useState<TeamMember[]>(mockTeamMembers)
+  const [members, setMembers] = useState<TeamMember[]>(mockTeamMembers)
   const [inviteEmail, setInviteEmail] = useState("")
+
+  const handleInviteUser = () => {
+    if (inviteEmail.trim()) {
+      console.log("Inviting user:", inviteEmail)
+      // Add invitation logic here
+      setInviteEmail("")
+    }
+  }
+
+  const handleViewMember = (memberId: string) => {
+    console.log("Viewing member:", memberId)
+  }
+
+  const handleEditMember = (memberId: string) => {
+    console.log("Editing member:", memberId)
+  }
+
+  const handleRemoveMember = (memberId: string) => {
+    if (confirm("Are you sure you want to remove this member?")) {
+      setMembers(members.filter(m => m.id !== memberId))
+      console.log("Removed member:", memberId)
+    }
+  }
+
+  const handleConfigureSetting = (setting: string) => {
+    console.log("Configuring setting:", setting)
+  }
 
   const getRoleBadge = (role: string) => {
     const styles = {
@@ -145,7 +172,7 @@ export default function Teams() {
                   <option>Admin</option>
                 </select>
               </div>
-              <Button className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-sm">
+              <Button className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-sm" onClick={handleInviteUser}>
                 <Plus className="w-4 h-4 mr-2" />
                 Send Invite
               </Button>
@@ -197,14 +224,14 @@ export default function Teams() {
                     </TableCell>
                     <TableCell>
                       <div className="flex items-center gap-2">
-                        <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                        <Button variant="ghost" size="sm" className="h-8 w-8 p-0" onClick={() => handleViewMember(member.id)}>
                           <Eye className="w-4 h-4" />
                         </Button>
-                        <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                        <Button variant="ghost" size="sm" className="h-8 w-8 p-0" onClick={() => handleEditMember(member.id)}>
                           <Settings className="w-4 h-4" />
                         </Button>
                         {member.role !== "owner" && (
-                          <Button variant="ghost" size="sm" className="h-8 w-8 p-0 text-destructive hover:text-destructive">
+                          <Button variant="ghost" size="sm" className="h-8 w-8 p-0 text-destructive hover:text-destructive" onClick={() => handleRemoveMember(member.id)}>
                             <Trash2 className="w-4 h-4" />
                           </Button>
                         )}
@@ -229,39 +256,39 @@ export default function Teams() {
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <div className="font-medium">Public Team Profile</div>
-                    <div className="text-sm text-foreground-secondary">Allow others to discover your team</div>
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <div className="font-medium">Public Team Profile</div>
+                      <div className="text-sm text-foreground-secondary">Allow others to discover your team</div>
+                    </div>
+                    <Button variant="outline" size="sm" onClick={() => handleConfigureSetting("public-profile")}>Configure</Button>
                   </div>
-                  <Button variant="outline" size="sm">Configure</Button>
+                  
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <div className="font-medium">Auto-approve Invites</div>
+                      <div className="text-sm text-foreground-secondary">Automatically approve team invitations</div>
+                    </div>
+                    <Button variant="outline" size="sm" onClick={() => handleConfigureSetting("auto-approve")}>Configure</Button>
+                  </div>
                 </div>
                 
-                <div className="flex items-center justify-between">
-                  <div>
-                    <div className="font-medium">Auto-approve Invites</div>
-                    <div className="text-sm text-foreground-secondary">Automatically approve team invitations</div>
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <div className="font-medium">Default Role</div>
+                      <div className="text-sm text-foreground-secondary">Default role for new team members</div>
+                    </div>
+                    <Button variant="outline" size="sm" onClick={() => handleConfigureSetting("default-role")}>Configure</Button>
                   </div>
-                  <Button variant="outline" size="sm">Configure</Button>
-                </div>
-              </div>
-              
-              <div className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <div className="font-medium">Default Role</div>
-                    <div className="text-sm text-foreground-secondary">Default role for new team members</div>
+                  
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <div className="font-medium">Team Limits</div>
+                      <div className="text-sm text-foreground-secondary">Maximum number of team members</div>
+                    </div>
+                    <Button variant="outline" size="sm" onClick={() => handleConfigureSetting("team-limits")}>Configure</Button>
                   </div>
-                  <Button variant="outline" size="sm">Configure</Button>
-                </div>
-                
-                <div className="flex items-center justify-between">
-                  <div>
-                    <div className="font-medium">Team Limits</div>
-                    <div className="text-sm text-foreground-secondary">Maximum number of team members</div>
-                  </div>
-                  <Button variant="outline" size="sm">Configure</Button>
-                </div>
               </div>
             </div>
           </div>

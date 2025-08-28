@@ -114,12 +114,41 @@ const mockKeys: VirtualKey[] = [
 ]
 
 export default function VirtualKeys() {
-  const [keys] = useState<VirtualKey[]>(mockKeys)
-  const [currentPage] = useState(1)
+  const [keys, setKeys] = useState<VirtualKey[]>(mockKeys)
+  const [currentPage, setCurrentPage] = useState(1)
+  const [showCreateDialog, setShowCreateDialog] = useState(false)
+  const [showFilters, setShowFilters] = useState(false)
   const totalPages = 1
 
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text)
+    // You could add a toast notification here
+    console.log("Copied to clipboard:", text)
+  }
+
+  const handleCreateKey = () => {
+    setShowCreateDialog(true)
+  }
+
+  const handleDeleteKey = (keyId: string) => {
+    if (confirm("Are you sure you want to delete this key?")) {
+      setKeys(keys.filter(key => key.id !== keyId))
+      console.log("Deleted key:", keyId)
+    }
+  }
+
+  const handleViewDetails = (keyId: string) => {
+    console.log("Viewing details for key:", keyId)
+    // Navigate to key details page or open modal
+  }
+
+  const handleFilterToggle = () => {
+    setShowFilters(!showFilters)
+  }
+
+  const handleResetFilters = () => {
+    setShowFilters(false)
+    console.log("Filters reset")
   }
 
   return (
@@ -133,7 +162,7 @@ export default function VirtualKeys() {
               Showing 1 - 3 of 3 results
             </p>
           </div>
-          <Button className="glass-button bg-primary hover:bg-primary/90">
+          <Button className="glass-button bg-primary hover:bg-primary/90" onClick={handleCreateKey}>
             <Plus className="w-4 h-4 mr-2" />
             Create New Key
           </Button>
@@ -141,11 +170,11 @@ export default function VirtualKeys() {
 
         {/* Filters */}
         <div className="flex items-center gap-3">
-          <Button variant="outline" className="glass-button">
+          <Button variant="outline" className="glass-button" onClick={handleFilterToggle}>
             <Filter className="w-4 h-4 mr-2" />
             Filters
           </Button>
-          <Button variant="outline" className="glass-button">
+          <Button variant="outline" className="glass-button" onClick={handleResetFilters}>
             <RotateCcw className="w-4 h-4 mr-2" />
             Reset Filters
           </Button>
@@ -264,15 +293,15 @@ export default function VirtualKeys() {
                           </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end" className="glass-card bg-background/95 backdrop-blur-md border-card-border/50 z-50">
-                          <DropdownMenuItem className="glass-button">
+                          <DropdownMenuItem className="glass-button" onClick={() => handleViewDetails(key.id)}>
                             <Eye className="mr-2 h-4 w-4" />
                             View Details
                           </DropdownMenuItem>
-                          <DropdownMenuItem className="glass-button">
+                          <DropdownMenuItem className="glass-button" onClick={() => copyToClipboard(key.secretKey)}>
                             <Copy className="mr-2 h-4 w-4" />
                             Copy Secret
                           </DropdownMenuItem>
-                          <DropdownMenuItem className="glass-button text-destructive">
+                          <DropdownMenuItem className="glass-button text-destructive" onClick={() => handleDeleteKey(key.id)}>
                             <Trash2 className="mr-2 h-4 w-4" />
                             Delete Key
                           </DropdownMenuItem>

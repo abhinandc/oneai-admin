@@ -139,7 +139,7 @@ const generateMockLogs = (): LogEntry[] => {
 }
 
 export default function Logs() {
-  const [logs] = useState<LogEntry[]>(generateMockLogs())
+  const [logs, setLogs] = useState<LogEntry[]>(generateMockLogs())
   const [searchTerm, setSearchTerm] = useState("")
   const [timeRange, setTimeRange] = useState("Last 24 Hours")
   const [liveTail, setLiveTail] = useState(true)
@@ -148,6 +148,27 @@ export default function Logs() {
   const [currentPage] = useState(1)
   const totalPages = 1
   const totalResults = 43
+
+  const handleRefreshLogs = () => {
+    console.log("Refreshing logs...")
+    setLogs(generateMockLogs())
+  }
+
+  const handleFilterLogs = () => {
+    console.log("Opening filter options")
+    // Open filter dialog or panel
+  }
+
+  const handleResetFilters = () => {
+    console.log("Resetting filters")
+    setSearchTerm("")
+    setTimeRange("Last 24 Hours")
+  }
+
+  const handleExpandLog = (logIndex: number) => {
+    console.log("Expanding log entry:", logIndex)
+    // Show detailed log view
+  }
 
   useEffect(() => {
     let interval: NodeJS.Timeout
@@ -203,14 +224,14 @@ export default function Logs() {
               
               {/* Filters and Controls */}
               <div className="flex items-center gap-4 mb-4">
-                <Button variant="outline" className="glass-button">
-                  <Filter className="w-4 h-4 mr-2" />
-                  Filters
-                </Button>
-                <Button variant="outline" className="glass-button">
-                  <RotateCcw className="w-4 h-4 mr-2" />
-                  Reset Filters
-                </Button>
+              <Button variant="outline" className="glass-button" onClick={handleFilterLogs}>
+                <Filter className="w-4 h-4 mr-2" />
+                Filters
+              </Button>
+              <Button variant="outline" className="glass-button" onClick={handleResetFilters}>
+                <RotateCcw className="w-4 h-4 mr-2" />
+                Reset Filters
+              </Button>
               </div>
 
               {/* Search and Time Controls */}
@@ -248,7 +269,7 @@ export default function Logs() {
                   <div className={`w-2 h-2 rounded-full ${liveTail ? 'bg-green-500' : 'bg-gray-400'}`} />
                 </div>
 
-                <Button variant="outline" className="glass-button">
+                <Button variant="outline" className="glass-button" onClick={handleRefreshLogs}>
                   <RefreshCw className="w-4 h-4 mr-2" />
                   Refresh
                 </Button>
@@ -319,7 +340,7 @@ export default function Logs() {
                       {logs.map((log, index) => (
                         <TableRow key={index} className="border-card-border/50">
                           <TableCell>
-                            <Button variant="ghost" size="sm" className="h-6 w-6 p-0">
+                            <Button variant="ghost" size="sm" className="h-6 w-6 p-0" onClick={() => handleExpandLog(index)}>
                               <ChevronRightIcon className="h-3 w-3" />
                             </Button>
                           </TableCell>
