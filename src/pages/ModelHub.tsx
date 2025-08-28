@@ -142,7 +142,7 @@ export default function ModelHub() {
                 <Copy className="w-4 h-4" />
               </Button>
             </div>
-            <Button className="glass-button bg-primary hover:bg-primary/90">
+            <Button className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-sm">
               <ExternalLink className="w-4 h-4 mr-2" />
               View Public
             </Button>
@@ -182,7 +182,7 @@ export default function ModelHub() {
                     className="glass-card bg-background/50"
                   />
                 </div>
-                <Button className="glass-button bg-primary hover:bg-primary/90">
+                <Button className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-sm">
                   <Plus className="w-4 h-4 mr-2" />
                   Add Link
                 </Button>
@@ -369,7 +369,7 @@ export default function ModelHub() {
                       </Badge>
                     </TableCell>
                     <TableCell>
-                      <Button variant="outline" size="sm" className="glass-button">
+                      <Button variant="outline" size="sm" className="border-border/60 hover:bg-accent hover:text-accent-foreground shadow-sm">
                         <Eye className="w-4 h-4 mr-2" />
                         Details
                       </Button>

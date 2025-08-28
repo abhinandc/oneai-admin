@@ -20,10 +20,16 @@ import {
   Menu
 } from "lucide-react"
 import { useTheme } from "next-themes"
+import { useEffect, useState } from "react"
 import { SidebarTrigger } from "@/components/ui/sidebar"
 
 export function TopBar() {
   const { theme, setTheme } = useTheme()
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   return (
     <header className="apple-glass border-b border-border/50 h-16 px-6 flex items-center justify-between sticky top-0 z-50">
@@ -67,7 +73,7 @@ export function TopBar() {
           className="apple-button w-10 h-10 p-0"
           onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
         >
-          {theme === "dark" ? (
+          {mounted && theme === "dark" ? (
             <Sun className="h-5 w-5" />
           ) : (
             <Moon className="h-5 w-5" />
