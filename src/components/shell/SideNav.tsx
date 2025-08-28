@@ -17,7 +17,8 @@ import {
   Bell,
   UserCog,
   Palette,
-  ChevronDown
+  ChevronDown,
+  Database
 } from "lucide-react"
 import { NavLink, useLocation } from "react-router-dom"
 import {
@@ -50,7 +51,9 @@ const expandableItems = [
     url: "/tools", 
     icon: Wrench, 
     hasDropdown: true,
-    children: []
+    children: [
+      { title: "MCP Servers", url: "/tools/mcp-servers", icon: Database },
+    ]
   },
   { 
     title: "Experimental", 
