@@ -79,7 +79,7 @@ export default function Login() {
             </div>
           </div>
           
-          <h1 className="text-5xl font-bold text-foreground whitespace-nowrap">
+          <h1 className="text-5xl font-bold text-foreground whitespace-nowrap text-center">
             OneAI Admin Interface
           </h1>
           <p className="text-foreground-secondary">
