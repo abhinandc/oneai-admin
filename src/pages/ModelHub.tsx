@@ -142,7 +142,7 @@ export default function ModelHub() {
                 <Copy className="w-4 h-4" />
               </Button>
             </div>
-            <Button className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-sm">
+            <Button className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-sm" onClick={() => window.open(modelHubUrl, '_blank')}>
               <ExternalLink className="w-4 h-4 mr-2" />
               View Public
             </Button>
@@ -182,7 +182,7 @@ export default function ModelHub() {
                     className="glass-card bg-background/50"
                   />
                 </div>
-                <Button className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-sm">
+                <Button className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-sm" onClick={() => console.log("Add Link button clicked!")}>
                   <Plus className="w-4 h-4 mr-2" />
                   Add Link
                 </Button>

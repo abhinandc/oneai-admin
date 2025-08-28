@@ -231,11 +231,11 @@ export default function Guardrails() {
               className="glass-card bg-background/50"
             />
           </div>
-          <Button variant="outline" className="glass-button">
+          <Button variant="outline" className="glass-button" onClick={() => console.log("Filters button clicked!")}>
             <Filter className="w-4 h-4 mr-2" />
             Filters
           </Button>
-          <Button variant="outline" className="glass-button">
+          <Button variant="outline" className="glass-button" onClick={() => console.log("Reset Filters button clicked!")}>
             <RotateCcw className="w-4 h-4 mr-2" />
             Reset Filters
           </Button>
