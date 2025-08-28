@@ -152,23 +152,29 @@ export function SideNav() {
           </SidebarGroupContent>
         </SidebarGroup>
 
-        {/* OneOrigin Logo at Footer Level - Placeholder */}
+        {/* OneOrigin Logo at Footer Level */}
         <div className="mt-auto mb-0 p-8 border-t border-border/10 bg-background/50">
           <div className="flex justify-center items-center">
-            <div 
-              className="flex items-center justify-center opacity-90 hover:opacity-100 transition-opacity"
+            <img 
+              src={theme === 'dark' ? '/lovable-uploads/dc8ec67b-6ec3-466b-9fd1-c30ca88ce7f9.png' : '/lovable-uploads/6769a209-c508-4221-a988-13dc68d43d9f.png'}
+              alt="OneOrigin"
+              className="w-auto object-contain max-w-full opacity-90 hover:opacity-100 transition-opacity"
               style={{ 
                 height: '160px', 
                 minHeight: '160px', 
                 maxHeight: '160px',
                 maxWidth: '100%' 
               }}
-            >
-              {/* Temporary placeholder - replace with actual logo once uploaded */}
-              <div className="text-center">
-                <div className="text-3xl font-bold text-foreground mb-2">oneorigin</div>
-                <div className="w-12 h-2 bg-blue-500 rounded-full mx-auto"></div>
-              </div>
+              onError={(e) => {
+                // Fallback if image fails to load
+                e.currentTarget.style.display = 'none';
+                e.currentTarget.nextElementSibling?.classList.remove('hidden');
+              }}
+            />
+            {/* Fallback text logo */}
+            <div className="hidden text-center">
+              <div className="text-3xl font-bold text-foreground mb-2">oneorigin</div>
+              <div className="w-12 h-2 bg-blue-500 rounded-full mx-auto"></div>
             </div>
           </div>
         </div>
