@@ -24,6 +24,14 @@ import { useEffect, useState } from "react"
 export function TopBar() {
   const { theme, setTheme } = useTheme()
   const [mounted, setMounted] = useState(false)
+  const [showNotifications, setShowNotifications] = useState(false)
+
+  const handleNotificationClick = () => {
+    console.log("Notifications button clicked!")
+    setShowNotifications(!showNotifications)
+    // In a real app, this would open a notifications panel or dropdown
+    alert("Notifications:\n• New API key created\n• Monthly usage report ready\n• Team member added")
+  }
 
   useEffect(() => {
     setMounted(true)
@@ -75,7 +83,12 @@ export function TopBar() {
         </Button>
 
         {/* Notifications */}
-        <Button variant="ghost" size="icon" className="apple-button w-10 h-10 p-0 relative">
+        <Button 
+          variant="ghost" 
+          size="icon" 
+          className="apple-button w-10 h-10 p-0 relative"
+          onClick={handleNotificationClick}
+        >
           <Bell className="h-5 w-5" />
           <Badge className="absolute -top-1 -right-1 w-5 h-5 p-0 flex items-center justify-center text-xs bg-destructive text-destructive-foreground">
             3
