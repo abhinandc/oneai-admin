@@ -38,6 +38,7 @@ export default function TestKey() {
   const [guardrails, setGuardrails] = useState("")
 
   const handleSendMessage = () => {
+    console.log("Send Message button clicked!")
     if (message.trim()) {
       // Handle message sending logic here
       console.log("Sending message:", message)
@@ -56,11 +57,13 @@ export default function TestKey() {
   }
 
   const handleClearChat = () => {
+    console.log("Clear Chat button clicked!")
     console.log("Clearing chat history")
     // Clear chat logic here
   }
 
   const handleGetCode = () => {
+    console.log("Get Code button clicked!")
     console.log("Generating code snippet")
     // Generate and show code snippet
   }

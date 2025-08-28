@@ -122,11 +122,38 @@ const mockModels: Model[] = [
 ]
 
 export default function ModelsEndpoints() {
-  const [models] = useState<Model[]>(mockModels)
+  const [models, setModels] = useState<Model[]>(mockModels)
   const [currentTeam, setCurrentTeam] = useState("Personal")
   const [viewType, setViewType] = useState("Current Team Models")
   const [searchTerm, setSearchTerm] = useState("")
   const [modelAccessFilter, setModelAccessFilter] = useState("All Model Access Groups")
+
+  const handleAddModel = () => {
+    console.log("Add Model button clicked!")
+    // Open add model dialog or navigate
+  }
+
+  const handleAddAutoRouter = () => {
+    console.log("Add Auto Router button clicked!")
+    // Open auto router dialog
+  }
+
+  const handleEditModel = (modelId: string) => {
+    console.log("Edit Model clicked for:", modelId)
+    // Open edit dialog
+  }
+
+  const handleCloneModel = (modelId: string) => {
+    console.log("Clone Model clicked for:", modelId)
+    // Clone model logic
+  }
+
+  const handleDeleteModel = (modelId: string) => {
+    console.log("Delete Model clicked for:", modelId)
+    if (confirm("Are you sure you want to delete this model?")) {
+      setModels(models.filter(m => m.id !== modelId))
+    }
+  }
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -344,15 +371,15 @@ export default function ModelsEndpoints() {
                               </Button>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent align="end" className="glass-card bg-background/95 backdrop-blur-md border-card-border/50 z-50">
-                              <DropdownMenuItem className="glass-button">
+                              <DropdownMenuItem className="glass-button" onClick={() => handleEditModel(model.id)}>
                                 <Edit className="mr-2 h-4 w-4" />
                                 Edit Model
                               </DropdownMenuItem>
-                              <DropdownMenuItem className="glass-button">
+                              <DropdownMenuItem className="glass-button" onClick={() => handleCloneModel(model.id)}>
                                 <Copy className="mr-2 h-4 w-4" />
                                 Clone Model
                               </DropdownMenuItem>
-                              <DropdownMenuItem className="glass-button text-destructive">
+                              <DropdownMenuItem className="glass-button text-destructive" onClick={() => handleDeleteModel(model.id)}>
                                 <Trash2 className="mr-2 h-4 w-4" />
                                 Delete Model
                               </DropdownMenuItem>
@@ -371,10 +398,10 @@ export default function ModelsEndpoints() {
           <TabsContent value="add-model" className="space-y-6">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-4">
-                <Button className="glass-button bg-primary hover:bg-primary/90">
+                <Button className="glass-button bg-primary hover:bg-primary/90" onClick={handleAddModel}>
                   Add Model
                 </Button>
-                <Button variant="outline" className="glass-button">
+                <Button variant="outline" className="glass-button" onClick={handleAddAutoRouter}>
                   Add Auto Router
                 </Button>
               </div>

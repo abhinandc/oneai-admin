@@ -127,6 +127,7 @@ export default function VirtualKeys() {
   }
 
   const handleCreateKey = () => {
+    console.log("Create Key button clicked!")
     setShowCreateDialog(true)
   }
 
@@ -143,10 +144,12 @@ export default function VirtualKeys() {
   }
 
   const handleFilterToggle = () => {
+    console.log("Filter button clicked!")
     setShowFilters(!showFilters)
   }
 
   const handleResetFilters = () => {
+    console.log("Reset Filters button clicked!")
     setShowFilters(false)
     console.log("Filters reset")
   }
