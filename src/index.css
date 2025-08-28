@@ -18,7 +18,7 @@
     /* Clean Apple surfaces */
     --card: 0 0% 100%;
     --card-foreground: 0 0% 9%;
-    --card-border: 0 0% 86%;
+    --card-border: 0 0% 82%;
 
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 9%;
@@ -30,13 +30,13 @@
     --primary-active: 213 94% 63%;
 
     /* Subtle grays with better contrast */
-    --secondary: 0 0% 95%;
+    --secondary: 0 0% 93%;
     --secondary-foreground: 0 0% 9%;
-    --secondary-hover: 0 0% 92%;
+    --secondary-hover: 0 0% 89%;
 
-    --accent: 0 0% 93%;
+    --accent: 0 0% 91%;
     --accent-foreground: 0 0% 9%;
-    --accent-hover: 0 0% 89%;
+    --accent-hover: 0 0% 87%;
 
     /* Status colors */
     --success: 142 76% 36%;
@@ -47,11 +47,11 @@
     --destructive-foreground: 0 0% 100%;
 
     /* Form elements */
-    --muted: 0 0% 95%;
+    --muted: 0 0% 93%;
     --muted-foreground: 0 0% 35%;
-    --border: 0 0% 87%;
+    --border: 0 0% 83%;
     --input: 0 0% 100%;
-    --input-border: 0 0% 84%;
+    --input-border: 0 0% 80%;
     --ring: 213 94% 68%;
 
     /* Apple radius */

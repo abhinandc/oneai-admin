@@ -46,9 +46,9 @@ export default function TestKey() {
   }
 
   return (
-    <div className="flex h-screen">
+    <div className="flex h-screen overflow-hidden">
       {/* Left Sidebar - Configurations */}
-      <div className="w-96 border-r border-card-border/50 bg-background/50 backdrop-blur-sm">
+      <div className="w-96 border-r border-card-border bg-card/95 backdrop-blur-sm overflow-y-auto">
         <div className="p-6 space-y-6">
           <div>
             <h2 className="text-lg font-semibold text-foreground mb-4">Configurations</h2>
@@ -64,7 +64,7 @@ export default function TestKey() {
               placeholder="Enter API key source"
               value={apiKeySource}
               onChange={(e) => setApiKeySource(e.target.value)}
-              className="glass-card bg-background/50"
+              className="apple-glass bg-card/50 border-card-border"
             />
           </div>
 
@@ -78,7 +78,7 @@ export default function TestKey() {
               placeholder="Session ID"
               value={currentSession}
               onChange={(e) => setCurrentSession(e.target.value)}
-              className="glass-card bg-background/50"
+              className="apple-glass bg-card/50 border-card-border"
             />
           </div>
 
@@ -89,10 +89,10 @@ export default function TestKey() {
               Select Model
             </Label>
             <Select value={selectedModel} onValueChange={setSelectedModel}>
-              <SelectTrigger className="glass-card bg-background/50">
+              <SelectTrigger className="apple-glass bg-card/50 border-card-border">
                 <SelectValue />
               </SelectTrigger>
-              <SelectContent className="glass-card bg-background/95 backdrop-blur-md border-card-border/50 z-50">
+              <SelectContent className="apple-glass bg-card/95 backdrop-blur-md border-card-border z-50">
                 <SelectItem value="gpt-4o-mini">gpt-4o-mini</SelectItem>
                 <SelectItem value="gpt-4o">gpt-4o</SelectItem>
                 <SelectItem value="claude-3.5-sonnet">claude-3.5-sonnet</SelectItem>
@@ -108,10 +108,10 @@ export default function TestKey() {
               Endpoint Type
             </Label>
             <Select value={endpointType} onValueChange={setEndpointType}>
-              <SelectTrigger className="glass-card bg-background/50">
+              <SelectTrigger className="apple-glass bg-card/50 border-card-border">
                 <SelectValue />
               </SelectTrigger>
-              <SelectContent className="glass-card bg-background/95 backdrop-blur-md border-card-border/50 z-50">
+              <SelectContent className="apple-glass bg-card/95 backdrop-blur-md border-card-border z-50">
                 <SelectItem value="/v1/chat/completions">/v1/chat/completions</SelectItem>
                 <SelectItem value="/v1/completions">/v1/completions</SelectItem>
                 <SelectItem value="/v1/embeddings">/v1/embeddings</SelectItem>
@@ -129,7 +129,7 @@ export default function TestKey() {
               placeholder="Add tags"
               value={tags}
               onChange={(e) => setTags(e.target.value)}
-              className="glass-card bg-background/50"
+              className="apple-glass bg-card/50 border-card-border"
             />
           </div>
 
@@ -144,7 +144,7 @@ export default function TestKey() {
               placeholder="MCP tool configuration"
               value={mcpTool}
               onChange={(e) => setMcpTool(e.target.value)}
-              className="glass-card bg-background/50"
+              className="apple-glass bg-card/50 border-card-border"
             />
           </div>
 
@@ -159,7 +159,7 @@ export default function TestKey() {
               placeholder="Vector store configuration"
               value={vectorStore}
               onChange={(e) => setVectorStore(e.target.value)}
-              className="glass-card bg-background/50"
+              className="apple-glass bg-card/50 border-card-border"
             />
           </div>
 
@@ -174,24 +174,24 @@ export default function TestKey() {
               placeholder="Guardrails configuration"
               value={guardrails}
               onChange={(e) => setGuardrails(e.target.value)}
-              className="glass-card bg-background/50"
+              className="apple-glass bg-card/50 border-card-border"
             />
           </div>
         </div>
       </div>
 
       {/* Main Content Area */}
-      <div className="flex-1 flex flex-col">
+      <div className="flex-1 flex flex-col overflow-hidden">
         {/* Header */}
-        <div className="border-b border-card-border/50 bg-background/50 backdrop-blur-sm p-4">
+        <div className="border-b border-card-border bg-card/95 backdrop-blur-sm p-4 flex-shrink-0">
           <div className="flex items-center justify-between">
             <h1 className="text-xl font-semibold text-foreground">Test Key</h1>
             <div className="flex items-center gap-3">
-              <Button variant="outline" className="glass-button">
+              <Button variant="outline" className="apple-button border-card-border">
                 <MessageCircle className="w-4 h-4 mr-2" />
                 Clear Chat
               </Button>
-              <Button variant="outline" className="glass-button">
+              <Button variant="outline" className="apple-button-primary">
                 <Code className="w-4 h-4 mr-2" />
                 Get Code
               </Button>
@@ -200,28 +200,28 @@ export default function TestKey() {
         </div>
 
         {/* Chat Area */}
-        <div className="flex-1 flex flex-col">
+        <div className="flex-1 flex flex-col overflow-hidden">
           {/* Messages Area */}
-          <div className="flex-1 p-6 flex items-center justify-center">
+          <div className="flex-1 p-6 flex items-center justify-center overflow-hidden">
             <div className="text-center space-y-4">
-              <div className="w-16 h-16 mx-auto rounded-2xl border-2 border-dashed border-card-border/50 flex items-center justify-center">
+              <div className="w-16 h-16 mx-auto rounded-2xl border-2 border-dashed border-card-border flex items-center justify-center bg-card/50">
                 <MessageCircle className="w-8 h-8 text-foreground-tertiary" />
               </div>
-              <p className="text-foreground-secondary">
+              <p className="text-foreground-secondary font-medium">
                 Start a conversation or generate an image
               </p>
             </div>
           </div>
 
           {/* Input Area */}
-          <div className="border-t border-card-border/50 bg-background/50 backdrop-blur-sm p-4">
+          <div className="border-t border-card-border bg-card/95 backdrop-blur-sm p-4 flex-shrink-0">
             <div className="flex items-end gap-3 max-w-4xl mx-auto">
               <div className="flex-1 relative">
                 <Textarea
                   placeholder="Why not change the world one day at a..."
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
-                  className="glass-card bg-background/50 border-card-border/50 resize-none min-h-[60px] pr-12"
+                  className="apple-glass bg-card/50 border-card-border resize-none min-h-[60px] pr-12"
                   onKeyDown={(e) => {
                     if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
                       handleSendMessage()
@@ -232,7 +232,7 @@ export default function TestKey() {
                   size="sm"
                   onClick={handleSendMessage}
                   disabled={!message.trim()}
-                  className="absolute bottom-2 right-2 h-8 w-8 p-0 glass-button bg-primary hover:bg-primary/90"
+                  className="absolute bottom-2 right-2 h-8 w-8 p-0 apple-button-primary"
                 >
                   <Send className="w-4 h-4" />
                 </Button>

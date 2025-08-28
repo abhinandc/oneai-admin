@@ -19,9 +19,12 @@ import {
   LogOut,
   Menu
 } from "lucide-react"
+import { useTheme } from "next-themes"
 import { SidebarTrigger } from "@/components/ui/sidebar"
 
 export function TopBar() {
+  const { theme, setTheme } = useTheme()
+
   return (
     <header className="apple-glass border-b border-border/50 h-16 px-6 flex items-center justify-between sticky top-0 z-50">
       {/* Left Section */}
@@ -57,6 +60,20 @@ export function TopBar() {
 
       {/* Right Section */}
       <div className="flex items-center gap-2">
+        {/* Theme Toggle */}
+        <Button 
+          variant="ghost" 
+          size="icon" 
+          className="apple-button w-10 h-10 p-0"
+          onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+        >
+          {theme === "dark" ? (
+            <Sun className="h-5 w-5" />
+          ) : (
+            <Moon className="h-5 w-5" />
+          )}
+        </Button>
+
         {/* Notifications */}
         <Button variant="ghost" size="icon" className="apple-button w-10 h-10 p-0 relative">
           <Bell className="h-5 w-5" />
