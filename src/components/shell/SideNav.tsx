@@ -155,12 +155,13 @@ export function SideNav() {
         </SidebarGroup>
 
         {/* OneOrigin Logo at Bottom */}
-        <div className="mt-auto p-4 border-t border-border/10">
+        <div className="mt-auto p-6 border-t border-border/10">
           <div className="flex justify-center items-center">
             <img 
               src={theme === 'dark' ? OneOriginLogoLight : OneOriginLogoDark}
               alt="OneOrigin"
-              className="h-6 w-auto object-contain max-w-full"
+              className="h-12 w-auto object-contain max-w-full opacity-80 hover:opacity-100 transition-opacity"
+              style={{ minHeight: '48px' }}
             />
           </div>
         </div>
