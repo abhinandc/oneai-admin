@@ -226,6 +226,14 @@ export default function ModelsEndpoints() {
     setNewAliasTarget("")
   }
 
+  const handleReloadPriceData = () => {
+    console.log("Reload Price Data button clicked!")
+    // Simulate reloading price data
+    setTimeout(() => {
+      console.log("Price data reloaded successfully")
+    }, 1500)
+  }
+
   const handleEditModel = (modelId: string) => {
     console.log("Edit Model clicked for:", modelId)
     // Open edit dialog
@@ -976,7 +984,7 @@ export default function ModelsEndpoints() {
               <p className="text-foreground-secondary mb-6">
                 Reload pricing data for all configured models to ensure accurate cost calculations.
               </p>
-                  <Button className="glass-button bg-primary hover:bg-primary/90" onClick={handleAddAlias}>
+                  <Button className="glass-button bg-primary hover:bg-primary/90" onClick={handleReloadPriceData}>
                 <RefreshCw className="w-4 h-4 mr-2" />
                 Reload Price Data
               </Button>
