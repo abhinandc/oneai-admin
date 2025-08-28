@@ -20,6 +20,7 @@ import Users from "./pages/admin/Users";
 import Billing from "./pages/admin/Billing";
 import AdminSettings from "./pages/admin/Settings";
 import Login from "./pages/Login";
+import Teams from "./pages/Teams";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -48,6 +49,7 @@ const App = () => (
             <Route path="/admin/billing" element={<Billing />} />
             <Route path="/admin/settings" element={<AdminSettings />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/teams" element={<Teams />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
