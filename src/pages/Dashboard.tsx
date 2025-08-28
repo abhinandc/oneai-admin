@@ -1,97 +1,322 @@
-import { Bot, MessageSquare, Zap, TrendingUp, Activity, Users } from "lucide-react"
+import { 
+  Bot, 
+  MessageSquare, 
+  Zap, 
+  TrendingUp, 
+  Activity, 
+  Users, 
+  Key,
+  Shield,
+  Brain,
+  BarChart3,
+  AlertTriangle,
+  CheckCircle,
+  Clock,
+  DollarSign,
+  ArrowRight,
+  Plus,
+  Settings,
+  Eye,
+  Database
+} from "lucide-react"
 import { GlassCard } from "@/components/ui/glass-card"
 import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import { useNavigate } from "react-router-dom"
 
 const stats = [
-  { label: "Active Users", value: "1,247", change: "+12%", icon: Users, trend: "up" },
-  { label: "API Requests", value: "847K", change: "+5.2%", icon: Activity, trend: "up" },
-  { label: "Chat Sessions", value: "3,921", change: "+18%", icon: MessageSquare, trend: "up" },
-  { label: "Automations", value: "156", change: "+3", icon: Zap, trend: "up" },
+  { label: "Total API Keys", value: "47", change: "+3", icon: Key, trend: "up", color: "text-blue-500" },
+  { label: "Monthly Requests", value: "2.4M", change: "+18%", icon: Activity, trend: "up", color: "text-green-500" },
+  { label: "Active Models", value: "23", change: "+2", icon: Brain, trend: "up", color: "text-purple-500" },
+  { label: "Team Members", value: "12", change: "+1", icon: Users, trend: "up", color: "text-orange-500" },
+]
+
+const systemHealth = [
+  { label: "API Uptime", value: "99.9%", status: "healthy", icon: CheckCircle },
+  { label: "Avg Response", value: "234ms", status: "healthy", icon: Clock },
+  { label: "Error Rate", value: "0.02%", status: "healthy", icon: AlertTriangle },
+  { label: "Monthly Cost", value: "$1,247", status: "warning", icon: DollarSign },
+]
+
+const quickActions = [
+  {
+    title: "Create Virtual Key",
+    description: "Generate a new API key with custom permissions",
+    icon: Key,
+    route: "/keys/virtual",
+    color: "bg-blue-500/10 text-blue-500"
+  },
+  {
+    title: "Test API Key", 
+    description: "Validate and test your API credentials",
+    icon: Shield,
+    route: "/keys/test",
+    color: "bg-green-500/10 text-green-500"
+  },
+  {
+    title: "Manage Models",
+    description: "Configure AI models and endpoints",
+    icon: Brain,
+    route: "/models",
+    color: "bg-purple-500/10 text-purple-500"
+  },
+  {
+    title: "View Usage Stats",
+    description: "Monitor API usage and billing details",
+    icon: BarChart3,
+    route: "/usage",
+    color: "bg-orange-500/10 text-orange-500"
+  },
+  {
+    title: "Review Logs",
+    description: "Check system logs and request history",
+    icon: Database,
+    route: "/logs",
+    color: "bg-red-500/10 text-red-500"
+  },
+  {
+    title: "Team Settings",
+    description: "Manage team members and permissions",
+    icon: Settings,
+    route: "/teams",
+    color: "bg-gray-500/10 text-gray-500"
+  }
 ]
 
 const recentActivity = [
-  { action: "New user registered", user: "alice@company.com", time: "2 minutes ago" },
-  { action: "API key rotated", user: "system", time: "1 hour ago" },
-  { action: "Billing threshold reached", user: "admin", time: "3 hours ago" },
-  { action: "New agent deployed", user: "bob@company.com", time: "5 hours ago" },
+  { 
+    action: "New virtual key created", 
+    user: "alice@company.com", 
+    time: "2 minutes ago",
+    type: "success"
+  },
+  { 
+    action: "Model endpoint updated", 
+    user: "system", 
+    time: "15 minutes ago",
+    type: "info"
+  },
+  { 
+    action: "Usage threshold 80% reached", 
+    user: "admin", 
+    time: "1 hour ago",
+    type: "warning"
+  },
+  { 
+    action: "New team member invited", 
+    user: "bob@company.com", 
+    time: "2 hours ago",
+    type: "success"
+  },
+  {
+    action: "Guardrail policy triggered",
+    user: "system",
+    time: "3 hours ago", 
+    type: "alert"
+  }
 ]
 
 export default function Dashboard() {
+  const navigate = useNavigate()
+
+  const getActivityColor = (type: string) => {
+    switch (type) {
+      case "success": return "bg-green-500/10 border-green-500/20"
+      case "warning": return "bg-yellow-500/10 border-yellow-500/20"
+      case "alert": return "bg-red-500/10 border-red-500/20"
+      default: return "bg-blue-500/10 border-blue-500/20"
+    }
+  }
+
+  const getHealthColor = (status: string) => {
+    switch (status) {
+      case "healthy": return "text-green-500"
+      case "warning": return "text-yellow-500"
+      case "critical": return "text-red-500"
+      default: return "text-gray-500"
+    }
+  }
+
   return (
     <div className="space-y-6">
+      {/* Header */}
       <div>
         <h1 className="text-3xl font-bold text-foreground flex items-center gap-3">
-          <Bot className="w-8 h-8" />
+          <Bot className="w-8 h-8 text-primary" />
           OneAI Dashboard
         </h1>
         <p className="text-foreground-secondary mt-1">
-          Welcome back! Here's what's happening with your AI platform.
+          Welcome back! Here's your AI platform overview and quick actions.
         </p>
       </div>
 
-      {/* Stats Grid */}
+      {/* Key Metrics */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {stats.map((stat) => (
-          <GlassCard key={stat.label} className="p-6 hover:scale-105 transition-transform">
+          <GlassCard key={stat.label} className="p-6 hover:scale-105 transition-all duration-200">
             <div className="flex items-center justify-between">
-              <div>
+              <div className="flex-1">
                 <p className="text-sm text-foreground-secondary">{stat.label}</p>
                 <p className="text-2xl font-bold text-foreground mt-1">{stat.value}</p>
                 <div className="flex items-center gap-1 mt-2">
-                  <TrendingUp className="w-3 h-3 text-success" />
-                  <span className="text-sm text-success font-medium">{stat.change}</span>
+                  <TrendingUp className="w-3 h-3 text-green-500" />
+                  <span className="text-sm text-green-500 font-medium">{stat.change}</span>
+                  <span className="text-xs text-foreground-tertiary ml-1">vs last month</span>
                 </div>
               </div>
-              <div className="p-3 bg-primary/20 rounded-xl">
-                <stat.icon className="w-6 h-6 text-primary" />
+              <div className={`p-3 bg-card/50 rounded-xl border border-border/30`}>
+                <stat.icon className={`w-6 h-6 ${stat.color}`} />
               </div>
             </div>
           </GlassCard>
         ))}
       </div>
 
-      {/* Quick Actions */}
+      {/* System Health */}
       <GlassCard className="p-6">
-        <h3 className="text-lg font-semibold text-foreground mb-4">Quick Actions</h3>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="glass-button p-4 rounded-xl cursor-pointer hover:bg-glass-hover/70 transition-colors">
-            <MessageSquare className="w-6 h-6 text-primary mb-2" />
-            <h4 className="font-medium text-foreground">Start Chat Session</h4>
-            <p className="text-sm text-foreground-secondary">Begin a new conversation</p>
-          </div>
-          <div className="glass-button p-4 rounded-xl cursor-pointer hover:bg-glass-hover/70 transition-colors">
-            <Bot className="w-6 h-6 text-primary mb-2" />
-            <h4 className="font-medium text-foreground">Create Agent</h4>
-            <p className="text-sm text-foreground-secondary">Build a new AI agent</p>
-          </div>
-          <div className="glass-button p-4 rounded-xl cursor-pointer hover:bg-glass-hover/70 transition-colors">
-            <Zap className="w-6 h-6 text-primary mb-2" />
-            <h4 className="font-medium text-foreground">New Automation</h4>
-            <p className="text-sm text-foreground-secondary">Automate workflows</p>
-          </div>
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-lg font-semibold text-foreground">System Health</h3>
+          <Button variant="ghost" size="sm" onClick={() => navigate("/logs")}>
+            <Eye className="w-4 h-4 mr-2" />
+            View Details
+          </Button>
         </div>
-      </GlassCard>
-
-      {/* Recent Activity */}
-      <GlassCard className="p-6">
-        <h3 className="text-lg font-semibold text-foreground mb-4">Recent Activity</h3>
-        <div className="space-y-3">
-          {recentActivity.map((activity, index) => (
-            <div key={index} className="flex items-center justify-between p-3 rounded-lg bg-glass/30">
-              <div className="flex items-center gap-3">
-                <div className="w-2 h-2 bg-primary rounded-full"></div>
-                <div>
-                  <p className="text-foreground font-medium">{activity.action}</p>
-                  <p className="text-sm text-foreground-secondary">{activity.user}</p>
-                </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          {systemHealth.map((item) => (
+            <div key={item.label} className="flex items-center gap-3 p-3 bg-card/30 rounded-lg border border-border/30">
+              <item.icon className={`w-5 h-5 ${getHealthColor(item.status)}`} />
+              <div>
+                <p className="text-sm text-foreground-secondary">{item.label}</p>
+                <p className="font-semibold text-foreground">{item.value}</p>
               </div>
-              <Badge variant="outline" className="glass-button text-xs">
-                {activity.time}
-              </Badge>
             </div>
           ))}
         </div>
       </GlassCard>
+
+      {/* Quick Actions */}
+      <GlassCard className="p-6">
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-lg font-semibold text-foreground">Quick Actions</h3>
+          <Badge variant="secondary" className="text-xs">
+            {quickActions.length} available
+          </Badge>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {quickActions.map((action) => (
+            <div 
+              key={action.title}
+              onClick={() => navigate(action.route)}
+              className="group p-4 bg-card/30 rounded-xl border border-border/30 cursor-pointer hover:bg-card/50 hover:border-border/60 transition-all duration-200"
+            >
+              <div className="flex items-start gap-3">
+                <div className={`p-2 rounded-lg ${action.color}`}>
+                  <action.icon className="w-5 h-5" />
+                </div>
+                <div className="flex-1">
+                  <h4 className="font-medium text-foreground group-hover:text-primary transition-colors">
+                    {action.title}
+                  </h4>
+                  <p className="text-sm text-foreground-secondary mt-1">
+                    {action.description}
+                  </p>
+                </div>
+                <ArrowRight className="w-4 h-4 text-foreground-tertiary group-hover:text-primary group-hover:translate-x-1 transition-all" />
+              </div>
+            </div>
+          ))}
+        </div>
+      </GlassCard>
+
+      {/* Recent Activity & Settings */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Recent Activity */}
+        <div className="lg:col-span-2">
+          <GlassCard className="p-6">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg font-semibold text-foreground">Recent Activity</h3>
+              <Button variant="ghost" size="sm" onClick={() => navigate("/logs")}>
+                View All
+                <ArrowRight className="w-4 h-4 ml-1" />
+              </Button>
+            </div>
+            <div className="space-y-3">
+              {recentActivity.map((activity, index) => (
+                <div key={index} className={`flex items-center justify-between p-3 rounded-lg border ${getActivityColor(activity.type)}`}>
+                  <div className="flex items-center gap-3">
+                    <div className={`w-2 h-2 rounded-full ${
+                      activity.type === "success" ? "bg-green-500" :
+                      activity.type === "warning" ? "bg-yellow-500" :
+                      activity.type === "alert" ? "bg-red-500" : "bg-blue-500"
+                    }`}></div>
+                    <div>
+                      <p className="text-foreground font-medium text-sm">{activity.action}</p>
+                      <p className="text-xs text-foreground-secondary">{activity.user}</p>
+                    </div>
+                  </div>
+                  <Badge variant="outline" className="text-xs">
+                    {activity.time}
+                  </Badge>
+                </div>
+              ))}
+            </div>
+          </GlassCard>
+        </div>
+
+        {/* Quick Stats */}
+        <div className="space-y-4">
+          <GlassCard className="p-4">
+            <h4 className="font-semibold text-foreground mb-3">This Month</h4>
+            <div className="space-y-3">
+              <div className="flex justify-between items-center">
+                <span className="text-sm text-foreground-secondary">Requests</span>
+                <span className="font-medium">2.4M</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-sm text-foreground-secondary">Cost</span>
+                <span className="font-medium">$1,247</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-sm text-foreground-secondary">Errors</span>
+                <span className="font-medium text-green-500">0.02%</span>
+              </div>
+            </div>
+          </GlassCard>
+
+          <GlassCard className="p-4">
+            <h4 className="font-semibold text-foreground mb-3">Quick Links</h4>
+            <div className="space-y-2">
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                className="w-full justify-start"
+                onClick={() => navigate("/admin/billing")}
+              >
+                <DollarSign className="w-4 h-4 mr-2" />
+                Billing
+              </Button>
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                className="w-full justify-start"
+                onClick={() => navigate("/settings")}
+              >
+                <Settings className="w-4 h-4 mr-2" />
+                Settings
+              </Button>
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                className="w-full justify-start"
+                onClick={() => navigate("/guardrails")}
+              >
+                <Shield className="w-4 h-4 mr-2" />
+                Guardrails
+              </Button>
+            </div>
+          </GlassCard>
+        </div>
+      </div>
     </div>
   )
 }
