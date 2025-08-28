@@ -15,6 +15,7 @@ import {
   Menu
 } from "lucide-react"
 import { NavLink, useLocation } from "react-router-dom"
+import { useTheme } from "next-themes"
 import {
   Sidebar,
   SidebarContent,
@@ -48,6 +49,7 @@ const toolsItems = [
 
 export function SideNav() {
   const { state } = useSidebar()
+  const { theme } = useTheme()
   const location = useLocation()
   const currentPath = location.pathname
   const isCollapsed = state === "collapsed"
@@ -149,6 +151,32 @@ export function SideNav() {
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
+
+        {/* OneOrigin Logo */}
+        <div className="mt-auto p-4 border-t border-border/20">
+          <div className="flex justify-center">
+            {/* Logo placeholder - replace with actual logo imports */}
+            <div className="h-8 flex items-center">
+              {theme === 'dark' ? (
+                // Dark theme logo (light colored logo)
+                <div className="flex items-center gap-2">
+                  <div className="w-6 h-6 bg-blue-500 rounded-sm flex-shrink-0"></div>
+                  {!isCollapsed && (
+                    <span className="text-foreground font-semibold text-sm">oneorigin</span>
+                  )}
+                </div>
+              ) : (
+                // Light theme logo (dark colored logo)  
+                <div className="flex items-center gap-2">
+                  <div className="w-6 h-6 bg-slate-800 rounded-sm flex-shrink-0"></div>
+                  {!isCollapsed && (
+                    <span className="text-foreground font-semibold text-sm">oneorigin</span>
+                  )}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
       </SidebarContent>
     </Sidebar>
   )
