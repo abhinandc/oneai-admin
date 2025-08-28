@@ -4,20 +4,12 @@ import {
   Package, 
   BarChart3, 
   Users, 
-  Building, 
   UserCheck, 
-  BookOpen, 
   Zap,
   FileBarChart,
   Shield,
   Wrench,
-  FlaskConical,
   Settings,
-  Route,
-  Bell,
-  UserCog,
-  Palette,
-  ChevronDown,
   Database
 } from "lucide-react"
 import { NavLink, useLocation } from "react-router-dom"
@@ -36,7 +28,7 @@ import {
 const mainItems = [
   { title: "Virtual Keys", url: "/keys/virtual", icon: Key },
   { title: "Test Key", url: "/keys/test", icon: TestTube },
-  { title: "Models + Endpoints", url: "/models", icon: Package, active: true },
+  { title: "Models + Endpoints", url: "/models", icon: Package },
   { title: "Usage", url: "/usage", icon: BarChart3 },
   { title: "Teams", url: "/teams", icon: Users },
   { title: "Internal Users", url: "/internal-users", icon: UserCheck },
@@ -45,20 +37,8 @@ const mainItems = [
   { title: "Guardrails", url: "/guardrails", icon: Shield },
 ]
 
-const expandableItems = [
-  { 
-    title: "Tools", 
-    url: "/tools", 
-    icon: Wrench, 
-    hasDropdown: true,
-    children: [
-      { title: "MCP Servers", url: "/tools/mcp-servers", icon: Database },
-    ]
-  },
-]
-
-const settingsItems = [
-  { title: "Settings", url: "/settings", icon: Settings },
+const toolsItems = [
+  { title: "MCP Servers", url: "/tools/mcp-servers", icon: Database },
 ]
 
 export function SideNav() {
@@ -70,24 +50,24 @@ export function SideNav() {
   const isActive = (path: string) => currentPath === path
   const getNavCls = ({ isActive }: { isActive: boolean }) =>
     isActive 
-      ? "bg-primary/20 text-primary border-primary/30 glass-card" 
-      : "hover:bg-accent/50 text-foreground-secondary hover:text-foreground glass-button"
+      ? "apple-nav-item-active" 
+      : "apple-nav-item"
 
   return (
-    <Sidebar
-      className="glass-card border-r border-card-border/50 backdrop-glass"
-      collapsible="icon"
-    >
-      <SidebarContent className="p-4">
+    <Sidebar className="apple-sidebar w-64" collapsible="icon">
+      <SidebarContent className="p-4 space-y-6">
         {/* Main Navigation */}
         <SidebarGroup>
+          <SidebarGroupLabel className="text-xs font-semibold text-foreground-secondary mb-3 px-3 tracking-wide">
+            PLATFORM
+          </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu className="space-y-1">
               {mainItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
                     <NavLink to={item.url} end className={getNavCls}>
-                      <item.icon className="w-4 h-4 flex-shrink-0" />
+                      <item.icon className="w-5 h-5 flex-shrink-0" />
                       {!isCollapsed && (
                         <span className="ml-3 font-medium">{item.title}</span>
                       )}
@@ -99,39 +79,23 @@ export function SideNav() {
           </SidebarGroupContent>
         </SidebarGroup>
 
-        {/* Expandable Items */}
-        <SidebarGroup className="mt-6">
+        {/* Tools Section */}
+        <SidebarGroup>
+          <SidebarGroupLabel className="text-xs font-semibold text-foreground-secondary mb-3 px-3 tracking-wide">
+            TOOLS
+          </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu className="space-y-1">
-              {expandableItems.map((item) => (
+              {toolsItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
                     <NavLink to={item.url} className={getNavCls}>
-                      <item.icon className="w-4 h-4 flex-shrink-0" />
+                      <item.icon className="w-5 h-5 flex-shrink-0" />
                       {!isCollapsed && (
-                        <>
-                          <span className="ml-3 font-medium">{item.title}</span>
-                          {item.hasDropdown && (
-                            <ChevronDown className="ml-auto w-3 h-3 opacity-50" />
-                          )}
-                        </>
+                        <span className="ml-3 font-medium">{item.title}</span>
                       )}
                     </NavLink>
                   </SidebarMenuButton>
-                  {item.children && item.children.length > 0 && !isCollapsed && (
-                    <SidebarMenu className="ml-6 mt-1 space-y-1">
-                      {item.children.map((child) => (
-                        <SidebarMenuItem key={child.title}>
-                          <SidebarMenuButton asChild>
-                            <NavLink to={child.url} className={getNavCls}>
-                              <child.icon className="w-4 h-4 flex-shrink-0" />
-                              <span className="ml-3 font-medium text-sm">{child.title}</span>
-                            </NavLink>
-                          </SidebarMenuButton>
-                        </SidebarMenuItem>
-                      ))}
-                    </SidebarMenu>
-                  )}
                 </SidebarMenuItem>
               ))}
             </SidebarMenu>
@@ -139,19 +103,19 @@ export function SideNav() {
         </SidebarGroup>
 
         {/* Settings */}
-        <SidebarGroup className="mt-6">
+        <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu className="space-y-1">
-              {settingsItems.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
-                    <NavLink to={item.url} className={getNavCls}>
-                      <item.icon className="w-4 h-4 flex-shrink-0" />
-                      {!isCollapsed && <span className="ml-3 font-medium">{item.title}</span>}
-                    </NavLink>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild>
+                  <NavLink to="/settings" className={getNavCls}>
+                    <Settings className="w-5 h-5 flex-shrink-0" />
+                    {!isCollapsed && (
+                      <span className="ml-3 font-medium">Settings</span>
+                    )}
+                  </NavLink>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>

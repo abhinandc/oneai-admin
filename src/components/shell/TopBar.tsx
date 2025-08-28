@@ -1,46 +1,99 @@
-import { Search, Bell, User, Command } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { Badge } from "@/components/ui/badge"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import { CommandPalette } from "@/components/CommandPalette"
+import { 
+  Search, 
+  Command, 
+  Bell, 
+  User, 
+  Moon, 
+  Sun,
+  Settings,
+  LogOut,
+  Menu
+} from "lucide-react"
 import { SidebarTrigger } from "@/components/ui/sidebar"
 
 export function TopBar() {
   return (
-    <header className="h-16 glass-card border-b border-card-border/50 backdrop-glass sticky top-0 z-50">
-      <div className="flex items-center justify-between h-full px-6">
-        <div className="flex items-center gap-4">
-          <SidebarTrigger className="glass-button" />
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
-              <span className="text-primary-foreground font-bold text-sm">OA</span>
-            </div>
-            <span className="font-semibold text-foreground">OneAI Admin</span>
+    <header className="apple-glass border-b border-border/50 h-16 px-6 flex items-center justify-between sticky top-0 z-50">
+      {/* Left Section */}
+      <div className="flex items-center gap-4">
+        <SidebarTrigger className="apple-button p-2 w-10 h-10">
+          <Menu className="w-5 h-5" />
+        </SidebarTrigger>
+        
+        {/* Logo */}
+        <div className="flex items-center gap-3">
+          <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-primary to-primary-hover flex items-center justify-center shadow-sm">
+            <span className="text-primary-foreground font-bold text-sm">OA</span>
           </div>
-        </div>
-
-        <div className="flex-1 max-w-md mx-8">
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-foreground-secondary" />
-            <Input
-              placeholder="Search or press ⌘K"
-              className="glass-button pl-10 pr-4 bg-glass/60 border-input-border focus:bg-glass-hover/70"
-            />
-            <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
-              <kbd className="inline-flex items-center rounded border border-border bg-muted px-1.5 py-0.5 text-xs font-mono text-muted-foreground">
-                <Command className="w-3 h-3 mr-0.5" />K
-              </kbd>
-            </div>
-          </div>
-        </div>
-
-        <div className="flex items-center gap-2">
-          <Button variant="ghost" size="icon" className="glass-button">
-            <Bell className="w-4 h-4" />
-          </Button>
-          <Button variant="ghost" size="icon" className="glass-button">
-            <User className="w-4 h-4" />
-          </Button>
+          <span className="font-semibold text-foreground">OneAI Admin</span>
         </div>
       </div>
+
+      {/* Center - Search */}
+      <div className="flex-1 max-w-lg mx-8">
+        <div className="relative">
+          <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-4 h-4 text-foreground-tertiary" />
+          <Input
+            placeholder="Search..."
+            className="chatgpt-input pl-12 pr-16 bg-background/80 border-border/50 focus:bg-background focus:border-primary/30 h-11"
+          />
+          <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
+            <Badge variant="secondary" className="text-xs font-mono bg-muted/60 border-border/30 px-2 py-1">
+              <Command className="w-3 h-3 mr-1" />
+              K
+            </Badge>
+          </div>
+        </div>
+      </div>
+
+      {/* Right Section */}
+      <div className="flex items-center gap-2">
+        {/* Notifications */}
+        <Button variant="ghost" size="icon" className="apple-button w-10 h-10 p-0 relative">
+          <Bell className="h-5 w-5" />
+          <Badge className="absolute -top-1 -right-1 w-5 h-5 p-0 flex items-center justify-center text-xs bg-destructive text-destructive-foreground">
+            3
+          </Badge>
+        </Button>
+
+        {/* User Menu */}
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" size="icon" className="apple-button w-10 h-10 p-0">
+              <User className="h-5 w-5" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent 
+            align="end" 
+            className="apple-glass bg-background/95 backdrop-blur-xl border-border/50 w-56 shadow-lg"
+          >
+            <DropdownMenuItem className="apple-nav-item">
+              <User className="mr-3 h-4 w-4" />
+              Profile
+            </DropdownMenuItem>
+            <DropdownMenuItem className="apple-nav-item">
+              <Settings className="mr-3 h-4 w-4" />
+              Settings
+            </DropdownMenuItem>
+            <DropdownMenuItem className="apple-nav-item text-destructive">
+              <LogOut className="mr-3 h-4 w-4" />
+              Sign Out
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
+
+      <CommandPalette />
     </header>
   )
 }
