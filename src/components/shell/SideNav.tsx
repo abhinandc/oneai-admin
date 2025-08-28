@@ -62,9 +62,9 @@ export function SideNav() {
     <Sidebar className="apple-sidebar w-64" collapsible="icon">
       <SidebarContent className="p-4 space-y-6">
         {/* Collapse Toggle */}
-        <div className="flex justify-end">
-          <SidebarTrigger className="apple-button p-2 w-10 h-10">
-            <Menu className="w-5 h-5" />
+        <div className="flex justify-end mb-4">
+          <SidebarTrigger className="flex items-center justify-center w-10 h-10 rounded-lg bg-background/50 hover:bg-background/80 transition-colors">
+            <Menu className="w-5 h-5 text-foreground" />
           </SidebarTrigger>
         </div>
 
