@@ -16,6 +16,8 @@ import {
 } from "lucide-react"
 import { NavLink, useLocation } from "react-router-dom"
 import { useTheme } from "next-themes"
+import OneOriginLogoDark from "@/assets/oneorigin-logo-dark.png"
+import OneOriginLogoLight from "@/assets/oneorigin-logo-light.png"
 import {
   Sidebar,
   SidebarContent,
@@ -152,29 +154,14 @@ export function SideNav() {
           </SidebarGroupContent>
         </SidebarGroup>
 
-        {/* OneOrigin Logo */}
-        <div className="mt-auto p-4 border-t border-border/20">
-          <div className="flex justify-center">
-            {/* Logo placeholder - replace with actual logo imports */}
-            <div className="h-8 flex items-center">
-              {theme === 'dark' ? (
-                // Dark theme logo (light colored logo)
-                <div className="flex items-center gap-2">
-                  <div className="w-6 h-6 bg-blue-500 rounded-sm flex-shrink-0"></div>
-                  {!isCollapsed && (
-                    <span className="text-foreground font-semibold text-sm">oneorigin</span>
-                  )}
-                </div>
-              ) : (
-                // Light theme logo (dark colored logo)  
-                <div className="flex items-center gap-2">
-                  <div className="w-6 h-6 bg-slate-800 rounded-sm flex-shrink-0"></div>
-                  {!isCollapsed && (
-                    <span className="text-foreground font-semibold text-sm">oneorigin</span>
-                  )}
-                </div>
-              )}
-            </div>
+        {/* OneOrigin Logo at Bottom */}
+        <div className="mt-auto p-4 border-t border-border/10">
+          <div className="flex justify-center items-center">
+            <img 
+              src={theme === 'dark' ? OneOriginLogoLight : OneOriginLogoDark}
+              alt="OneOrigin"
+              className="h-6 w-auto object-contain max-w-full"
+            />
           </div>
         </div>
       </SidebarContent>
