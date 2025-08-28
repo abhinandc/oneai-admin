@@ -153,19 +153,19 @@ export default function Dashboard() {
       {/* Key Metrics */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {stats.map((stat) => (
-          <GlassCard key={stat.label} className="p-6 hover:scale-105 transition-all duration-200">
+          <GlassCard key={stat.label} className="p-6 hover:scale-105 transition-all duration-200 bg-card border-2 border-card-border shadow-lg">
             <div className="flex items-center justify-between">
               <div className="flex-1">
-                <p className="text-sm text-foreground-secondary">{stat.label}</p>
-                <p className="text-2xl font-bold text-foreground mt-1">{stat.value}</p>
-                <div className="flex items-center gap-1 mt-2">
-                  <TrendingUp className="w-3 h-3 text-green-500" />
-                  <span className="text-sm text-green-500 font-medium">{stat.change}</span>
+                <p className="text-sm font-medium text-foreground-secondary">{stat.label}</p>
+                <p className="text-3xl font-bold text-foreground mt-2">{stat.value}</p>
+                <div className="flex items-center gap-1 mt-3">
+                  <TrendingUp className="w-4 h-4 text-green-600 dark:text-green-400" />
+                  <span className="text-sm text-green-600 dark:text-green-400 font-semibold">{stat.change}</span>
                   <span className="text-xs text-foreground-tertiary ml-1">vs last month</span>
                 </div>
               </div>
-              <div className={`p-3 bg-card/50 rounded-xl border border-border/30`}>
-                <stat.icon className={`w-6 h-6 ${stat.color}`} />
+              <div className={`p-4 bg-primary/20 rounded-xl border-2 border-primary/30`}>
+                <stat.icon className={`w-7 h-7 ${stat.color}`} />
               </div>
             </div>
           </GlassCard>
@@ -173,21 +173,21 @@ export default function Dashboard() {
       </div>
 
       {/* System Health */}
-      <GlassCard className="p-6">
-        <div className="flex items-center justify-between mb-4">
-          <h3 className="text-lg font-semibold text-foreground">System Health</h3>
-          <Button variant="ghost" size="sm" onClick={() => navigate("/logs")}>
+      <GlassCard className="p-6 bg-card border-2 border-card-border shadow-lg">
+        <div className="flex items-center justify-between mb-6">
+          <h3 className="text-xl font-bold text-foreground">System Health</h3>
+          <Button variant="outline" size="sm" onClick={() => navigate("/logs")} className="border-2 border-border hover:bg-accent">
             <Eye className="w-4 h-4 mr-2" />
             View Details
           </Button>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {systemHealth.map((item) => (
-            <div key={item.label} className="flex items-center gap-3 p-3 bg-card/30 rounded-lg border border-border/30">
-              <item.icon className={`w-5 h-5 ${getHealthColor(item.status)}`} />
+            <div key={item.label} className="flex items-center gap-4 p-4 bg-background/50 rounded-xl border-2 border-border/60 shadow-sm">
+              <item.icon className={`w-6 h-6 ${getHealthColor(item.status)}`} />
               <div>
-                <p className="text-sm text-foreground-secondary">{item.label}</p>
-                <p className="font-semibold text-foreground">{item.value}</p>
+                <p className="text-sm font-medium text-foreground-secondary">{item.label}</p>
+                <p className="font-bold text-lg text-foreground">{item.value}</p>
               </div>
             </div>
           ))}
@@ -195,10 +195,10 @@ export default function Dashboard() {
       </GlassCard>
 
       {/* Quick Actions */}
-      <GlassCard className="p-6">
-        <div className="flex items-center justify-between mb-4">
-          <h3 className="text-lg font-semibold text-foreground">Quick Actions</h3>
-          <Badge variant="secondary" className="text-xs">
+      <GlassCard className="p-6 bg-card border-2 border-card-border shadow-lg">
+        <div className="flex items-center justify-between mb-6">
+          <h3 className="text-xl font-bold text-foreground">Quick Actions</h3>
+          <Badge variant="secondary" className="text-sm font-medium bg-primary/20 text-primary border border-primary/30">
             {quickActions.length} available
           </Badge>
         </div>
@@ -207,21 +207,21 @@ export default function Dashboard() {
             <div 
               key={action.title}
               onClick={() => navigate(action.route)}
-              className="group p-4 bg-card/30 rounded-xl border border-border/30 cursor-pointer hover:bg-card/50 hover:border-border/60 transition-all duration-200"
+              className="group p-5 bg-background/70 rounded-xl border-2 border-border/60 cursor-pointer hover:bg-background hover:border-primary/40 hover:shadow-md transition-all duration-200"
             >
-              <div className="flex items-start gap-3">
-                <div className={`p-2 rounded-lg ${action.color}`}>
-                  <action.icon className="w-5 h-5" />
+              <div className="flex items-start gap-4">
+                <div className={`p-3 rounded-xl ${action.color} border border-current/20`}>
+                  <action.icon className="w-6 h-6" />
                 </div>
                 <div className="flex-1">
-                  <h4 className="font-medium text-foreground group-hover:text-primary transition-colors">
+                  <h4 className="font-semibold text-foreground group-hover:text-primary transition-colors text-base">
                     {action.title}
                   </h4>
-                  <p className="text-sm text-foreground-secondary mt-1">
+                  <p className="text-sm text-foreground-secondary mt-1 leading-relaxed">
                     {action.description}
                   </p>
                 </div>
-                <ArrowRight className="w-4 h-4 text-foreground-tertiary group-hover:text-primary group-hover:translate-x-1 transition-all" />
+                <ArrowRight className="w-5 h-5 text-foreground-tertiary group-hover:text-primary group-hover:translate-x-1 transition-all" />
               </div>
             </div>
           ))}
@@ -232,29 +232,29 @@ export default function Dashboard() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Recent Activity */}
         <div className="lg:col-span-2">
-          <GlassCard className="p-6">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-semibold text-foreground">Recent Activity</h3>
-              <Button variant="ghost" size="sm" onClick={() => navigate("/logs")}>
+          <GlassCard className="p-6 bg-card border-2 border-card-border shadow-lg">
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="text-xl font-bold text-foreground">Recent Activity</h3>
+              <Button variant="outline" size="sm" onClick={() => navigate("/logs")} className="border-2 border-border hover:bg-accent">
                 View All
                 <ArrowRight className="w-4 h-4 ml-1" />
               </Button>
             </div>
             <div className="space-y-3">
               {recentActivity.map((activity, index) => (
-                <div key={index} className={`flex items-center justify-between p-3 rounded-lg border ${getActivityColor(activity.type)}`}>
-                  <div className="flex items-center gap-3">
-                    <div className={`w-2 h-2 rounded-full ${
+                <div key={index} className={`flex items-center justify-between p-4 rounded-xl border-2 ${getActivityColor(activity.type)} shadow-sm`}>
+                  <div className="flex items-center gap-4">
+                    <div className={`w-3 h-3 rounded-full ${
                       activity.type === "success" ? "bg-green-500" :
                       activity.type === "warning" ? "bg-yellow-500" :
                       activity.type === "alert" ? "bg-red-500" : "bg-blue-500"
                     }`}></div>
                     <div>
-                      <p className="text-foreground font-medium text-sm">{activity.action}</p>
-                      <p className="text-xs text-foreground-secondary">{activity.user}</p>
+                      <p className="text-foreground font-semibold text-sm">{activity.action}</p>
+                      <p className="text-xs text-foreground-secondary font-medium">{activity.user}</p>
                     </div>
                   </div>
-                  <Badge variant="outline" className="text-xs">
+                  <Badge variant="outline" className="text-xs font-medium border-2">
                     {activity.time}
                   </Badge>
                 </div>
@@ -265,52 +265,52 @@ export default function Dashboard() {
 
         {/* Quick Stats */}
         <div className="space-y-4">
-          <GlassCard className="p-4">
-            <h4 className="font-semibold text-foreground mb-3">This Month</h4>
-            <div className="space-y-3">
+          <GlassCard className="p-5 bg-card border-2 border-card-border shadow-lg">
+            <h4 className="font-bold text-foreground mb-4 text-lg">This Month</h4>
+            <div className="space-y-4">
               <div className="flex justify-between items-center">
-                <span className="text-sm text-foreground-secondary">Requests</span>
-                <span className="font-medium">2.4M</span>
+                <span className="text-sm font-medium text-foreground-secondary">Requests</span>
+                <span className="font-bold text-lg text-foreground">2.4M</span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-sm text-foreground-secondary">Cost</span>
-                <span className="font-medium">$1,247</span>
+                <span className="text-sm font-medium text-foreground-secondary">Cost</span>
+                <span className="font-bold text-lg text-foreground">$1,247</span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-sm text-foreground-secondary">Errors</span>
-                <span className="font-medium text-green-500">0.02%</span>
+                <span className="text-sm font-medium text-foreground-secondary">Errors</span>
+                <span className="font-bold text-lg text-green-600 dark:text-green-400">0.02%</span>
               </div>
             </div>
           </GlassCard>
 
-          <GlassCard className="p-4">
-            <h4 className="font-semibold text-foreground mb-3">Quick Links</h4>
+          <GlassCard className="p-5 bg-card border-2 border-card-border shadow-lg">
+            <h4 className="font-bold text-foreground mb-4 text-lg">Quick Links</h4>
             <div className="space-y-2">
               <Button 
                 variant="ghost" 
                 size="sm" 
-                className="w-full justify-start"
+                className="w-full justify-start hover:bg-accent border border-transparent hover:border-border font-medium"
                 onClick={() => navigate("/admin/billing")}
               >
-                <DollarSign className="w-4 h-4 mr-2" />
+                <DollarSign className="w-4 h-4 mr-3" />
                 Billing
               </Button>
               <Button 
                 variant="ghost" 
                 size="sm" 
-                className="w-full justify-start"
+                className="w-full justify-start hover:bg-accent border border-transparent hover:border-border font-medium"
                 onClick={() => navigate("/settings")}
               >
-                <Settings className="w-4 h-4 mr-2" />
+                <Settings className="w-4 h-4 mr-3" />
                 Settings
               </Button>
               <Button 
                 variant="ghost" 
                 size="sm" 
-                className="w-full justify-start"
+                className="w-full justify-start hover:bg-accent border border-transparent hover:border-border font-medium"
                 onClick={() => navigate("/guardrails")}
               >
-                <Shield className="w-4 h-4 mr-2" />
+                <Shield className="w-4 h-4 mr-3" />
                 Guardrails
               </Button>
             </div>
