@@ -1,4 +1,4 @@
-import { Heart, Code } from "lucide-react"
+import { Code } from "lucide-react"
 
 export function Footer() {
   return (
@@ -6,9 +6,7 @@ export function Footer() {
       <div className="border-t border-border/20 pt-6">
         <div className="flex flex-col md:flex-row justify-between items-center gap-4">
           <div className="flex items-center gap-2 text-sm text-foreground-secondary">
-            <span>Made with</span>
-            <Heart className="w-4 h-4 text-red-500 fill-current" />
-            <span>by OneAI Team</span>
+            <span>Product by OneOrigin</span>
           </div>
           
           <div className="flex items-center gap-6 text-sm text-foreground-secondary">
@@ -25,7 +23,7 @@ export function Footer() {
           </div>
           
           <div className="text-sm text-foreground-tertiary">
-            © 2024 OneAI. All rights reserved.
+            © 2025 OneAI. All rights reserved.
           </div>
         </div>
       </div>

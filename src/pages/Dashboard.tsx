@@ -141,8 +141,7 @@ export default function Dashboard() {
     <div className="space-y-8">
       {/* Header */}
       <div className="pb-4">
-        <h1 className="text-3xl font-bold text-foreground flex items-center gap-3">
-          <Bot className="w-8 h-8 text-primary" />
+        <h1 className="text-3xl font-bold text-foreground">
           OneAI Dashboard
         </h1>
         <p className="text-foreground-secondary mt-1">
