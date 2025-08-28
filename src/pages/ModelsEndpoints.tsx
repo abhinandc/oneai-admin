@@ -698,7 +698,7 @@ export default function ModelsEndpoints() {
                       Configure and manage your pass-through endpoints
                     </p>
                   </div>
-                  <Button className="glass-button bg-primary hover:bg-primary/90" onClick={handleAddCredential}>
+                  <Button className="glass-button bg-primary hover:bg-primary/90" onClick={handleAddPassThrough}>
                     <Plus className="w-4 h-4 mr-2" />
                     Add Pass-Through Endpoint
                   </Button>
@@ -734,7 +734,7 @@ export default function ModelsEndpoints() {
                   Run health checks on individual models to verify they are working correctly
                 </p>
               </div>
-                  <Button className="glass-button bg-primary hover:bg-primary/90" onClick={handleAddPassThrough}>
+              <Button className="glass-button bg-primary hover:bg-primary/90" onClick={handleRunAllChecks}>
                 <RefreshCw className="w-4 h-4 mr-2" />
                 Run All Checks
               </Button>
@@ -930,7 +930,7 @@ export default function ModelsEndpoints() {
                       />
                     </div>
                   </div>
-                  <Button className="glass-button bg-primary hover:bg-primary/90">
+                  <Button className="glass-button bg-primary hover:bg-primary/90" onClick={handleAddAlias}>
                     <Plus className="w-4 h-4 mr-2" />
                     Add Alias
                   </Button>
