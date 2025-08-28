@@ -1,4 +1,5 @@
 import { 
+  Home,
   Key, 
   TestTube,
   Package, 
@@ -24,6 +25,8 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar"
+
+const homeItem = { title: "Home", url: "/", icon: Home }
 
 const mainItems = [
   { title: "Virtual Keys", url: "/keys/virtual", icon: Key },
@@ -56,6 +59,24 @@ export function SideNav() {
   return (
     <Sidebar className="apple-sidebar w-64" collapsible="icon">
       <SidebarContent className="p-4 space-y-6">
+        {/* Home Button */}
+        <SidebarGroup>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild>
+                  <NavLink to={homeItem.url} end className={getNavCls}>
+                    <homeItem.icon className="w-5 h-5 flex-shrink-0" />
+                    {!isCollapsed && (
+                      <span className="ml-3 font-semibold">{homeItem.title}</span>
+                    )}
+                  </NavLink>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+
         {/* Main Navigation */}
         <SidebarGroup>
           <SidebarGroupLabel className="section-header">
