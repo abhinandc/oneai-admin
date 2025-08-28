@@ -15,10 +15,10 @@
     --foreground-secondary: 0 0% 35%;
     --foreground-tertiary: 0 0% 55%;
 
-    /* Clean Apple surfaces */
+    /* Clean Apple surfaces with better contrast */
     --card: 0 0% 100%;
     --card-foreground: 0 0% 9%;
-    --card-border: 0 0% 82%;
+    --card-border: 0 0% 75%;
 
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 9%;
@@ -46,12 +46,12 @@
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
 
-    /* Form elements */
-    --muted: 0 0% 93%;
+    /* Form elements with better contrast */
+    --muted: 0 0% 90%;
     --muted-foreground: 0 0% 35%;
-    --border: 0 0% 83%;
+    --border: 0 0% 75%;
     --input: 0 0% 100%;
-    --input-border: 0 0% 80%;
+    --input-border: 0 0% 70%;
     --ring: 213 94% 68%;
 
     /* Apple radius */
@@ -64,10 +64,10 @@
     --sidebar-accent: 0 0% 94%;
     --sidebar-accent-foreground: 0 0% 9%;
 
-    /* Glass effects for light mode */
-    --glass-bg: 0 0% 100% / 0.85;
-    --glass-border: 0 0% 85% / 0.6;
-    --shadow-light: 0 0% 82%;
+    /* Glass effects with better contrast */
+    --glass-bg: 0 0% 100% / 0.90;
+    --glass-border: 0 0% 75% / 0.8;
+    --shadow-light: 0 0% 75%;
   }
 
   .dark {
@@ -80,10 +80,10 @@
     --foreground-secondary: 0 0% 68%;
     --foreground-tertiary: 0 0% 48%;
 
-    /* Dark surfaces with better contrast */
-    --card: 0 0% 14%;
-    --card-foreground: 0 0% 92%;
-    --card-border: 0 0% 24%;
+    /* Dark surfaces with enhanced contrast */
+    --card: 0 0% 8%;
+    --card-foreground: 0 0% 95%;
+    --card-border: 0 0% 30%;
 
     --popover: 0 0% 14%;
     --popover-foreground: 0 0% 92%;
@@ -111,12 +111,12 @@
     --destructive: 0 72% 61%;
     --destructive-foreground: 0 0% 100%;
 
-    /* Dark form elements */
-    --muted: 0 0% 19%;
-    --muted-foreground: 0 0% 58%;
-    --border: 0 0% 22%;
-    --input: 0 0% 14%;
-    --input-border: 0 0% 24%;
+    /* Dark form elements with enhanced contrast */
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 65%;
+    --border: 0 0% 30%;
+    --input: 0 0% 8%;
+    --input-border: 0 0% 35%;
     --ring: 213 94% 68%;
 
     /* Dark sidebar with better contrast */
@@ -126,10 +126,10 @@
     --sidebar-accent: 0 0% 18%;
     --sidebar-accent-foreground: 0 0% 92%;
 
-    /* Glass effects for dark mode */
-    --glass-bg: 0 0% 13% / 0.85;
-    --glass-border: 0 0% 24% / 0.6;
-    --shadow-light: 0 0% 8%;
+    /* Glass effects for dark mode with better contrast */
+    --glass-bg: 0 0% 8% / 0.90;
+    --glass-border: 0 0% 30% / 0.8;
+    --shadow-light: 0 0% 5%;
   }
 }
 
@@ -148,16 +148,16 @@
 }
 
 @layer components {
-  /* Apple-style cards with better contrast */
+  /* Apple-style cards with enhanced contrast */
   .apple-card {
     @apply bg-card border border-card-border rounded-2xl shadow-sm;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 1px 3px 0 hsla(var(--shadow-light), 0.1), 0 1px 2px -1px hsla(var(--shadow-light), 0.1);
+    box-shadow: 0 2px 8px 0 hsla(var(--shadow-light), 0.15), 0 1px 3px -1px hsla(var(--shadow-light), 0.1);
   }
   
   .apple-card:hover {
     transform: translateY(-2px);
-    box-shadow: 0 10px 25px -3px hsla(var(--shadow-light), 0.1), 0 4px 6px -4px hsla(var(--shadow-light), 0.1);
+    box-shadow: 0 12px 30px -3px hsla(var(--shadow-light), 0.2), 0 6px 8px -4px hsla(var(--shadow-light), 0.15);
   }
   
   /* Apple-style buttons with refined styling */
