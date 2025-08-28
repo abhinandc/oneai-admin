@@ -10,10 +10,10 @@ interface LayoutProps {
 export function Layout({ children }: LayoutProps) {
   return (
     <SidebarProvider defaultOpen={true}>
-      <div className="flex min-h-screen w-full">
-        <SideNav />
-        <div className="flex-1 flex flex-col">
-          <TopBar />
+      <div className="min-h-screen w-full">
+        <TopBar />
+        <div className="flex">
+          <SideNav />
           <main className="flex-1 p-6">
             {children}
           </main>
