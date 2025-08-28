@@ -19,14 +19,25 @@ export default {
 		},
 		extend: {
 			fontFamily: {
-				system: [
-					"-apple-system",
-					"BlinkMacSystemFont",
+				sans: [
+					'Inter',
+					'-apple-system',
+					'BlinkMacSystemFont',
 					'"Segoe UI"',
-					"Roboto",
+					'Roboto',
 					'"Helvetica Neue"',
-					"Arial",
-					"sans-serif"
+					'Arial',
+					'sans-serif'
+				],
+				display: [
+					'Inter',
+					'-apple-system',
+					'BlinkMacSystemFont',
+					'"Segoe UI"',
+					'Roboto',
+					'"Helvetica Neue"',
+					'Arial',
+					'sans-serif'
 				],
 			},
 			colors: {

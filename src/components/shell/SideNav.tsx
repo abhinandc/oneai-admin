@@ -58,7 +58,7 @@ export function SideNav() {
       <SidebarContent className="p-4 space-y-6">
         {/* Main Navigation */}
         <SidebarGroup>
-          <SidebarGroupLabel className="text-xs font-semibold text-foreground-secondary mb-3 px-3 tracking-wide">
+          <SidebarGroupLabel className="section-header">
             PLATFORM
           </SidebarGroupLabel>
           <SidebarGroupContent>
@@ -81,7 +81,7 @@ export function SideNav() {
 
         {/* Tools Section */}
         <SidebarGroup>
-          <SidebarGroupLabel className="text-xs font-semibold text-foreground-secondary mb-3 px-3 tracking-wide">
+          <SidebarGroupLabel className="section-header">
             TOOLS
           </SidebarGroupLabel>
           <SidebarGroupContent>

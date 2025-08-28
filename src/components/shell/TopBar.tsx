@@ -30,12 +30,11 @@ export function TopBar() {
           <Menu className="w-5 h-5" />
         </SidebarTrigger>
         
-        {/* Logo */}
-        <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-primary to-primary-hover flex items-center justify-center shadow-sm">
-            <span className="text-primary-foreground font-bold text-sm">OA</span>
-          </div>
-          <span className="font-semibold text-foreground">OneAI Admin</span>
+        {/* Brand */}
+        <div className="flex items-center">
+          <span className="font-display font-semibold text-lg text-foreground tracking-tight">
+            OneAI <span className="text-foreground-secondary">|</span> Admin
+          </span>
         </div>
       </div>
 
