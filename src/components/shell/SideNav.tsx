@@ -152,34 +152,35 @@ export function SideNav() {
           </SidebarGroupContent>
         </SidebarGroup>
 
-        {/* OneOrigin Logo - SMALL SIZE AT BOTTOM */}
-        <div className="mt-auto mb-0 p-2 border-t border-border/10 bg-background/20">
-          <div className="flex justify-center items-center">
-            <img 
-              src={theme === 'dark' ? '/lovable-uploads/dc8ec67b-6ec3-466b-9fd1-c30ca88ce7f9.png' : '/lovable-uploads/6769a209-c508-4221-a988-13dc68d43d9f.png'}
-              alt="OneOrigin"
-              className="w-auto object-contain max-w-full opacity-70 hover:opacity-100 transition-opacity"
-              style={{ 
-                height: '32px !important', 
-                minHeight: '32px',
-                maxHeight: '32px',
-                maxWidth: '100%',
-                width: 'auto'
-              }}
-              onError={(e) => {
-                // Fallback if image fails to load
-                e.currentTarget.style.display = 'none';
-                e.currentTarget.nextElementSibling?.classList.remove('hidden');
-              }}
-            />
-            {/* Fallback text logo */}
-            <div className="hidden text-center">
-              <div className="text-sm font-bold text-foreground">oneorigin</div>
-              <div className="w-4 h-0.5 bg-blue-500 rounded-full mx-auto mt-1"></div>
-            </div>
+      </SidebarContent>
+
+      {/* OneOrigin Logo - ABSOLUTE BOTTOMMOST POSITION */}
+      <div className="absolute bottom-0 left-0 right-0 p-2 border-t border-border/10 bg-background/95 backdrop-blur-sm">
+        <div className="flex justify-center items-center">
+          <img 
+            src={theme === 'dark' ? '/lovable-uploads/dc8ec67b-6ec3-466b-9fd1-c30ca88ce7f9.png' : '/lovable-uploads/6769a209-c508-4221-a988-13dc68d43d9f.png'}
+            alt="OneOrigin"
+            className="w-auto object-contain max-w-full opacity-70 hover:opacity-100 transition-opacity"
+            style={{ 
+              height: '32px !important', 
+              minHeight: '32px',
+              maxHeight: '32px',
+              maxWidth: '100%',
+              width: 'auto'
+            }}
+            onError={(e) => {
+              // Fallback if image fails to load
+              e.currentTarget.style.display = 'none';
+              e.currentTarget.nextElementSibling?.classList.remove('hidden');
+            }}
+          />
+          {/* Fallback text logo */}
+          <div className="hidden text-center">
+            <div className="text-sm font-bold text-foreground">oneorigin</div>
+            <div className="w-4 h-0.5 bg-blue-500 rounded-full mx-auto mt-1"></div>
           </div>
         </div>
-      </SidebarContent>
+      </div>
     </Sidebar>
   )
 }
