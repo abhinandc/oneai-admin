@@ -173,7 +173,7 @@
   
   /* Apple-style sidebar */
   .apple-sidebar {
-    @apply bg-sidebar-background border-r border-sidebar-border;
+    @apply bg-sidebar border-r border-sidebar-border;
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
   }
