@@ -211,8 +211,15 @@ export default function Login() {
           </Button>{" "}
           and{" "}
           <Button variant="link" className="text-xs p-0 h-auto">
-            Privacy Policy
+          Privacy Policy
           </Button>
+        </div>
+
+        {/* Copyright */}
+        <div className="text-center mt-8">
+          <p className="text-sm text-foreground-tertiary">
+            © {new Date().getFullYear()} OneOrigin. All rights reserved.
+          </p>
         </div>
       </div>
     </div>
