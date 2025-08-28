@@ -139,6 +139,11 @@ export default function ModelsEndpoints() {
   const [showAutoRouterDialog, setShowAutoRouterDialog] = useState(false)
   const [newModelName, setNewModelName] = useState("")
   const [newModelProvider, setNewModelProvider] = useState("")
+  const [newModelCredentials, setNewModelCredentials] = useState("")
+  const [newModelCosts, setNewModelCosts] = useState("")
+  const [newModelTeamId, setNewModelTeamId] = useState("")
+  const [newModelAccessGroup, setNewModelAccessGroup] = useState("")
+  const [newModelStatus, setNewModelStatus] = useState<"active" | "inactive">("active")
 
   const handleAddModel = () => {
     console.log("Add Model button clicked!")
@@ -154,20 +159,26 @@ export default function ModelsEndpoints() {
     const newModel: Model = {
       id: `model_${Date.now()}`,
       modelName: newModelName || "New Model",
-      modelInfo: "Added via form",
-      credentials: "No credentials",
+      modelInfo: newModelProvider || "Custom Provider",
+      credentials: newModelCredentials || "No credentials",
       createdBy: "Current User",
       updatedAt: new Date().toLocaleDateString(),
-      costs: "In: $0.10 Out: $0.30",
-      teamId: "",
-      modelAccessGroup: "US Model",
-      status: "active"
+      costs: newModelCosts || "In: $0.10 Out: $0.30",
+      teamId: newModelTeamId || "",
+      modelAccessGroup: newModelAccessGroup || "US Model",
+      status: newModelStatus
     }
     
     setModels([newModel, ...models])
     setShowAddModelDialog(false)
+    // Reset form
     setNewModelName("")
     setNewModelProvider("")
+    setNewModelCredentials("")
+    setNewModelCosts("")
+    setNewModelTeamId("")
+    setNewModelAccessGroup("")
+    setNewModelStatus("active")
     console.log("Created new model:", newModel)
   }
 
@@ -950,16 +961,68 @@ export default function ModelsEndpoints() {
                 />
               </div>
               <div className="grid gap-2">
-                <Label htmlFor="provider">Provider</Label>
-                <Select value={newModelProvider} onValueChange={setNewModelProvider}>
+                <Label htmlFor="provider">Model Information/Provider</Label>
+                <Input
+                  id="provider"
+                  value={newModelProvider}
+                  onChange={(e) => setNewModelProvider(e.target.value)}
+                  placeholder="e.g. OpenAI, Anthropic"
+                  className="glass-button"
+                />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="credentials">Credentials</Label>
+                <Input
+                  id="credentials"
+                  value={newModelCredentials}
+                  onChange={(e) => setNewModelCredentials(e.target.value)}
+                  placeholder="API key or credential info"
+                  className="glass-button"
+                />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="costs">Costs (Input/Output per token)</Label>
+                <Input
+                  id="costs"
+                  value={newModelCosts}
+                  onChange={(e) => setNewModelCosts(e.target.value)}
+                  placeholder="e.g. In: $0.10 Out: $0.30"
+                  className="glass-button"
+                />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="team-id">Team ID</Label>
+                <Input
+                  id="team-id"
+                  value={newModelTeamId}
+                  onChange={(e) => setNewModelTeamId(e.target.value)}
+                  placeholder="Team identifier (optional)"
+                  className="glass-button"
+                />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="access-group">Model Access Group</Label>
+                <Select value={newModelAccessGroup} onValueChange={setNewModelAccessGroup}>
                   <SelectTrigger className="glass-button">
-                    <SelectValue placeholder="Select provider" />
+                    <SelectValue placeholder="Select access group" />
                   </SelectTrigger>
                   <SelectContent className="glass-card bg-background/95 backdrop-blur-md border-card-border/50">
-                    <SelectItem value="OpenAI">OpenAI</SelectItem>
-                    <SelectItem value="Anthropic">Anthropic</SelectItem>
-                    <SelectItem value="Google">Google</SelectItem>
-                    <SelectItem value="Microsoft">Microsoft</SelectItem>
+                    <SelectItem value="US Model">US Model</SelectItem>
+                    <SelectItem value="EU Model">EU Model</SelectItem>
+                    <SelectItem value="Global Model">Global Model</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="status">Status</Label>
+                <Select value={newModelStatus} onValueChange={(value) => setNewModelStatus(value as "active" | "inactive")}>
+                  <SelectTrigger className="glass-button">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent className="glass-card bg-background/95 backdrop-blur-md border-card-border/50">
+                    <SelectItem value="active">Active</SelectItem>
+                    <SelectItem value="inactive">Inactive</SelectItem>
+                    <SelectItem value="pending">Pending</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
