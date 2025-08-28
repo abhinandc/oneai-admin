@@ -29,6 +29,14 @@ import { Switch } from "@/components/ui/switch"
 import { Textarea } from "@/components/ui/textarea"
 import { GlassCard } from "@/components/ui/glass-card"
 import { Separator } from "@/components/ui/separator"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog"
 import { 
   Plus, 
   MoreHorizontal, 
@@ -127,15 +135,40 @@ export default function ModelsEndpoints() {
   const [viewType, setViewType] = useState("Current Team Models")
   const [searchTerm, setSearchTerm] = useState("")
   const [modelAccessFilter, setModelAccessFilter] = useState("All Model Access Groups")
+  const [showAddModelDialog, setShowAddModelDialog] = useState(false)
+  const [showAutoRouterDialog, setShowAutoRouterDialog] = useState(false)
+  const [newModelName, setNewModelName] = useState("")
+  const [newModelProvider, setNewModelProvider] = useState("")
 
   const handleAddModel = () => {
     console.log("Add Model button clicked!")
-    // Open add model dialog or navigate
+    setShowAddModelDialog(true)
   }
 
   const handleAddAutoRouter = () => {
     console.log("Add Auto Router button clicked!")
-    // Open auto router dialog
+    setShowAutoRouterDialog(true)
+  }
+
+  const handleSaveModel = () => {
+    const newModel: Model = {
+      id: `model_${Date.now()}`,
+      modelName: newModelName || "New Model",
+      modelInfo: "Added via form",
+      credentials: "No credentials",
+      createdBy: "Current User",
+      updatedAt: new Date().toLocaleDateString(),
+      costs: "In: $0.10 Out: $0.30",
+      teamId: "",
+      modelAccessGroup: "US Model",
+      status: "active"
+    }
+    
+    setModels([newModel, ...models])
+    setShowAddModelDialog(false)
+    setNewModelName("")
+    setNewModelProvider("")
+    console.log("Created new model:", newModel)
   }
 
   const handleEditModel = (modelId: string) => {
@@ -895,6 +928,90 @@ export default function ModelsEndpoints() {
             </GlassCard>
           </TabsContent>
         </Tabs>
+
+        {/* Add Model Dialog */}
+        <Dialog open={showAddModelDialog} onOpenChange={setShowAddModelDialog}>
+          <DialogContent className="glass-card bg-background/95 backdrop-blur-md border-card-border/50 sm:max-w-[500px]">
+            <DialogHeader>
+              <DialogTitle>Add New Model</DialogTitle>
+              <DialogDescription>
+                Add a new AI model to your proxy configuration.
+              </DialogDescription>
+            </DialogHeader>
+            <div className="grid gap-4 py-4">
+              <div className="grid gap-2">
+                <Label htmlFor="model-name">Model Name</Label>
+                <Input
+                  id="model-name"
+                  value={newModelName}
+                  onChange={(e) => setNewModelName(e.target.value)}
+                  placeholder="e.g. gpt-4o-mini"
+                  className="glass-button"
+                />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="provider">Provider</Label>
+                <Select value={newModelProvider} onValueChange={setNewModelProvider}>
+                  <SelectTrigger className="glass-button">
+                    <SelectValue placeholder="Select provider" />
+                  </SelectTrigger>
+                  <SelectContent className="glass-card bg-background/95 backdrop-blur-md border-card-border/50">
+                    <SelectItem value="OpenAI">OpenAI</SelectItem>
+                    <SelectItem value="Anthropic">Anthropic</SelectItem>
+                    <SelectItem value="Google">Google</SelectItem>
+                    <SelectItem value="Microsoft">Microsoft</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+            <DialogFooter>
+              <Button variant="outline" onClick={() => setShowAddModelDialog(false)} className="glass-button">
+                Cancel
+              </Button>
+              <Button onClick={handleSaveModel} className="glass-button bg-primary hover:bg-primary/90">
+                Add Model
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+
+        {/* Add Auto Router Dialog */}
+        <Dialog open={showAutoRouterDialog} onOpenChange={setShowAutoRouterDialog}>
+          <DialogContent className="glass-card bg-background/95 backdrop-blur-md border-card-border/50 sm:max-w-[500px]">
+            <DialogHeader>
+              <DialogTitle>Add Auto Router</DialogTitle>
+              <DialogDescription>
+                Configure automatic routing between multiple AI models for load balancing and failover.
+              </DialogDescription>
+            </DialogHeader>
+            <div className="grid gap-4 py-4">
+              <div className="grid gap-2">
+                <Label htmlFor="router-name">Router Name</Label>
+                <Input
+                  id="router-name"
+                  placeholder="e.g. gpt-4-router"
+                  className="glass-button"
+                />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="models">Target Models (comma-separated)</Label>
+                <Textarea
+                  id="models"
+                  placeholder="gpt-4o, gpt-4o-mini, gpt-4-turbo"
+                  className="glass-button"
+                />
+              </div>
+            </div>
+            <DialogFooter>
+              <Button variant="outline" onClick={() => setShowAutoRouterDialog(false)} className="glass-button">
+                Cancel
+              </Button>
+              <Button onClick={() => { setShowAutoRouterDialog(false); console.log("Auto Router created"); }} className="glass-button bg-primary hover:bg-primary/90">
+                Create Router
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       </main>
     </div>
   )

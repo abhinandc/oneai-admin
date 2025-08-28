@@ -29,6 +29,17 @@ import {
   Trash2
 } from "lucide-react"
 import { GlassCard } from "@/components/ui/glass-card"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog"
+import { Label } from "@/components/ui/label"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Textarea } from "@/components/ui/textarea"
 
 interface VirtualKey {
   id: string
@@ -118,6 +129,10 @@ export default function VirtualKeys() {
   const [currentPage, setCurrentPage] = useState(1)
   const [showCreateDialog, setShowCreateDialog] = useState(false)
   const [showFilters, setShowFilters] = useState(false)
+  const [newKeyAlias, setNewKeyAlias] = useState("")
+  const [newKeyTeam, setNewKeyTeam] = useState("")
+  const [newKeyModels, setNewKeyModels] = useState("")
+  const [newKeyBudget, setNewKeyBudget] = useState("")
   const totalPages = 1
 
   const copyToClipboard = (text: string) => {
@@ -129,6 +144,36 @@ export default function VirtualKeys() {
   const handleCreateKey = () => {
     console.log("Create Key button clicked!")
     setShowCreateDialog(true)
+  }
+
+  const handleSaveKey = () => {
+    const newKey: VirtualKey = {
+      id: `new_${Date.now().toString().slice(-8)}...`,
+      alias: newKeyAlias,
+      secretKey: `sk-...${Math.random().toString(36).substr(2, 4)}`,
+      teamAlias: newKeyTeam || "Unknown",
+      teamId: "",
+      organizationId: "",
+      userEmail: "default_user_id",
+      userId: "",
+      createdAt: new Date().toLocaleDateString(),
+      createdBy: "default_user_id",
+      updatedAt: new Date().toLocaleDateString(),
+      expires: "Never",
+      spendUsd: 0.0000,
+      budgetUsd: newKeyBudget || "Unlimited",
+      budgetReset: "Never",
+      models: newKeyModels ? newKeyModels.split(",").map(m => m.trim()) : ["gpt-4o-2024-05-13"],
+      rateLimits: { tpm: "Unlimited", rpm: "Unlimited" }
+    }
+    
+    setKeys([newKey, ...keys])
+    setShowCreateDialog(false)
+    setNewKeyAlias("")
+    setNewKeyTeam("")
+    setNewKeyModels("")
+    setNewKeyBudget("")
+    console.log("Created new key:", newKey)
   }
 
   const handleDeleteKey = (keyId: string) => {
@@ -334,6 +379,71 @@ export default function VirtualKeys() {
             </Button>
           </div>
         </div>
+
+        {/* Create Key Dialog */}
+        <Dialog open={showCreateDialog} onOpenChange={setShowCreateDialog}>
+          <DialogContent className="glass-card bg-background/95 backdrop-blur-md border-card-border/50 sm:max-w-[500px]">
+            <DialogHeader>
+              <DialogTitle>Create New Virtual Key</DialogTitle>
+              <DialogDescription>
+                Create a new virtual key with custom settings and permissions.
+              </DialogDescription>
+            </DialogHeader>
+            <div className="grid gap-4 py-4">
+              <div className="grid gap-2">
+                <Label htmlFor="alias">Key Alias (Optional)</Label>
+                <Input
+                  id="alias"
+                  value={newKeyAlias}
+                  onChange={(e) => setNewKeyAlias(e.target.value)}
+                  placeholder="Enter a memorable name for this key"
+                  className="glass-button"
+                />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="team">Team</Label>
+                <Select value={newKeyTeam} onValueChange={setNewKeyTeam}>
+                  <SelectTrigger className="glass-button">
+                    <SelectValue placeholder="Select team" />
+                  </SelectTrigger>
+                  <SelectContent className="glass-card bg-background/95 backdrop-blur-md border-card-border/50">
+                    <SelectItem value="personal">Personal</SelectItem>
+                    <SelectItem value="development">Development</SelectItem>
+                    <SelectItem value="production">Production</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="models">Models (comma-separated)</Label>
+                <Textarea
+                  id="models"
+                  value={newKeyModels}
+                  onChange={(e) => setNewKeyModels(e.target.value)}
+                  placeholder="gpt-4o-2024-05-13, claude-3.5-sonnet-20241022"
+                  className="glass-button"
+                />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="budget">Budget (USD)</Label>
+                <Input
+                  id="budget"
+                  value={newKeyBudget}
+                  onChange={(e) => setNewKeyBudget(e.target.value)}
+                  placeholder="Leave empty for unlimited"
+                  className="glass-button"
+                />
+              </div>
+            </div>
+            <DialogFooter>
+              <Button variant="outline" onClick={() => setShowCreateDialog(false)} className="glass-button">
+                Cancel
+              </Button>
+              <Button onClick={handleSaveKey} className="glass-button bg-primary hover:bg-primary/90">
+                Create Key
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       </main>
     </div>
   )
