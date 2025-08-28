@@ -16,28 +16,39 @@ export default function Settings() {
   const [activeTab, setActiveTab] = useState("security-settings")
 
   const handleAddSSO = () => {
-    console.log("Adding SSO configuration")
-    // Navigate to SSO setup or open dialog
+    console.log("Add SSO button clicked!")
+    alert("SSO Configuration: This would open the Single Sign-On setup dialog to configure SAML, OAuth, or other SSO providers.")
   }
 
   const handleAllowedIPs = () => {
-    console.log("Configuring allowed IPs")
-    // Navigate to IP allowlist or open dialog
+    console.log("Allowed IPs button clicked!")
+    alert("IP Allowlist Configuration: This would open a dialog to manage allowed IP addresses for proxy access.")
   }
 
   const handleUIAccessControl = () => {
-    console.log("Configuring UI access control")
-    // Navigate to access control or open dialog
+    console.log("UI Access Control button clicked!")
+    alert("UI Access Control: This would open settings to control who can access the admin interface.")
   }
 
   const handleConfigureSCIM = () => {
-    console.log("Configuring SCIM")
-    // Navigate to SCIM setup or open dialog
+    console.log("Configure SCIM button clicked!")
+    alert("SCIM Configuration: This would open the System for Cross-domain Identity Management setup for automatic user provisioning.")
   }
 
   const handleOpenLink = (link: string) => {
     console.log("Opening link:", link)
-    // Open external link or navigate
+    const urls = {
+      documentation: "https://docs.lovable.dev/",
+      security: "https://docs.lovable.dev/security",
+      api: "https://docs.lovable.dev/api"
+    }
+    
+    const url = urls[link as keyof typeof urls]
+    if (url) {
+      window.open(url, '_blank')
+    } else {
+      alert(`Opening ${link} documentation...`)
+    }
   }
 
   return (
