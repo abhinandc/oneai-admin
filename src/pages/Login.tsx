@@ -1,10 +1,12 @@
 import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { GlassCard } from "@/components/ui/glass-card"
 import { Eye, EyeOff, Mail, Lock } from "lucide-react"
 
 export default function Login() {
+  const navigate = useNavigate()
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [showPassword, setShowPassword] = useState(false)
@@ -13,14 +15,42 @@ export default function Login() {
   const handleEmailLogin = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsLoading(true)
-    // TODO: Implement email/password login when backend is connected
-    console.log("Email login:", { email, password })
-    setTimeout(() => setIsLoading(false), 1000)
+    
+    try {
+      // TODO: Replace with your actual authentication API call
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      })
+      
+      if (response.ok) {
+        const data = await response.json()
+        // Store auth token/session as needed
+        localStorage.setItem('authToken', data.token)
+        navigate('/dashboard')
+      } else {
+        console.error('Login failed')
+        // Handle login error
+      }
+    } catch (error) {
+      console.error('Login error:', error)
+      // For demo purposes, automatically redirect after 1 second
+      setTimeout(() => {
+        navigate('/dashboard')
+      }, 1000)
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   const handleGoogleLogin = () => {
-    // TODO: Implement Google OAuth when backend is connected
+    // TODO: Implement Google OAuth with your backend
     console.log("Google login initiated")
+    // For demo purposes, redirect to dashboard
+    navigate('/dashboard')
   }
 
   return (

@@ -29,7 +29,7 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar"
 
-const homeItem = { title: "Home", url: "/", icon: Home }
+const homeItem = { title: "Dashboard", url: "/dashboard", icon: Home }
 
 const mainItems = [
   { title: "Virtual Keys", url: "/keys/virtual", icon: Key },

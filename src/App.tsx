@@ -34,7 +34,8 @@ const App = () => (
         <BrowserRouter>
         <Layout>
           <Routes>
-            <Route path="/" element={<Dashboard />} />
+            <Route path="/" element={<Login />} />
+            <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/keys/virtual" element={<VirtualKeys />} />
             <Route path="/keys/test" element={<TestKey />} />
             <Route path="/models" element={<ModelsEndpoints />} />
@@ -48,7 +49,7 @@ const App = () => (
             <Route path="/admin/users" element={<Users />} />
             <Route path="/admin/billing" element={<Billing />} />
             <Route path="/admin/settings" element={<AdminSettings />} />
-            <Route path="/login" element={<Login />} />
+            
             <Route path="/teams" element={<Teams />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
