@@ -1,17 +1,23 @@
 import { 
-  Home, 
-  MessageSquare, 
-  Bot, 
-  Zap, 
+  Key, 
+  TestTube,
   Package, 
-  FileText, 
-  Wrench, 
-  PlayCircle, 
-  HelpCircle,
-  Users,
-  CreditCard,
+  BarChart3, 
+  Users, 
+  Building, 
+  UserCheck, 
+  BookOpen, 
+  Zap,
+  FileBarChart,
+  Shield,
+  Wrench,
+  FlaskConical,
   Settings,
-  CheckSquare
+  Route,
+  Bell,
+  UserCog,
+  Palette,
+  ChevronDown
 } from "lucide-react"
 import { NavLink, useLocation } from "react-router-dom"
 import {
@@ -27,25 +33,46 @@ import {
 } from "@/components/ui/sidebar"
 
 const mainItems = [
-  { title: "Home", url: "/", icon: Home, shortcut: "G H" },
-  { title: "Chat", url: "/chat", icon: MessageSquare, shortcut: "G C" },
-  { title: "Agents", url: "/agents", icon: Bot, shortcut: "G A" },
-  { title: "Automations", url: "/automations", icon: Zap, shortcut: "G Z" },
-  { title: "Model Hub", url: "/models", icon: Package, shortcut: "G M" },
-  { title: "Prompts", url: "/prompts", icon: FileText, shortcut: "G P" },
-  { title: "Tools", url: "/tools", icon: Wrench, shortcut: "G T" },
-  { title: "Playground", url: "/playground", icon: PlayCircle, shortcut: "G Y" },
+  { title: "Virtual Keys", url: "/keys/virtual", icon: Key },
+  { title: "Test Key", url: "/keys/test", icon: TestTube },
+  { title: "Models + Endpoints", url: "/models", icon: Package, active: true },
+  { title: "Usage", url: "/usage", icon: BarChart3 },
+  { title: "Teams", url: "/teams", icon: Users },
+  { title: "Organizations", url: "/organizations", icon: Building },
+  { title: "Internal Users", url: "/internal-users", icon: UserCheck },
+  { title: "API Reference", url: "/api-reference", icon: BookOpen },
+  { title: "Model Hub", url: "/model-hub", icon: Zap },
+  { title: "Logs", url: "/logs", icon: FileBarChart },
+  { title: "Guardrails", url: "/guardrails", icon: Shield },
 ]
 
-const adminItems = [
-  { title: "Users & Roles", url: "/admin/users", icon: Users },
-  { title: "Billing & Usage", url: "/admin/billing", icon: CreditCard },
-  { title: "Settings", url: "/admin/settings", icon: Settings },
-  { title: "QA Checklist", url: "/admin/qa", icon: CheckSquare },
-]
-
-const supportItems = [
-  { title: "Help", url: "/help", icon: HelpCircle, shortcut: "?" },
+const expandableItems = [
+  { 
+    title: "Tools", 
+    url: "/tools", 
+    icon: Wrench, 
+    hasDropdown: true,
+    children: []
+  },
+  { 
+    title: "Experimental", 
+    url: "/experimental", 
+    icon: FlaskConical, 
+    hasDropdown: true,
+    children: []
+  },
+  { 
+    title: "Settings", 
+    url: "/settings", 
+    icon: Settings, 
+    hasDropdown: true,
+    children: [
+      { title: "Router Settings", url: "/settings/router", icon: Route },
+      { title: "Logging & Alerts", url: "/settings/logging", icon: Bell },
+      { title: "Admin Settings", url: "/settings/admin", icon: UserCog },
+      { title: "UI Theme", url: "/settings/theme", icon: Palette },
+    ]
+  },
 ]
 
 export function SideNav() {
@@ -68,9 +95,6 @@ export function SideNav() {
       <SidebarContent className="p-4">
         {/* Main Navigation */}
         <SidebarGroup>
-          <SidebarGroupLabel className="text-xs uppercase tracking-wider text-foreground-tertiary mb-3">
-            Platform
-          </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu className="space-y-1">
               {mainItems.map((item) => (
@@ -79,12 +103,7 @@ export function SideNav() {
                     <NavLink to={item.url} end className={getNavCls}>
                       <item.icon className="w-4 h-4 flex-shrink-0" />
                       {!isCollapsed && (
-                        <>
-                          <span className="ml-3 font-medium">{item.title}</span>
-                          {item.shortcut && (
-                            <kbd className="ml-auto text-xs opacity-50">{item.shortcut}</kbd>
-                          )}
-                        </>
+                        <span className="ml-3 font-medium">{item.title}</span>
                       )}
                     </NavLink>
                   </SidebarMenuButton>
@@ -94,32 +113,11 @@ export function SideNav() {
           </SidebarGroupContent>
         </SidebarGroup>
 
-        {/* Admin Navigation */}
-        <SidebarGroup className="mt-6">
-          <SidebarGroupLabel className="text-xs uppercase tracking-wider text-foreground-tertiary mb-3">
-            Administration
-          </SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu className="space-y-1">
-              {adminItems.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
-                    <NavLink to={item.url} className={getNavCls}>
-                      <item.icon className="w-4 h-4 flex-shrink-0" />
-                      {!isCollapsed && <span className="ml-3 font-medium">{item.title}</span>}
-                    </NavLink>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
-
-        {/* Support */}
+        {/* Expandable Items */}
         <SidebarGroup className="mt-6">
           <SidebarGroupContent>
             <SidebarMenu className="space-y-1">
-              {supportItems.map((item) => (
+              {expandableItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
                     <NavLink to={item.url} className={getNavCls}>
@@ -127,13 +125,27 @@ export function SideNav() {
                       {!isCollapsed && (
                         <>
                           <span className="ml-3 font-medium">{item.title}</span>
-                          {item.shortcut && (
-                            <kbd className="ml-auto text-xs opacity-50">{item.shortcut}</kbd>
+                          {item.hasDropdown && (
+                            <ChevronDown className="ml-auto w-3 h-3 opacity-50" />
                           )}
                         </>
                       )}
                     </NavLink>
                   </SidebarMenuButton>
+                  {item.children && item.children.length > 0 && !isCollapsed && (
+                    <SidebarMenu className="ml-6 mt-1 space-y-1">
+                      {item.children.map((child) => (
+                        <SidebarMenuItem key={child.title}>
+                          <SidebarMenuButton asChild>
+                            <NavLink to={child.url} className={getNavCls}>
+                              <child.icon className="w-4 h-4 flex-shrink-0" />
+                              <span className="ml-3 font-medium text-sm">{child.title}</span>
+                            </NavLink>
+                          </SidebarMenuButton>
+                        </SidebarMenuItem>
+                      ))}
+                    </SidebarMenu>
+                  )}
                 </SidebarMenuItem>
               ))}
             </SidebarMenu>
