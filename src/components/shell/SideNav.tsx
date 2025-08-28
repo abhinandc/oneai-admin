@@ -11,7 +11,8 @@ import {
   Shield,
   Wrench,
   Settings,
-  Database
+  Database,
+  Menu
 } from "lucide-react"
 import { NavLink, useLocation } from "react-router-dom"
 import {
@@ -23,6 +24,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarTrigger,
   useSidebar,
 } from "@/components/ui/sidebar"
 
@@ -59,6 +61,13 @@ export function SideNav() {
   return (
     <Sidebar className="apple-sidebar w-64" collapsible="icon">
       <SidebarContent className="p-4 space-y-6">
+        {/* Collapse Toggle */}
+        <div className="flex justify-end">
+          <SidebarTrigger className="apple-button p-2 w-10 h-10">
+            <Menu className="w-5 h-5" />
+          </SidebarTrigger>
+        </div>
+
         {/* Home Button */}
         <SidebarGroup>
           <SidebarGroupContent>

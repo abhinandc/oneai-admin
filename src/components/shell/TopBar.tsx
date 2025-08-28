@@ -16,12 +16,10 @@ import {
   Moon, 
   Sun,
   Settings,
-  LogOut,
-  Menu
+  LogOut
 } from "lucide-react"
 import { useTheme } from "next-themes"
 import { useEffect, useState } from "react"
-import { SidebarTrigger } from "@/components/ui/sidebar"
 
 export function TopBar() {
   const { theme, setTheme } = useTheme()
@@ -35,10 +33,6 @@ export function TopBar() {
     <header className="apple-glass h-16 px-6 flex items-center justify-between sticky top-0 z-50">
       {/* Left Section */}
       <div className="flex items-center gap-4">
-        <SidebarTrigger className="apple-button p-2 w-10 h-10">
-          <Menu className="w-5 h-5" />
-        </SidebarTrigger>
-        
         {/* Brand */}
         <div className="flex items-center">
           <span className="font-display font-semibold text-lg text-foreground tracking-tight">
