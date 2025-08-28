@@ -32,7 +32,7 @@ export function TopBar() {
   }, [])
 
   return (
-    <header className="apple-glass border-b border-border/50 h-16 px-6 flex items-center justify-between sticky top-0 z-50">
+    <header className="apple-glass h-16 px-6 flex items-center justify-between sticky top-0 z-50">
       {/* Left Section */}
       <div className="flex items-center gap-4">
         <SidebarTrigger className="apple-button p-2 w-10 h-10">

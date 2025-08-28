@@ -138,9 +138,9 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       {/* Header */}
-      <div>
+      <div className="pb-2">
         <h1 className="text-3xl font-bold text-foreground flex items-center gap-3">
           <Bot className="w-8 h-8 text-primary" />
           OneAI Dashboard
@@ -153,7 +153,7 @@ export default function Dashboard() {
       {/* Key Metrics */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {stats.map((stat) => (
-          <GlassCard key={stat.label} className="p-6 hover:scale-105 transition-all duration-200 bg-card border-2 border-card-border shadow-lg">
+          <div key={stat.label} className="p-6 bg-background/50 backdrop-blur-sm rounded-2xl hover:bg-background/70 transition-all duration-300">
             <div className="flex items-center justify-between">
               <div className="flex-1">
                 <p className="text-sm font-medium text-foreground-secondary">{stat.label}</p>
@@ -164,26 +164,26 @@ export default function Dashboard() {
                   <span className="text-xs text-foreground-tertiary ml-1">vs last month</span>
                 </div>
               </div>
-              <div className={`p-4 bg-primary/20 rounded-xl border-2 border-primary/30`}>
+              <div className={`p-4 bg-primary/10 rounded-xl`}>
                 <stat.icon className={`w-7 h-7 ${stat.color}`} />
               </div>
             </div>
-          </GlassCard>
+          </div>
         ))}
       </div>
 
       {/* System Health */}
-      <GlassCard className="p-6 bg-card border-2 border-card-border shadow-lg">
+      <div className="p-6 bg-background/30 backdrop-blur-sm rounded-2xl">
         <div className="flex items-center justify-between mb-6">
           <h3 className="text-xl font-bold text-foreground">System Health</h3>
-          <Button variant="outline" size="sm" onClick={() => navigate("/logs")} className="border-2 border-border hover:bg-accent">
+          <Button variant="ghost" size="sm" onClick={() => navigate("/logs")} className="hover:bg-background/50">
             <Eye className="w-4 h-4 mr-2" />
             View Details
           </Button>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {systemHealth.map((item) => (
-            <div key={item.label} className="flex items-center gap-4 p-4 bg-background/50 rounded-xl border-2 border-border/60 shadow-sm">
+            <div key={item.label} className="flex items-center gap-4 p-4 bg-background/40 rounded-xl">
               <item.icon className={`w-6 h-6 ${getHealthColor(item.status)}`} />
               <div>
                 <p className="text-sm font-medium text-foreground-secondary">{item.label}</p>
@@ -192,13 +192,13 @@ export default function Dashboard() {
             </div>
           ))}
         </div>
-      </GlassCard>
+      </div>
 
       {/* Quick Actions */}
-      <GlassCard className="p-6 bg-card border-2 border-card-border shadow-lg">
+      <div className="p-6 bg-background/30 backdrop-blur-sm rounded-2xl">
         <div className="flex items-center justify-between mb-6">
           <h3 className="text-xl font-bold text-foreground">Quick Actions</h3>
-          <Badge variant="secondary" className="text-sm font-medium bg-primary/20 text-primary border border-primary/30">
+          <Badge variant="secondary" className="text-sm font-medium bg-primary/20 text-primary">
             {quickActions.length} available
           </Badge>
         </div>
@@ -207,10 +207,10 @@ export default function Dashboard() {
             <div 
               key={action.title}
               onClick={() => navigate(action.route)}
-              className="group p-5 bg-background/70 rounded-xl border-2 border-border/60 cursor-pointer hover:bg-background hover:border-primary/40 hover:shadow-md transition-all duration-200"
+              className="group p-5 bg-background/40 rounded-xl cursor-pointer hover:bg-background/60 transition-all duration-200"
             >
               <div className="flex items-start gap-4">
-                <div className={`p-3 rounded-xl ${action.color} border border-current/20`}>
+                <div className={`p-3 rounded-xl ${action.color}`}>
                   <action.icon className="w-6 h-6" />
                 </div>
                 <div className="flex-1">
@@ -226,23 +226,23 @@ export default function Dashboard() {
             </div>
           ))}
         </div>
-      </GlassCard>
+      </div>
 
       {/* Recent Activity & Settings */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Recent Activity */}
         <div className="lg:col-span-2">
-          <GlassCard className="p-6 bg-card border-2 border-card-border shadow-lg">
+          <div className="p-6 bg-background/30 backdrop-blur-sm rounded-2xl">
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-xl font-bold text-foreground">Recent Activity</h3>
-              <Button variant="outline" size="sm" onClick={() => navigate("/logs")} className="border-2 border-border hover:bg-accent">
+              <Button variant="ghost" size="sm" onClick={() => navigate("/logs")} className="hover:bg-background/50">
                 View All
                 <ArrowRight className="w-4 h-4 ml-1" />
               </Button>
             </div>
             <div className="space-y-3">
               {recentActivity.map((activity, index) => (
-                <div key={index} className={`flex items-center justify-between p-4 rounded-xl border-2 ${getActivityColor(activity.type)} shadow-sm`}>
+                <div key={index} className={`flex items-center justify-between p-4 rounded-xl ${getActivityColor(activity.type).replace('border-', '').replace('/20', '/10')}`}>
                   <div className="flex items-center gap-4">
                     <div className={`w-3 h-3 rounded-full ${
                       activity.type === "success" ? "bg-green-500" :
@@ -254,18 +254,18 @@ export default function Dashboard() {
                       <p className="text-xs text-foreground-secondary font-medium">{activity.user}</p>
                     </div>
                   </div>
-                  <Badge variant="outline" className="text-xs font-medium border-2">
+                  <Badge variant="outline" className="text-xs font-medium">
                     {activity.time}
                   </Badge>
                 </div>
               ))}
             </div>
-          </GlassCard>
+          </div>
         </div>
 
         {/* Quick Stats */}
         <div className="space-y-4">
-          <GlassCard className="p-5 bg-card border-2 border-card-border shadow-lg">
+          <div className="p-5 bg-background/30 backdrop-blur-sm rounded-2xl">
             <h4 className="font-bold text-foreground mb-4 text-lg">This Month</h4>
             <div className="space-y-4">
               <div className="flex justify-between items-center">
@@ -281,15 +281,15 @@ export default function Dashboard() {
                 <span className="font-bold text-lg text-green-600 dark:text-green-400">0.02%</span>
               </div>
             </div>
-          </GlassCard>
+          </div>
 
-          <GlassCard className="p-5 bg-card border-2 border-card-border shadow-lg">
+          <div className="p-5 bg-background/30 backdrop-blur-sm rounded-2xl">
             <h4 className="font-bold text-foreground mb-4 text-lg">Quick Links</h4>
             <div className="space-y-2">
               <Button 
                 variant="ghost" 
                 size="sm" 
-                className="w-full justify-start hover:bg-accent border border-transparent hover:border-border font-medium"
+                className="w-full justify-start hover:bg-background/50 font-medium"
                 onClick={() => navigate("/admin/billing")}
               >
                 <DollarSign className="w-4 h-4 mr-3" />
@@ -298,7 +298,7 @@ export default function Dashboard() {
               <Button 
                 variant="ghost" 
                 size="sm" 
-                className="w-full justify-start hover:bg-accent border border-transparent hover:border-border font-medium"
+                className="w-full justify-start hover:bg-background/50 font-medium"
                 onClick={() => navigate("/settings")}
               >
                 <Settings className="w-4 h-4 mr-3" />
@@ -307,14 +307,14 @@ export default function Dashboard() {
               <Button 
                 variant="ghost" 
                 size="sm" 
-                className="w-full justify-start hover:bg-accent border border-transparent hover:border-border font-medium"
+                className="w-full justify-start hover:bg-background/50 font-medium"
                 onClick={() => navigate("/guardrails")}
               >
                 <Shield className="w-4 h-4 mr-3" />
                 Guardrails
               </Button>
             </div>
-          </GlassCard>
+          </div>
         </div>
       </div>
     </div>
