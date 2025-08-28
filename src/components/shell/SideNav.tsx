@@ -38,7 +38,6 @@ const mainItems = [
   { title: "Models + Endpoints", url: "/models", icon: Package, active: true },
   { title: "Usage", url: "/usage", icon: BarChart3 },
   { title: "Teams", url: "/teams", icon: Users },
-  { title: "Organizations", url: "/organizations", icon: Building },
   { title: "Internal Users", url: "/internal-users", icon: UserCheck },
   { title: "API Reference", url: "/api-reference", icon: BookOpen },
   { title: "Model Hub", url: "/model-hub", icon: Zap },
