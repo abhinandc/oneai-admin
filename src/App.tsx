@@ -7,6 +7,7 @@ import { Layout } from "@/components/Layout";
 import Dashboard from "./pages/Dashboard";
 import VirtualKeys from "./pages/VirtualKeys";
 import TestKey from "./pages/TestKey";
+import ModelsEndpoints from "./pages/ModelsEndpoints";
 import Users from "./pages/admin/Users";
 import Billing from "./pages/admin/Billing";
 import Settings from "./pages/admin/Settings";
