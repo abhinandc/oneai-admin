@@ -152,17 +152,17 @@ export function SideNav() {
           </SidebarGroupContent>
         </SidebarGroup>
 
-        {/* OneOrigin Logo at Footer Level */}
-        <div className="mt-auto mb-0 p-8 border-t border-border/10 bg-background/50">
+        {/* OneOrigin Logo - Footer Level Inline */}
+        <div className="mt-auto mb-0 p-6 border-t border-border/10 bg-background/50">
           <div className="flex justify-center items-center">
             <img 
               src={theme === 'dark' ? '/lovable-uploads/dc8ec67b-6ec3-466b-9fd1-c30ca88ce7f9.png' : '/lovable-uploads/6769a209-c508-4221-a988-13dc68d43d9f.png'}
               alt="OneOrigin"
               className="w-auto object-contain max-w-full opacity-90 hover:opacity-100 transition-opacity"
               style={{ 
-                height: '160px', 
-                minHeight: '160px', 
-                maxHeight: '160px',
+                height: '96px', 
+                minHeight: '96px', 
+                maxHeight: '96px',
                 maxWidth: '100%' 
               }}
               onError={(e) => {
@@ -173,8 +173,8 @@ export function SideNav() {
             />
             {/* Fallback text logo */}
             <div className="hidden text-center">
-              <div className="text-3xl font-bold text-foreground mb-2">oneorigin</div>
-              <div className="w-12 h-2 bg-blue-500 rounded-full mx-auto"></div>
+              <div className="text-2xl font-bold text-foreground mb-1">oneorigin</div>
+              <div className="w-8 h-1.5 bg-blue-500 rounded-full mx-auto"></div>
             </div>
           </div>
         </div>
