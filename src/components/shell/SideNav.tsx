@@ -154,8 +154,8 @@ export function SideNav() {
 
       </SidebarContent>
 
-      {/* OneOrigin Logo - ABSOLUTE BOTTOMMOST POSITION */}
-      <div className="absolute bottom-0 left-0 right-0 p-2 border-t border-border/10 bg-background/95 backdrop-blur-sm">
+      {/* OneOrigin Logo - FOOTER HEIGHT ALIGNMENT */}
+      <div className="absolute bottom-0 left-0 right-0 p-2 pb-4 border-t border-border/10 bg-background/95 backdrop-blur-sm">
         <div className="flex justify-center items-center">
           <img 
             src={theme === 'dark' ? '/lovable-uploads/dc8ec67b-6ec3-466b-9fd1-c30ca88ce7f9.png' : '/lovable-uploads/6769a209-c508-4221-a988-13dc68d43d9f.png'}
