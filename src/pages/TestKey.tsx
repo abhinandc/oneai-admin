@@ -46,7 +46,7 @@ export default function TestKey() {
   }
 
   return (
-    <div className="max-w-7xl mx-auto space-y-6">
+    <div className="max-w-7xl mx-auto space-y-6 h-full">
       {/* Header */}
       <div>
         <h1 className="text-3xl font-bold text-foreground">Test Key</h1>
@@ -55,7 +55,7 @@ export default function TestKey() {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 h-[calc(100vh-250px)]">
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 h-[600px]">
         {/* Left Sidebar - Configurations */}
         <div className="lg:col-span-1">
           <div className="p-6 bg-card/70 backdrop-blur-sm rounded-2xl shadow-lg border border-border/20 h-full overflow-y-auto">
@@ -223,7 +223,8 @@ export default function TestKey() {
                   placeholder="Why not change the world one day at a..."
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
-                  className="bg-background/60 border border-border/10 resize-none min-h-[60px] pr-14 py-3"
+                  className="bg-background/60 border border-border/10 resize-none h-[60px] pr-14 py-3 flex items-center"
+                  style={{ lineHeight: '60px', paddingTop: '18px', paddingBottom: '18px' }}
                   onKeyDown={(e) => {
                     if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
                       handleSendMessage()
