@@ -137,6 +137,9 @@ export default function ModelsEndpoints() {
   const [modelAccessFilter, setModelAccessFilter] = useState("All Model Access Groups")
   const [showAddModelDialog, setShowAddModelDialog] = useState(false)
   const [showAutoRouterDialog, setShowAutoRouterDialog] = useState(false)
+  const [showCredentialDialog, setShowCredentialDialog] = useState(false)
+  const [showPassThroughDialog, setShowPassThroughDialog] = useState(false)
+  const [showAliasDialog, setShowAliasDialog] = useState(false)
   const [newModelName, setNewModelName] = useState("")
   const [newModelProvider, setNewModelProvider] = useState("")
   const [newModelCredentials, setNewModelCredentials] = useState("")
@@ -144,6 +147,10 @@ export default function ModelsEndpoints() {
   const [newModelTeamId, setNewModelTeamId] = useState("")
   const [newModelAccessGroup, setNewModelAccessGroup] = useState("")
   const [newModelStatus, setNewModelStatus] = useState<"active" | "inactive">("active")
+  const [newCredentialProvider, setNewCredentialProvider] = useState("")
+  const [newCredentialApiKey, setNewCredentialApiKey] = useState("")
+  const [newAliasName, setNewAliasName] = useState("")
+  const [newAliasTarget, setNewAliasTarget] = useState("")
 
   const handleAddModel = () => {
     console.log("Add Model button clicked!")
@@ -180,6 +187,43 @@ export default function ModelsEndpoints() {
     setNewModelAccessGroup("")
     setNewModelStatus("active")
     console.log("Created new model:", newModel)
+  }
+
+  const handleAddCredential = () => {
+    console.log("Add LLM Credential button clicked!")
+    setShowCredentialDialog(true)
+  }
+
+  const handleSaveCredential = () => {
+    console.log("Saved new credential:", { provider: newCredentialProvider, apiKey: newCredentialApiKey })
+    setShowCredentialDialog(false)
+    setNewCredentialProvider("")
+    setNewCredentialApiKey("")
+  }
+
+  const handleAddPassThrough = () => {
+    console.log("Add Pass-Through Endpoint button clicked!")
+    setShowPassThroughDialog(true)
+  }
+
+  const handleRunAllChecks = () => {
+    console.log("Run All Checks button clicked!")
+    // Simulate running health checks
+    setTimeout(() => {
+      console.log("All health checks completed")
+    }, 2000)
+  }
+
+  const handleAddAlias = () => {
+    console.log("Add Alias button clicked!")
+    setShowAliasDialog(true)
+  }
+
+  const handleSaveAlias = () => {
+    console.log("Saved new alias:", { name: newAliasName, target: newAliasTarget })
+    setShowAliasDialog(false)
+    setNewAliasName("")
+    setNewAliasTarget("")
   }
 
   const handleEditModel = (modelId: string) => {
@@ -635,7 +679,7 @@ export default function ModelsEndpoints() {
                   <div className="text-center text-foreground-tertiary">
                     No credentials configured
                   </div>
-                  <Button className="glass-button bg-primary hover:bg-primary/90">
+              <Button className="glass-button bg-primary hover:bg-primary/90" onClick={handleRunAllChecks}>
                     <Plus className="w-4 h-4 mr-2" />
                     Add Credential
                   </Button>
@@ -654,7 +698,7 @@ export default function ModelsEndpoints() {
                       Configure and manage your pass-through endpoints
                     </p>
                   </div>
-                  <Button className="glass-button bg-primary hover:bg-primary/90">
+                  <Button className="glass-button bg-primary hover:bg-primary/90" onClick={handleAddCredential}>
                     <Plus className="w-4 h-4 mr-2" />
                     Add Pass-Through Endpoint
                   </Button>
@@ -690,7 +734,7 @@ export default function ModelsEndpoints() {
                   Run health checks on individual models to verify they are working correctly
                 </p>
               </div>
-              <Button className="glass-button bg-primary hover:bg-primary/90">
+                  <Button className="glass-button bg-primary hover:bg-primary/90" onClick={handleAddPassThrough}>
                 <RefreshCw className="w-4 h-4 mr-2" />
                 Run All Checks
               </Button>
@@ -932,7 +976,7 @@ export default function ModelsEndpoints() {
               <p className="text-foreground-secondary mb-6">
                 Reload pricing data for all configured models to ensure accurate cost calculations.
               </p>
-              <Button className="glass-button bg-primary hover:bg-primary/90">
+                  <Button className="glass-button bg-primary hover:bg-primary/90" onClick={handleAddAlias}>
                 <RefreshCw className="w-4 h-4 mr-2" />
                 Reload Price Data
               </Button>
@@ -1038,39 +1082,137 @@ export default function ModelsEndpoints() {
           </DialogContent>
         </Dialog>
 
-        {/* Add Auto Router Dialog */}
-        <Dialog open={showAutoRouterDialog} onOpenChange={setShowAutoRouterDialog}>
+        {/* Add Credential Dialog */}
+        <Dialog open={showCredentialDialog} onOpenChange={setShowCredentialDialog}>
           <DialogContent className="glass-card bg-background/95 backdrop-blur-md border-card-border/50 sm:max-w-[500px]">
             <DialogHeader>
-              <DialogTitle>Add Auto Router</DialogTitle>
+              <DialogTitle>Add LLM Credential</DialogTitle>
               <DialogDescription>
-                Configure automatic routing between multiple AI models for load balancing and failover.
+                Add API credentials for AI providers to authenticate requests.
               </DialogDescription>
             </DialogHeader>
             <div className="grid gap-4 py-4">
               <div className="grid gap-2">
-                <Label htmlFor="router-name">Router Name</Label>
-                <Input
-                  id="router-name"
-                  placeholder="e.g. gpt-4-router"
-                  className="glass-button"
-                />
+                <Label htmlFor="credential-provider">Provider</Label>
+                <Select value={newCredentialProvider} onValueChange={setNewCredentialProvider}>
+                  <SelectTrigger className="glass-button">
+                    <SelectValue placeholder="Select AI provider" />
+                  </SelectTrigger>
+                  <SelectContent className="glass-card bg-background/95 backdrop-blur-md border-card-border/50">
+                    <SelectItem value="openai">OpenAI</SelectItem>
+                    <SelectItem value="anthropic">Anthropic</SelectItem>
+                    <SelectItem value="google">Google</SelectItem>
+                    <SelectItem value="microsoft">Microsoft Azure</SelectItem>
+                    <SelectItem value="aws">AWS Bedrock</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
               <div className="grid gap-2">
-                <Label htmlFor="models">Target Models (comma-separated)</Label>
-                <Textarea
-                  id="models"
-                  placeholder="gpt-4o, gpt-4o-mini, gpt-4-turbo"
+                <Label htmlFor="credential-api-key">API Key</Label>
+                <Input
+                  id="credential-api-key"
+                  type="password"
+                  value={newCredentialApiKey}
+                  onChange={(e) => setNewCredentialApiKey(e.target.value)}
+                  placeholder="Enter your API key"
                   className="glass-button"
                 />
               </div>
             </div>
             <DialogFooter>
-              <Button variant="outline" onClick={() => setShowAutoRouterDialog(false)} className="glass-button">
+              <Button variant="outline" onClick={() => setShowCredentialDialog(false)} className="glass-button">
                 Cancel
               </Button>
-              <Button onClick={() => { setShowAutoRouterDialog(false); console.log("Auto Router created"); }} className="glass-button bg-primary hover:bg-primary/90">
-                Create Router
+              <Button onClick={handleSaveCredential} className="glass-button bg-primary hover:bg-primary/90">
+                Save Credential
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+
+        {/* Add Pass-Through Endpoint Dialog */}
+        <Dialog open={showPassThroughDialog} onOpenChange={setShowPassThroughDialog}>
+          <DialogContent className="glass-card bg-background/95 backdrop-blur-md border-card-border/50 sm:max-w-[500px]">
+            <DialogHeader>
+              <DialogTitle>Add Pass-Through Endpoint</DialogTitle>
+              <DialogDescription>
+                Create a new pass-through endpoint for direct API access.
+              </DialogDescription>
+            </DialogHeader>
+            <div className="grid gap-4 py-4">
+              <div className="grid gap-2">
+                <Label htmlFor="endpoint-name">Endpoint Name</Label>
+                <Input
+                  id="endpoint-name"
+                  placeholder="e.g. openai-direct"
+                  className="glass-button"
+                />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="endpoint-url">Target URL</Label>
+                <Input
+                  id="endpoint-url"
+                  placeholder="https://api.openai.com/v1"
+                  className="glass-button"
+                />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="endpoint-headers">Headers (JSON)</Label>
+                <Textarea
+                  id="endpoint-headers"
+                  placeholder='{"Authorization": "Bearer $API_KEY"}'
+                  className="glass-button"
+                />
+              </div>
+            </div>
+            <DialogFooter>
+              <Button variant="outline" onClick={() => setShowPassThroughDialog(false)} className="glass-button">
+                Cancel
+              </Button>
+              <Button onClick={() => { setShowPassThroughDialog(false); console.log("Pass-through endpoint created"); }} className="glass-button bg-primary hover:bg-primary/90">
+                Create Endpoint
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+
+        {/* Add Alias Dialog */}
+        <Dialog open={showAliasDialog} onOpenChange={setShowAliasDialog}>
+          <DialogContent className="glass-card bg-background/95 backdrop-blur-md border-card-border/50 sm:max-w-[500px]">
+            <DialogHeader>
+              <DialogTitle>Add Model Alias</DialogTitle>
+              <DialogDescription>
+                Create an alias to map a custom name to one or more models.
+              </DialogDescription>
+            </DialogHeader>
+            <div className="grid gap-4 py-4">
+              <div className="grid gap-2">
+                <Label htmlFor="alias-name">Alias Name</Label>
+                <Input
+                  id="alias-name"
+                  value={newAliasName}
+                  onChange={(e) => setNewAliasName(e.target.value)}
+                  placeholder="e.g. my-gpt-4"
+                  className="glass-button"
+                />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="alias-target">Target Model Group</Label>
+                <Input
+                  id="alias-target"
+                  value={newAliasTarget}
+                  onChange={(e) => setNewAliasTarget(e.target.value)}
+                  placeholder="e.g. gpt-4o, gpt-4-turbo"
+                  className="glass-button"
+                />
+              </div>
+            </div>
+            <DialogFooter>
+              <Button variant="outline" onClick={() => setShowAliasDialog(false)} className="glass-button">
+                Cancel
+              </Button>
+              <Button onClick={handleSaveAlias} className="glass-button bg-primary hover:bg-primary/90">
+                Create Alias
               </Button>
             </DialogFooter>
           </DialogContent>
