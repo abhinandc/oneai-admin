@@ -240,29 +240,33 @@ export default function TestKey() {
             </div>
 
             {/* Input Area */}
-            <div className="flex items-end gap-3">
-              <div className="flex-1 relative">
-                <Textarea
-                  placeholder="Why not change the world one day at a..."
-                  value={message}
-                  onChange={(e) => setMessage(e.target.value)}
-                  className="bg-background/60 border border-border/10 resize-none h-[60px] pr-14 py-3 flex items-center"
-                  style={{ lineHeight: '60px', paddingTop: '18px', paddingBottom: '18px' }}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
-                      handleSendMessage()
-                    }
-                  }}
-                />
-                <Button
-                  size="sm"
-                  onClick={handleSendMessage}
-                  disabled={!message.trim()}
-                  className="absolute bottom-3 right-3 h-8 w-8 p-0 bg-primary hover:bg-primary-hover text-primary-foreground"
-                >
-                  <Send className="w-4 h-4" />
-                </Button>
-              </div>
+            <div className="relative">
+              <Textarea
+                placeholder="Type your message..."
+                value={message}
+                onChange={(e) => {
+                  setMessage(e.target.value)
+                  // Auto-expand functionality
+                  const textarea = e.target as HTMLTextAreaElement
+                  textarea.style.height = 'auto'
+                  textarea.style.height = Math.min(textarea.scrollHeight, 120) + 'px'
+                }}
+                className="bg-background/60 border border-border/10 resize-none min-h-[40px] max-h-[120px] pr-14 py-2 px-3 leading-6 overflow-y-auto w-full"
+                rows={1}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+                    handleSendMessage()
+                  }
+                }}
+              />
+              <Button
+                size="sm"
+                onClick={handleSendMessage}
+                disabled={!message.trim()}
+                className="absolute bottom-2 right-2 h-8 w-8 p-0 bg-primary hover:bg-primary-hover text-primary-foreground"
+              >
+                <Send className="w-4 h-4" />
+              </Button>
             </div>
             <p className="text-xs text-foreground-tertiary text-left mt-2">
               Press Ctrl+Enter to send
