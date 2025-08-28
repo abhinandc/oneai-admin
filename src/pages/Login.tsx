@@ -80,7 +80,7 @@ export default function Login() {
           </div>
           
           <h1 className="text-3xl font-bold text-foreground">
-            Welcome to OneAI Admin Interface
+            OneAI Admin Interface
           </h1>
           <p className="text-foreground-secondary">
             Sign in to your OneAI account
