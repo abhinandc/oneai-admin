@@ -19,6 +19,7 @@ import Settings from "./pages/Settings";
 import Users from "./pages/admin/Users";
 import Billing from "./pages/admin/Billing";
 import AdminSettings from "./pages/admin/Settings";
+import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -46,6 +47,7 @@ const App = () => (
             <Route path="/admin/users" element={<Users />} />
             <Route path="/admin/billing" element={<Billing />} />
             <Route path="/admin/settings" element={<AdminSettings />} />
+            <Route path="/login" element={<Login />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
