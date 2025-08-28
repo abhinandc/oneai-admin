@@ -23,7 +23,7 @@ export function Footer() {
           </div>
           
           <div className="text-sm text-foreground-tertiary">
-            © 2025 OneAI. All rights reserved.
+            © 2025 OneOrigin. All rights reserved.
           </div>
         </div>
       </div>
