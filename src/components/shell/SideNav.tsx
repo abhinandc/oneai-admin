@@ -39,7 +39,6 @@ const mainItems = [
   { title: "Usage", url: "/usage", icon: BarChart3 },
   { title: "Teams", url: "/teams", icon: Users },
   { title: "Internal Users", url: "/internal-users", icon: UserCheck },
-  { title: "API Reference", url: "/api-reference", icon: BookOpen },
   { title: "Model Hub", url: "/model-hub", icon: Zap },
   { title: "Logs", url: "/logs", icon: FileBarChart },
   { title: "Guardrails", url: "/guardrails", icon: Shield },

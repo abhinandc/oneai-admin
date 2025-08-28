@@ -33,7 +33,6 @@ const commands = [
   { id: "usage", label: "Usage", icon: BarChart3, url: "/usage" },
   { id: "teams", label: "Teams", icon: Users, url: "/teams" },
   { id: "internal-users", label: "Internal Users", icon: UserCheck, url: "/internal-users" },
-  { id: "api-reference", label: "API Reference", icon: BookOpen, url: "/api-reference" },
   { id: "model-hub", label: "Model Hub", icon: Zap, url: "/model-hub" },
   { id: "logs", label: "Logs", icon: FileBarChart, url: "/logs" },
   { id: "guardrails", label: "Guardrails", icon: Shield, url: "/guardrails" },

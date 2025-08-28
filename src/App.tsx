@@ -10,6 +10,7 @@ import TestKey from "./pages/TestKey";
 import ModelsEndpoints from "./pages/ModelsEndpoints";
 import Usage from "./pages/Usage";
 import InternalUsers from "./pages/InternalUsers";
+import ModelHub from "./pages/ModelHub";
 import Users from "./pages/admin/Users";
 import Billing from "./pages/admin/Billing";
 import Settings from "./pages/admin/Settings";
@@ -31,6 +32,7 @@ const App = () => (
             <Route path="/models" element={<ModelsEndpoints />} />
             <Route path="/usage" element={<Usage />} />
             <Route path="/internal-users" element={<InternalUsers />} />
+            <Route path="/model-hub" element={<ModelHub />} />
             <Route path="/admin/users" element={<Users />} />
             <Route path="/admin/billing" element={<Billing />} />
             <Route path="/admin/settings" element={<Settings />} />
