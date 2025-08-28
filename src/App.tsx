@@ -32,29 +32,34 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
-        <Layout>
           <Routes>
+            {/* Login route without navigation */}
             <Route path="/" element={<Login />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/keys/virtual" element={<VirtualKeys />} />
-            <Route path="/keys/test" element={<TestKey />} />
-            <Route path="/models" element={<ModelsEndpoints />} />
-            <Route path="/usage" element={<Usage />} />
-            <Route path="/internal-users" element={<InternalUsers />} />
-            <Route path="/model-hub" element={<ModelHub />} />
-            <Route path="/logs" element={<Logs />} />
-            <Route path="/guardrails" element={<Guardrails />} />
-            <Route path="/tools/mcp-servers" element={<MCPServers />} />
-            <Route path="/settings" element={<Settings />} />
-            <Route path="/admin/users" element={<Users />} />
-            <Route path="/admin/billing" element={<Billing />} />
-            <Route path="/admin/settings" element={<AdminSettings />} />
             
-            <Route path="/teams" element={<Teams />} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
+            {/* All other routes with navigation layout */}
+            <Route path="/*" element={
+              <Layout>
+                <Routes>
+                  <Route path="/dashboard" element={<Dashboard />} />
+                  <Route path="/keys/virtual" element={<VirtualKeys />} />
+                  <Route path="/keys/test" element={<TestKey />} />
+                  <Route path="/models" element={<ModelsEndpoints />} />
+                  <Route path="/usage" element={<Usage />} />
+                  <Route path="/internal-users" element={<InternalUsers />} />
+                  <Route path="/model-hub" element={<ModelHub />} />
+                  <Route path="/logs" element={<Logs />} />
+                  <Route path="/guardrails" element={<Guardrails />} />
+                  <Route path="/tools/mcp-servers" element={<MCPServers />} />
+                  <Route path="/settings" element={<Settings />} />
+                  <Route path="/admin/users" element={<Users />} />
+                  <Route path="/admin/billing" element={<Billing />} />
+                  <Route path="/admin/settings" element={<AdminSettings />} />
+                  <Route path="/teams" element={<Teams />} />
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </Layout>
+            } />
           </Routes>
-        </Layout>
         </BrowserRouter>
       </TooltipProvider>
     </ThemeProvider>
