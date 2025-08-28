@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
+import { useTheme } from "next-themes"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { GlassCard } from "@/components/ui/glass-card"
@@ -7,6 +8,7 @@ import { Eye, EyeOff, Mail, Lock } from "lucide-react"
 
 export default function Login() {
   const navigate = useNavigate()
+  const { theme } = useTheme()
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [showPassword, setShowPassword] = useState(false)
@@ -56,10 +58,29 @@ export default function Login() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background-secondary to-background-tertiary flex items-center justify-center p-6">
       <div className="w-full max-w-md space-y-8">
-        {/* Header */}
-        <div className="text-center space-y-2">
+        {/* Header with Logo */}
+        <div className="text-center space-y-4">
+          {/* OneOrigin Logo */}
+          <div className="flex justify-center mb-6">
+            <img 
+              src={theme === 'dark' ? '/lovable-uploads/dc8ec67b-6ec3-466b-9fd1-c30ca88ce7f9.png' : '/lovable-uploads/6769a209-c508-4221-a988-13dc68d43d9f.png'}
+              alt="OneOrigin"
+              className="h-16 w-auto object-contain opacity-90"
+              onError={(e) => {
+                // Fallback if image fails to load
+                e.currentTarget.style.display = 'none';
+                e.currentTarget.nextElementSibling?.classList.remove('hidden');
+              }}
+            />
+            {/* Fallback text logo */}
+            <div className="hidden text-center">
+              <div className="text-2xl font-bold text-foreground mb-1">oneorigin</div>
+              <div className="w-8 h-1.5 bg-blue-500 rounded-full mx-auto"></div>
+            </div>
+          </div>
+          
           <h1 className="text-3xl font-bold text-foreground">
-            Welcome back
+            Welcome to OneAI Admin Interface
           </h1>
           <p className="text-foreground-secondary">
             Sign in to your OneAI account
