@@ -21,11 +21,13 @@ import {
 } from "lucide-react"
 import { useTheme } from "next-themes"
 import { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
 
 export function TopBar() {
   const { theme, setTheme } = useTheme()
   const [mounted, setMounted] = useState(false)
   const { toast } = useToast()
+  const navigate = useNavigate()
 
   const handleNotificationClick = () => {
     console.log("Notifications button clicked!")
@@ -108,11 +110,17 @@ export function TopBar() {
             align="end" 
             className="apple-glass bg-background/95 backdrop-blur-xl border-border/50 w-56 shadow-lg"
           >
-            <DropdownMenuItem className="apple-nav-item">
+            <DropdownMenuItem 
+              className="apple-nav-item"
+              onClick={() => navigate('/admin/settings')}
+            >
               <User className="mr-3 h-4 w-4" />
               Profile
             </DropdownMenuItem>
-            <DropdownMenuItem className="apple-nav-item">
+            <DropdownMenuItem 
+              className="apple-nav-item"
+              onClick={() => navigate('/admin/settings')}
+            >
               <Settings className="mr-3 h-4 w-4" />
               Settings
             </DropdownMenuItem>

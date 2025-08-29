@@ -1,3 +1,4 @@
+import { useState } from "react"
 import { Settings as SettingsIcon, Key, Webhook, User, Building } from "lucide-react"
 import { GlassCard } from "@/components/ui/glass-card"
 import { Button } from "@/components/ui/button"
@@ -6,6 +7,7 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Switch } from "@/components/ui/switch"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { useToast } from "@/hooks/use-toast"
 import {
   Select,
   SelectContent,
@@ -15,6 +17,27 @@ import {
 } from "@/components/ui/select"
 
 export default function Settings() {
+  const { toast } = useToast()
+  const [orgSettings, setOrgSettings] = useState({
+    name: "OneAI Corporation",
+    domain: "oneai.com",
+    defaultModel: "gpt-4",
+    dataRetention: "90",
+    piiRedaction: true
+  })
+  
+  const [personalSettings, setPersonalSettings] = useState({
+    displayName: "John Doe",
+    email: "john@oneai.com",
+    emailNotifications: true,
+    usageAlerts: true
+  })
+  
+  const [webhookSettings, setWebhookSettings] = useState({
+    url: "",
+    secret: "",
+    enabled: false
+  })
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -56,17 +79,27 @@ export default function Settings() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <Label htmlFor="org-name">Organization Name</Label>
-                  <Input id="org-name" defaultValue="OneAI Corporation" className="bg-glass/60 border-input-border" />
+                  <Input 
+                    id="org-name" 
+                    value={orgSettings.name}
+                    onChange={(e) => setOrgSettings(prev => ({ ...prev, name: e.target.value }))}
+                    className="bg-glass/60 border-input-border" 
+                  />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="domain">Domain</Label>
-                  <Input id="domain" defaultValue="oneai.com" className="bg-glass/60 border-input-border" />
+                  <Input 
+                    id="domain" 
+                    value={orgSettings.domain}
+                    onChange={(e) => setOrgSettings(prev => ({ ...prev, domain: e.target.value }))}
+                    className="bg-glass/60 border-input-border" 
+                  />
                 </div>
               </div>
 
               <div className="space-y-2">
                 <Label htmlFor="default-model">Default Model</Label>
-                <Select defaultValue="gpt-4">
+                <Select value={orgSettings.defaultModel} onValueChange={(value) => setOrgSettings(prev => ({ ...prev, defaultModel: value }))}>
                   <SelectTrigger className="bg-glass/60 border-input-border">
                     <SelectValue />
                   </SelectTrigger>
@@ -84,7 +117,7 @@ export default function Settings() {
                     <Label>Data Retention</Label>
                     <p className="text-sm text-foreground-secondary">How long to keep conversation logs</p>
                   </div>
-                  <Select defaultValue="90">
+                  <Select value={orgSettings.dataRetention} onValueChange={(value) => setOrgSettings(prev => ({ ...prev, dataRetention: value }))}>
                     <SelectTrigger className="w-32 bg-glass/60 border-input-border">
                       <SelectValue />
                     </SelectTrigger>
@@ -102,11 +135,24 @@ export default function Settings() {
                     <Label>PII Redaction</Label>
                     <p className="text-sm text-foreground-secondary">Automatically redact sensitive information</p>
                   </div>
-                  <Switch defaultChecked />
+                  <Switch 
+                    checked={orgSettings.piiRedaction}
+                    onCheckedChange={(checked) => setOrgSettings(prev => ({ ...prev, piiRedaction: checked }))}
+                  />
                 </div>
               </div>
 
-              <Button className="glass-button">Save Changes</Button>
+              <Button 
+                className="glass-button" 
+                onClick={() => {
+                  toast({
+                    title: "Organization settings saved",
+                    description: "Your organization settings have been updated successfully."
+                  })
+                }}
+              >
+                Save Changes
+              </Button>
             </div>
           </GlassCard>
         </TabsContent>
@@ -121,8 +167,32 @@ export default function Settings() {
                   <div className="text-sm text-foreground-secondary font-mono">sk-...4a2b</div>
                 </div>
                 <div className="flex gap-2">
-                  <Button variant="outline" size="sm" className="glass-button">Rotate</Button>
-                  <Button variant="destructive" size="sm">Revoke</Button>
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    className="glass-button"
+                    onClick={() => {
+                      toast({
+                        title: "API Key rotated",
+                        description: "Your development API key has been rotated successfully."
+                      })
+                    }}
+                  >
+                    Rotate
+                  </Button>
+                  <Button 
+                    variant="destructive" 
+                    size="sm"
+                    onClick={() => {
+                      toast({
+                        title: "API Key revoked", 
+                        description: "Your development API key has been revoked.",
+                        variant: "destructive"
+                      })
+                    }}
+                  >
+                    Revoke
+                  </Button>
                 </div>
               </div>
               
@@ -132,12 +202,44 @@ export default function Settings() {
                   <div className="text-sm text-foreground-secondary font-mono">sk-...8x9c</div>
                 </div>
                 <div className="flex gap-2">
-                  <Button variant="outline" size="sm" className="glass-button">Rotate</Button>
-                  <Button variant="destructive" size="sm">Revoke</Button>
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    className="glass-button"
+                    onClick={() => {
+                      toast({
+                        title: "API Key rotated",
+                        description: "Your production API key has been rotated successfully."
+                      })
+                    }}
+                  >
+                    Rotate
+                  </Button>
+                  <Button 
+                    variant="destructive" 
+                    size="sm"
+                    onClick={() => {
+                      toast({
+                        title: "API Key revoked",
+                        description: "Your production API key has been revoked.",
+                        variant: "destructive"
+                      })
+                    }}
+                  >
+                    Revoke
+                  </Button>
                 </div>
               </div>
 
-              <Button className="glass-button">
+              <Button 
+                className="glass-button"
+                onClick={() => {
+                  toast({
+                    title: "API Key created",
+                    description: "A new API key has been created successfully."
+                  })
+                }}
+              >
                 <Key className="w-4 h-4 mr-2" />
                 Create New Key
               </Button>
@@ -154,6 +256,8 @@ export default function Settings() {
                   <Label htmlFor="webhook-url">Webhook URL</Label>
                   <Input 
                     id="webhook-url" 
+                    value={webhookSettings.url}
+                    onChange={(e) => setWebhookSettings(prev => ({ ...prev, url: e.target.value }))}
                     placeholder="https://your-api.com/webhooks/oneai"
                     className="bg-glass/60 border-input-border" 
                   />
@@ -164,6 +268,8 @@ export default function Settings() {
                   <Input 
                     id="webhook-secret" 
                     type="password"
+                    value={webhookSettings.secret}
+                    onChange={(e) => setWebhookSettings(prev => ({ ...prev, secret: e.target.value }))}
                     placeholder="Generated automatically"
                     className="bg-glass/60 border-input-border" 
                   />
@@ -174,13 +280,37 @@ export default function Settings() {
                     <Label>Enable Webhooks</Label>
                     <p className="text-sm text-foreground-secondary">Receive real-time notifications</p>
                   </div>
-                  <Switch />
+                  <Switch 
+                    checked={webhookSettings.enabled}
+                    onCheckedChange={(checked) => setWebhookSettings(prev => ({ ...prev, enabled: checked }))}
+                  />
                 </div>
               </div>
 
               <div className="flex gap-2">
-                <Button className="glass-button">Save Webhook</Button>
-                <Button variant="outline" className="glass-button">Test Delivery</Button>
+                <Button 
+                  className="glass-button"
+                  onClick={() => {
+                    toast({
+                      title: "Webhook settings saved",
+                      description: "Your webhook configuration has been updated successfully."
+                    })
+                  }}
+                >
+                  Save Webhook
+                </Button>
+                <Button 
+                  variant="outline" 
+                  className="glass-button"
+                  onClick={() => {
+                    toast({
+                      title: "Test delivery sent",
+                      description: "A test webhook has been sent to your endpoint."
+                    })
+                  }}
+                >
+                  Test Delivery
+                </Button>
               </div>
             </div>
           </GlassCard>
@@ -193,11 +323,21 @@ export default function Settings() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <Label htmlFor="display-name">Display Name</Label>
-                  <Input id="display-name" defaultValue="John Doe" className="bg-glass/60 border-input-border" />
+                  <Input 
+                    id="display-name" 
+                    value={personalSettings.displayName}
+                    onChange={(e) => setPersonalSettings(prev => ({ ...prev, displayName: e.target.value }))}
+                    className="bg-glass/60 border-input-border" 
+                  />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="email">Email</Label>
-                  <Input id="email" defaultValue="john@oneai.com" className="bg-glass/60 border-input-border" />
+                  <Input 
+                    id="email" 
+                    value={personalSettings.email}
+                    onChange={(e) => setPersonalSettings(prev => ({ ...prev, email: e.target.value }))}
+                    className="bg-glass/60 border-input-border" 
+                  />
                 </div>
               </div>
 
@@ -207,7 +347,10 @@ export default function Settings() {
                     <Label>Email Notifications</Label>
                     <p className="text-sm text-foreground-secondary">Receive alerts and updates via email</p>
                   </div>
-                  <Switch defaultChecked />
+                  <Switch 
+                    checked={personalSettings.usageAlerts}
+                    onCheckedChange={(checked) => setPersonalSettings(prev => ({ ...prev, usageAlerts: checked }))}
+                  />
                 </div>
 
                 <div className="flex items-center justify-between">
@@ -215,11 +358,24 @@ export default function Settings() {
                     <Label>Usage Alerts</Label>
                     <p className="text-sm text-foreground-secondary">Get notified when approaching limits</p>
                   </div>
-                  <Switch defaultChecked />
+                  <Switch 
+                    checked={personalSettings.emailNotifications}
+                    onCheckedChange={(checked) => setPersonalSettings(prev => ({ ...prev, emailNotifications: checked }))}
+                  />
                 </div>
               </div>
 
-              <Button className="glass-button">Update Profile</Button>
+              <Button 
+                className="glass-button"
+                onClick={() => {
+                  toast({
+                    title: "Profile updated",
+                    description: "Your personal settings have been saved successfully."
+                  })
+                }}
+              >
+                Update Profile
+              </Button>
             </div>
           </GlassCard>
         </TabsContent>
