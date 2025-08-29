@@ -59,7 +59,7 @@ export default function Login() {
           {/* OneOrigin Logo */}
           <div className="flex justify-center mb-6">
             <img 
-              src={theme === 'dark' ? '/lovable-uploads/dc8ec67b-6ec3-466b-9fd1-c30ca88ce7f9.png' : '/lovable-uploads/6769a209-c508-4221-a988-13dc68d43d9f.png'}
+              src={theme === 'dark' ? '/lovable-uploads/dd643953-77fa-4e55-a10d-1a0df298ef50.png' : '/lovable-uploads/6769a209-c508-4221-a988-13dc68d43d9f.png'}
               alt="OneOrigin"
               className="h-8 w-auto object-contain opacity-90"
               onError={(e) => {
