@@ -39,10 +39,7 @@ export default function Login() {
       }
     } catch (error) {
       console.error('Login error:', error)
-      // For demo purposes, automatically redirect after 1 second
-      setTimeout(() => {
-        navigate('/dashboard')
-      }, 1000)
+      // Handle login error - no automatic redirect
     } finally {
       setIsLoading(false)
     }
@@ -51,8 +48,7 @@ export default function Login() {
   const handleGoogleLogin = () => {
     // TODO: Implement Google OAuth with your backend
     console.log("Google login initiated")
-    // For demo purposes, redirect to dashboard
-    navigate('/dashboard')
+    // No automatic redirect - implement proper OAuth flow
   }
 
   return (
