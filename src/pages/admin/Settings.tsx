@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Settings as SettingsIcon, Key, Webhook, User, Building, Shield, Users, History, Database, Bell } from "lucide-react"
+import { Settings as SettingsIcon, Key, Webhook, User, Building, Shield, Users, History, Database, Bell, Globe, Lock, Eye, AlertTriangle, Server, Monitor, Activity, CreditCard, FileText } from "lucide-react"
 import { GlassCard } from "@/components/ui/glass-card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -12,6 +12,7 @@ import { useToast } from "@/hooks/use-toast"
 import { InviteAdminDialog } from "@/components/InviteAdminDialog"
 import { EditUserDialog } from "@/components/EditUserDialog"
 import { CreateApiKeyDialog } from "@/components/CreateApiKeyDialog"
+import { WebhookConfigDialog } from "@/components/WebhookConfigDialog"
 import {
   Select,
   SelectContent,
@@ -62,6 +63,7 @@ export default function Settings() {
   const [inviteAdminOpen, setInviteAdminOpen] = useState(false)
   const [editUserOpen, setEditUserOpen] = useState(false)
   const [createApiKeyOpen, setCreateApiKeyOpen] = useState(false)
+  const [webhookConfigOpen, setWebhookConfigOpen] = useState(false)
   const [selectedUser, setSelectedUser] = useState<typeof adminUsers[0] | null>(null)
 
   return (
@@ -70,41 +72,49 @@ export default function Settings() {
         <div>
           <h1 className="text-3xl font-bold text-foreground flex items-center gap-3">
             <SettingsIcon className="w-8 h-8" />
-            Settings
+            Admin Access
           </h1>
           <p className="text-foreground-secondary mt-1">
-            Organization and personal preferences
+            Manage your organization, users, security, and system configuration
           </p>
         </div>
       </div>
 
-      <Tabs defaultValue="organization" className="space-y-6">
-        <TabsList className="glass-card bg-glass/60 grid w-full grid-cols-3 lg:grid-cols-6">
-          <TabsTrigger value="organization" className="glass-button data-[state=active]:bg-primary/20">
-            <Building className="w-4 h-4 mr-2" />
-            Organization
-          </TabsTrigger>
-          <TabsTrigger value="admin-users" className="glass-button data-[state=active]:bg-primary/20">
-            <Users className="w-4 h-4 mr-2" />
-            Admin Users
-          </TabsTrigger>
-          <TabsTrigger value="system" className="glass-button data-[state=active]:bg-primary/20">
-            <Database className="w-4 h-4 mr-2" />
-            System
-          </TabsTrigger>
-          <TabsTrigger value="security" className="glass-button data-[state=active]:bg-primary/20">
-            <Shield className="w-4 h-4 mr-2" />
-            Security
-          </TabsTrigger>
-          <TabsTrigger value="api-keys" className="glass-button data-[state=active]:bg-primary/20">
-            <Key className="w-4 h-4 mr-2" />
-            API Keys
-          </TabsTrigger>
-          <TabsTrigger value="personal" className="glass-button data-[state=active]:bg-primary/20">
-            <User className="w-4 h-4 mr-2" />
-            Personal
-          </TabsTrigger>
-        </TabsList>
+        <Tabs defaultValue="organization" className="space-y-6">
+          <TabsList className="glass-card bg-glass/60 grid w-full grid-cols-4 lg:grid-cols-8">
+            <TabsTrigger value="organization" className="glass-button data-[state=active]:bg-primary/20">
+              <Building className="w-4 h-4 mr-2" />
+              Organization
+            </TabsTrigger>
+            <TabsTrigger value="admin-users" className="glass-button data-[state=active]:bg-primary/20">
+              <Users className="w-4 h-4 mr-2" />
+              Admin Users
+            </TabsTrigger>
+            <TabsTrigger value="system" className="glass-button data-[state=active]:bg-primary/20">
+              <Server className="w-4 h-4 mr-2" />
+              System
+            </TabsTrigger>
+            <TabsTrigger value="security" className="glass-button data-[state=active]:bg-primary/20">
+              <Shield className="w-4 h-4 mr-2" />
+              Security
+            </TabsTrigger>
+            <TabsTrigger value="api-keys" className="glass-button data-[state=active]:bg-primary/20">
+              <Key className="w-4 h-4 mr-2" />
+              API Keys
+            </TabsTrigger>
+            <TabsTrigger value="webhooks" className="glass-button data-[state=active]:bg-primary/20">
+              <Webhook className="w-4 h-4 mr-2" />
+              Webhooks
+            </TabsTrigger>
+            <TabsTrigger value="monitoring" className="glass-button data-[state=active]:bg-primary/20">
+              <Monitor className="w-4 h-4 mr-2" />
+              Monitoring
+            </TabsTrigger>
+            <TabsTrigger value="personal" className="glass-button data-[state=active]:bg-primary/20">
+              <User className="w-4 h-4 mr-2" />
+              Personal
+            </TabsTrigger>
+          </TabsList>
 
         <TabsContent value="organization">
           <GlassCard className="p-6">
@@ -527,6 +537,170 @@ export default function Settings() {
           </GlassCard>
         </TabsContent>
 
+        <TabsContent value="webhooks" className="space-y-6">
+          <GlassCard className="p-6">
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="text-lg font-semibold text-foreground">Webhooks</h3>
+              <Button 
+                className="glass-button bg-primary hover:bg-primary/90"
+                onClick={() => setWebhookConfigOpen(true)}
+              >
+                <Webhook className="w-4 h-4 mr-2" />
+                Configure Webhook
+              </Button>
+            </div>
+            
+            <div className="space-y-6">
+              <div className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="webhook-url">Webhook URL</Label>
+                  <Input 
+                    id="webhook-url" 
+                    value={webhookSettings.url}
+                    onChange={(e) => setWebhookSettings(prev => ({ ...prev, url: e.target.value }))}
+                    placeholder="https://your-api.com/webhooks/oneai"
+                    className="bg-glass/60 border-input-border" 
+                  />
+                </div>
+                
+                <div className="space-y-2">
+                  <Label htmlFor="webhook-secret">Signing Secret</Label>
+                  <Input 
+                    id="webhook-secret" 
+                    type="password"
+                    value={webhookSettings.secret}
+                    onChange={(e) => setWebhookSettings(prev => ({ ...prev, secret: e.target.value }))}
+                    placeholder="Generated automatically"
+                    className="bg-glass/60 border-input-border" 
+                  />
+                </div>
+
+                <div className="flex items-center justify-between">
+                  <div>
+                    <Label>Enable Webhooks</Label>
+                    <p className="text-sm text-foreground-secondary">Receive real-time notifications</p>
+                  </div>
+                  <Switch 
+                    checked={webhookSettings.enabled}
+                    onCheckedChange={(checked) => setWebhookSettings(prev => ({ ...prev, enabled: checked }))}
+                  />
+                </div>
+              </div>
+
+              <div className="flex gap-2">
+                <Button 
+                  className="glass-button"
+                  onClick={() => {
+                    toast({
+                      title: "Webhook settings saved",
+                      description: "Your webhook configuration has been updated successfully."
+                    })
+                  }}
+                >
+                  Save Webhook
+                </Button>
+                <Button 
+                  variant="outline" 
+                  className="glass-button"
+                  onClick={() => {
+                    toast({
+                      title: "Test delivery sent",
+                      description: "A test webhook has been sent to your endpoint."
+                    })
+                  }}
+                >
+                  Test Delivery
+                </Button>
+              </div>
+            </div>
+          </GlassCard>
+        </TabsContent>
+
+        <TabsContent value="monitoring" className="space-y-6">
+          <GlassCard className="p-6">
+            <h3 className="text-lg font-semibold text-foreground mb-6">System Monitoring</h3>
+            <div className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div className="p-4 rounded-lg bg-glass/30 text-center">
+                  <Activity className="w-8 h-8 mx-auto mb-2 text-green-500" />
+                  <div className="text-2xl font-bold text-foreground">99.9%</div>
+                  <div className="text-sm text-foreground-secondary">Uptime</div>
+                </div>
+                <div className="p-4 rounded-lg bg-glass/30 text-center">
+                  <Database className="w-8 h-8 mx-auto mb-2 text-blue-500" />
+                  <div className="text-2xl font-bold text-foreground">12GB</div>
+                  <div className="text-sm text-foreground-secondary">Database Size</div>
+                </div>
+                <div className="p-4 rounded-lg bg-glass/30 text-center">
+                  <Monitor className="w-8 h-8 mx-auto mb-2 text-purple-500" />
+                  <div className="text-2xl font-bold text-foreground">45ms</div>
+                  <div className="text-sm text-foreground-secondary">Avg Response</div>
+                </div>
+                <div className="p-4 rounded-lg bg-glass/30 text-center">
+                  <CreditCard className="w-8 h-8 mx-auto mb-2 text-orange-500" />
+                  <div className="text-2xl font-bold text-foreground">$1,247</div>
+                  <div className="text-sm text-foreground-secondary">Monthly Cost</div>
+                </div>
+              </div>
+
+              <div className="space-y-4">
+                <h4 className="font-medium text-foreground">System Health Checks</h4>
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between p-3 rounded-lg bg-glass/20">
+                    <div className="flex items-center gap-3">
+                      <div className="w-2 h-2 rounded-full bg-green-500"></div>
+                      <span className="text-sm">Database Connection</span>
+                    </div>
+                    <span className="text-xs text-green-600 font-medium">Healthy</span>
+                  </div>
+                  <div className="flex items-center justify-between p-3 rounded-lg bg-glass/20">
+                    <div className="flex items-center gap-3">
+                      <div className="w-2 h-2 rounded-full bg-green-500"></div>
+                      <span className="text-sm">API Gateway</span>
+                    </div>
+                    <span className="text-xs text-green-600 font-medium">Operational</span>
+                  </div>
+                  <div className="flex items-center justify-between p-3 rounded-lg bg-glass/20">
+                    <div className="flex items-center gap-3">
+                      <div className="w-2 h-2 rounded-full bg-yellow-500"></div>
+                      <span className="text-sm">Cache Layer</span>
+                    </div>
+                    <span className="text-xs text-yellow-600 font-medium">Degraded</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex gap-2">
+                <Button 
+                  className="glass-button"
+                  onClick={() => {
+                    toast({
+                      title: "Health check initiated",
+                      description: "Running comprehensive system health check."
+                    })
+                  }}
+                >
+                  <Monitor className="w-4 h-4 mr-2" />
+                  Run Health Check
+                </Button>
+                <Button 
+                  variant="outline" 
+                  className="glass-button"
+                  onClick={() => {
+                    toast({
+                      title: "Report generated",
+                      description: "System monitoring report has been generated."
+                    })
+                  }}
+                >
+                  <FileText className="w-4 h-4 mr-2" />
+                  Generate Report
+                </Button>
+              </div>
+            </div>
+          </GlassCard>
+        </TabsContent>
+
         <TabsContent value="personal">
           <GlassCard className="p-6">
             <h3 className="text-lg font-semibold text-foreground mb-6">Personal Preferences</h3>
@@ -600,6 +774,12 @@ export default function Settings() {
         user={selectedUser}
       />
       <CreateApiKeyDialog open={createApiKeyOpen} onOpenChange={setCreateApiKeyOpen} />
+      <WebhookConfigDialog 
+        open={webhookConfigOpen} 
+        onOpenChange={setWebhookConfigOpen}
+        webhookSettings={webhookSettings}
+        onSettingsChange={setWebhookSettings}
+      />
     </div>
   )
 }

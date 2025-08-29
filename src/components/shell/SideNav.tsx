@@ -12,7 +12,8 @@ import {
   Wrench,
   Settings,
   Database,
-  Menu
+  Menu,
+  UserCog
 } from "lucide-react"
 import { NavLink, useLocation } from "react-router-dom"
 import { useTheme } from "next-themes"
@@ -141,9 +142,9 @@ export function SideNav() {
               <SidebarMenuItem>
                 <SidebarMenuButton asChild>
                   <NavLink to="/settings" className={getNavCls}>
-                    <Settings className="w-5 h-5 flex-shrink-0" />
+                    <UserCog className="w-5 h-5 flex-shrink-0" />
                     {!isCollapsed && (
-                      <span className="ml-3 font-medium">Settings</span>
+                      <span className="ml-3 font-medium">Admin Access</span>
                     )}
                   </NavLink>
                 </SidebarMenuButton>
