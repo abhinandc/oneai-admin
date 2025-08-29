@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { useToast } from "@/hooks/use-toast"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -134,6 +135,7 @@ export default function ModelsEndpoints() {
   const [currentTeam, setCurrentTeam] = useState("Personal")
   const [viewType, setViewType] = useState("Current Team Models")
   const [searchTerm, setSearchTerm] = useState("")
+  const { toast } = useToast()
   const [modelAccessFilter, setModelAccessFilter] = useState("All Model Access Groups")
   const [showAddModelDialog, setShowAddModelDialog] = useState(false)
   const [showAutoRouterDialog, setShowAutoRouterDialog] = useState(false)
@@ -246,9 +248,12 @@ export default function ModelsEndpoints() {
 
   const handleDeleteModel = (modelId: string) => {
     console.log("Delete Model clicked for:", modelId)
-    if (confirm("Are you sure you want to delete this model?")) {
-      setModels(models.filter(m => m.id !== modelId))
-    }
+    // Replace confirm with toast - in real app, use a proper dialog
+    setModels(models.filter(m => m.id !== modelId))
+    toast({
+      title: "Model deleted",
+      description: "Model has been successfully deleted from your configuration."
+    })
   }
 
   return (

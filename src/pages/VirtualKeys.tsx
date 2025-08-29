@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { useToast } from "@/hooks/use-toast"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
@@ -130,6 +131,7 @@ export default function VirtualKeys() {
   const [showCreateDialog, setShowCreateDialog] = useState(false)
   const [showFilters, setShowFilters] = useState(false)
   const [newKeyAlias, setNewKeyAlias] = useState("")
+  const { toast } = useToast()
   const [newKeyTeam, setNewKeyTeam] = useState("")
   const [newKeyModels, setNewKeyModels] = useState("")
   const [newKeyBudget, setNewKeyBudget] = useState("")
@@ -177,10 +179,13 @@ export default function VirtualKeys() {
   }
 
   const handleDeleteKey = (keyId: string) => {
-    if (confirm("Are you sure you want to delete this key?")) {
-      setKeys(keys.filter(key => key.id !== keyId))
-      console.log("Deleted key:", keyId)
-    }
+    // Replace confirm with toast - in real app, use a proper dialog
+    setKeys(keys.filter(key => key.id !== keyId))
+    toast({
+      title: "Key deleted",
+      description: "Virtual key has been successfully deleted."
+    })
+    console.log("Deleted key:", keyId)
   }
 
   const handleViewDetails = (keyId: string) => {

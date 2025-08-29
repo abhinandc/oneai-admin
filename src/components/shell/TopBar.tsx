@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button"
+import { useToast } from "@/hooks/use-toast"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
 import {
@@ -24,13 +25,14 @@ import { useEffect, useState } from "react"
 export function TopBar() {
   const { theme, setTheme } = useTheme()
   const [mounted, setMounted] = useState(false)
-  const [showNotifications, setShowNotifications] = useState(false)
+  const { toast } = useToast()
 
   const handleNotificationClick = () => {
     console.log("Notifications button clicked!")
-    setShowNotifications(!showNotifications)
-    // In a real app, this would open a notifications panel or dropdown
-    alert("Notifications:\n• New API key created\n• Monthly usage report ready\n• Team member added")
+    toast({
+      title: "Notifications",
+      description: "• New API key created\n• Monthly usage report ready\n• Team member added"
+    })
   }
 
   useEffect(() => {

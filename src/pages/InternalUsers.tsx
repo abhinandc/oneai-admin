@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { useToast } from "@/hooks/use-toast"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
@@ -82,6 +83,7 @@ export default function InternalUsers() {
   const [users, setUsers] = useState<InternalUser[]>(mockUsers)
   const [searchTerm, setSearchTerm] = useState("")
   const [currentPage] = useState(1)
+  const { toast } = useToast()
   const totalPages = 1
 
   const handleInviteUser = () => {
@@ -115,10 +117,13 @@ export default function InternalUsers() {
   }
 
   const handleRemoveUser = (userId: string) => {
-    if (confirm("Are you sure you want to remove this user?")) {
-      setUsers(users.filter(u => u.id !== userId))
-      console.log("Removed user:", userId)
-    }
+    // Replace confirm with toast - in real app, use a proper dialog
+    setUsers(users.filter(u => u.id !== userId))
+    toast({
+      title: "User removed",
+      description: "Internal user has been successfully removed."
+    })
+    console.log("Removed user:", userId)
   }
 
   const handleCopyUserId = (userId: string) => {

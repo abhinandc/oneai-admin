@@ -140,10 +140,13 @@ export default function Teams() {
   }
 
   const handleRemoveMember = (memberId: string) => {
-    if (confirm("Are you sure you want to remove this member?")) {
-      setMembers(members.filter(m => m.id !== memberId))
-      console.log("Removed member:", memberId)
-    }
+    // Replace confirm with toast - in real app, use a proper dialog
+    setMembers(members.filter(m => m.id !== memberId))
+    toast({
+      title: "Member removed",
+      description: "Team member has been successfully removed from the team."
+    })
+    console.log("Removed member:", memberId)
   }
 
   const handleConfigureSetting = (setting: string) => {

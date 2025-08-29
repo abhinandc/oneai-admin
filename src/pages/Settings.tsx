@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { useToast } from "@/hooks/use-toast"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { GlassCard } from "@/components/ui/glass-card"
@@ -14,25 +15,38 @@ import {
 
 export default function Settings() {
   const [activeTab, setActiveTab] = useState("security-settings")
+  const { toast } = useToast()
 
   const handleAddSSO = () => {
     console.log("Add SSO button clicked!")
-    alert("SSO Configuration: This would open the Single Sign-On setup dialog to configure SAML, OAuth, or other SSO providers.")
+    toast({
+      title: "SSO Configuration",
+      description: "This would open the Single Sign-On setup dialog to configure SAML, OAuth, or other SSO providers."
+    })
   }
 
   const handleAllowedIPs = () => {
     console.log("Allowed IPs button clicked!")
-    alert("IP Allowlist Configuration: This would open a dialog to manage allowed IP addresses for proxy access.")
+    toast({
+      title: "IP Allowlist Configuration",
+      description: "This would open a dialog to manage allowed IP addresses for proxy access."
+    })
   }
 
   const handleUIAccessControl = () => {
     console.log("UI Access Control button clicked!")
-    alert("UI Access Control: This would open settings to control who can access the admin interface.")
+    toast({
+      title: "UI Access Control",
+      description: "This would open settings to control who can access the admin interface."
+    })
   }
 
   const handleConfigureSCIM = () => {
     console.log("Configure SCIM button clicked!")
-    alert("SCIM Configuration: This would open the System for Cross-domain Identity Management setup for automatic user provisioning.")
+    toast({
+      title: "SCIM Configuration",
+      description: "This would open the System for Cross-domain Identity Management setup for automatic user provisioning."
+    })
   }
 
   const handleOpenLink = (link: string) => {
@@ -47,7 +61,10 @@ export default function Settings() {
     if (url) {
       window.open(url, '_blank')
     } else {
-      alert(`Opening ${link} documentation...`)
+      toast({
+        title: "Documentation",
+        description: `Opening ${link} documentation...`
+      })
     }
   }
 
