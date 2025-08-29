@@ -9,6 +9,9 @@ import { Switch } from "@/components/ui/switch"
 import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { useToast } from "@/hooks/use-toast"
+import { InviteAdminDialog } from "@/components/InviteAdminDialog"
+import { EditUserDialog } from "@/components/EditUserDialog"
+import { CreateApiKeyDialog } from "@/components/CreateApiKeyDialog"
 import {
   Select,
   SelectContent,
@@ -54,6 +57,12 @@ export default function Settings() {
     sessionTimeout: "24",
     maxLoginAttempts: "5"
   })
+
+  // Dialog states
+  const [inviteAdminOpen, setInviteAdminOpen] = useState(false)
+  const [editUserOpen, setEditUserOpen] = useState(false)
+  const [createApiKeyOpen, setCreateApiKeyOpen] = useState(false)
+  const [selectedUser, setSelectedUser] = useState<typeof adminUsers[0] | null>(null)
 
   return (
     <div className="space-y-6">
@@ -188,12 +197,7 @@ export default function Settings() {
               <h3 className="text-lg font-semibold text-foreground">Admin Users</h3>
               <Button 
                 className="glass-button bg-primary hover:bg-primary/90"
-                onClick={() => {
-                  toast({
-                    title: "Invite admin user",
-                    description: "Admin user invitation dialog would open here."
-                  })
-                }}
+                onClick={() => setInviteAdminOpen(true)}
               >
                 <Users className="w-4 h-4 mr-2" />
                 Invite Admin
@@ -223,19 +227,17 @@ export default function Settings() {
                       Last: {user.lastLogin}
                     </div>
                     <div className="flex gap-2">
-                      <Button 
-                        variant="outline" 
-                        size="sm" 
-                        className="glass-button"
-                        onClick={() => {
-                          toast({
-                            title: "Edit user",
-                            description: `Editing ${user.name}'s permissions.`
-                          })
-                        }}
-                      >
-                        Edit
-                      </Button>
+                        <Button 
+                          variant="outline" 
+                          size="sm" 
+                          className="glass-button"
+                          onClick={() => {
+                            setSelectedUser(user)
+                            setEditUserOpen(true)
+                          }}
+                        >
+                          Edit
+                        </Button>
                       <Button 
                         variant="destructive" 
                         size="sm"
@@ -516,12 +518,7 @@ export default function Settings() {
 
               <Button 
                 className="glass-button"
-                onClick={() => {
-                  toast({
-                    title: "API Key created",
-                    description: "A new API key has been created successfully."
-                  })
-                }}
+                onClick={() => setCreateApiKeyOpen(true)}
               >
                 <Key className="w-4 h-4 mr-2" />
                 Create New Key
@@ -594,6 +591,15 @@ export default function Settings() {
           </GlassCard>
         </TabsContent>
       </Tabs>
+
+      {/* Dialogs */}
+      <InviteAdminDialog open={inviteAdminOpen} onOpenChange={setInviteAdminOpen} />
+      <EditUserDialog 
+        open={editUserOpen} 
+        onOpenChange={setEditUserOpen} 
+        user={selectedUser}
+      />
+      <CreateApiKeyDialog open={createApiKeyOpen} onOpenChange={setCreateApiKeyOpen} />
     </div>
   )
 }
