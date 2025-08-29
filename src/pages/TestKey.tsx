@@ -130,17 +130,17 @@ console.log(data);`
   }
 
   return (
-    <div className="h-[calc(100vh-8rem)] w-full space-y-6">
+    <div className="h-[calc(100vh-9rem)] w-full space-y-4">
       {/* Compact Header with Action Buttons */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-foreground flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center">
-              <Brain className="w-5 h-5 text-primary" />
+          <h1 className="text-xl font-bold text-foreground flex items-center gap-2">
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center">
+              <Brain className="w-4 h-4 text-primary" />
             </div>
             Test Key
           </h1>
-          <p className="text-foreground-secondary mt-1">
+          <p className="text-foreground-secondary text-sm mt-1">
             Test your API keys and chat with AI models in real-time
           </p>
         </div>
@@ -169,20 +169,20 @@ console.log(data);`
         </div>
       </div>
 
-      <div className="grid grid-cols-12 gap-6 h-[calc(100%-5rem)]">
+      <div className="grid grid-cols-12 gap-4 h-[calc(100%-4rem)]">
         {/* Compact Left Sidebar - Essential Configurations */}
         <div className="col-span-3">
-          <GlassCard className="p-4 h-full">
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-6 h-6 rounded-lg bg-primary/10 flex items-center justify-center">
+          <GlassCard className="p-3 h-full">
+            <div className="flex items-center gap-2 mb-3">
+              <div className="w-5 h-5 rounded-lg bg-primary/10 flex items-center justify-center">
                 <Wrench className="w-3 h-3 text-primary" />
               </div>
-              <h2 className="text-lg font-semibold text-foreground">Configuration</h2>
+              <h2 className="text-base font-semibold text-foreground">Configuration</h2>
             </div>
             
-            <div className="grid grid-cols-2 gap-4 h-[calc(100%-3rem)]">
+            <div className="grid grid-cols-2 gap-3 h-[calc(100%-2.5rem)]">
               {/* Left Column - Essential Settings */}
-              <div className="space-y-4">
+              <div className="space-y-3">
                 {/* API Key Source */}
                 <div className="space-y-2">
                   <Label className="text-sm font-semibold flex items-center gap-2 text-foreground">
@@ -193,7 +193,7 @@ console.log(data);`
                     placeholder="Enter your API key"
                     value={apiKeySource}
                     onChange={(e) => setApiKeySource(e.target.value)}
-                    className="bg-background/60 border-border/50 focus:border-primary/50 transition-all h-9"
+                    className="bg-background/60 border-border/50 focus:border-primary/50 transition-all h-8"
                   />
                 </div>
 
@@ -204,7 +204,7 @@ console.log(data);`
                     AI Model
                   </Label>
                   <Select value={selectedModel} onValueChange={setSelectedModel}>
-                    <SelectTrigger className="bg-background/60 border-border/50 focus:border-primary/50 h-9">
+                    <SelectTrigger className="bg-background/60 border-border/50 focus:border-primary/50 h-8">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent className="glass-card bg-background/95 backdrop-blur-md border-card-border/50 z-50">
@@ -223,7 +223,7 @@ console.log(data);`
                     Endpoint
                   </Label>
                   <Select value={endpointType} onValueChange={setEndpointType}>
-                    <SelectTrigger className="bg-background/60 border-border/50 focus:border-primary/50 h-9">
+                    <SelectTrigger className="bg-background/60 border-border/50 focus:border-primary/50 h-8">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent className="glass-card bg-background/95 backdrop-blur-md border-card-border/50 z-50">
@@ -244,13 +244,13 @@ console.log(data);`
                     placeholder="request-type:test, env:dev"
                     value={tags}
                     onChange={(e) => setTags(e.target.value)}
-                    className="bg-background/60 border-border/50 focus:border-primary/50 transition-all h-9"
+                    className="bg-background/60 border-border/50 focus:border-primary/50 transition-all h-8"
                   />
                 </div>
               </div>
 
               {/* Right Column - Advanced Settings */}
-              <div className="space-y-4">
+              <div className="space-y-3">
                 {/* Current UI Session */}
                 <div className="space-y-2">
                   <Label className="text-sm font-semibold flex items-center gap-2 text-foreground">
@@ -261,7 +261,7 @@ console.log(data);`
                     placeholder="Session identifier"
                     value={currentSession}
                     onChange={(e) => setCurrentSession(e.target.value)}
-                    className="bg-background/60 border-border/50 focus:border-primary/50 transition-all h-9"
+                    className="bg-background/60 border-border/50 focus:border-primary/50 transition-all h-8"
                   />
                 </div>
 
@@ -275,7 +275,7 @@ console.log(data);`
                     placeholder="Tool configuration"
                     value={mcpTool}
                     onChange={(e) => setMcpTool(e.target.value)}
-                    className="bg-background/60 border-border/50 focus:border-primary/50 transition-all h-9"
+                    className="bg-background/60 border-border/50 focus:border-primary/50 transition-all h-8"
                   />
                 </div>
 
@@ -289,7 +289,7 @@ console.log(data);`
                     placeholder="Vector store ID"
                     value={vectorStore}
                     onChange={(e) => setVectorStore(e.target.value)}
-                    className="bg-background/60 border-border/50 focus:border-primary/50 transition-all h-9"
+                    className="bg-background/60 border-border/50 focus:border-primary/50 transition-all h-8"
                   />
                 </div>
 
@@ -303,7 +303,7 @@ console.log(data);`
                     placeholder="Guardrail configuration"
                     value={guardrails}
                     onChange={(e) => setGuardrails(e.target.value)}
-                    className="bg-background/60 border-border/50 focus:border-primary/50 transition-all h-9"
+                    className="bg-background/60 border-border/50 focus:border-primary/50 transition-all h-8"
                   />
                 </div>
               </div>
@@ -315,14 +315,14 @@ console.log(data);`
         <div className="col-span-9">
           <GlassCard className="h-full flex flex-col">
             {/* Compact Chat Header */}
-            <div className="p-4 border-b border-border/20">
+            <div className="p-3 border-b border-border/20">
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="w-6 h-6 rounded-lg bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center">
+                <div className="flex items-center gap-2">
+                  <div className="w-5 h-5 rounded-lg bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center">
                     <MessageCircle className="w-3 h-3 text-primary" />
                   </div>
                   <div>
-                    <h2 className="text-lg font-semibold text-foreground">AI Chat Interface</h2>
+                    <h2 className="text-base font-semibold text-foreground">AI Chat Interface</h2>
                     <p className="text-xs text-foreground-secondary">
                       {selectedModel} • {endpointType}
                     </p>
@@ -343,44 +343,44 @@ console.log(data);`
               </div>
             </div>
 
-            {/* Optimized Messages Area */}
-            <div className="flex-1 p-4 overflow-y-auto min-h-0">
+            {/* Reduced Messages Area */}
+            <div className="flex-1 p-3 overflow-y-auto min-h-0 max-h-48">
               {chatHistory.length === 0 ? (
                 <div className="h-full flex items-center justify-center">
-                  <div className="text-center space-y-4 max-w-md">
-                    <div className="w-20 h-20 mx-auto rounded-2xl bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center">
-                      <Zap className="w-10 h-10 text-primary" />
+                  <div className="text-center space-y-3 max-w-sm">
+                    <div className="w-16 h-16 mx-auto rounded-xl bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center">
+                      <Zap className="w-8 h-8 text-primary" />
                     </div>
                     <div>
-                      <h3 className="text-xl font-semibold text-foreground mb-2">
+                      <h3 className="text-base font-semibold text-foreground mb-1">
                         Ready to test your API
                       </h3>
-                      <p className="text-foreground-secondary leading-relaxed">
-                        Configure your settings on the left, then start a conversation to test your API integration.
+                      <p className="text-foreground-secondary text-sm leading-relaxed">
+                        Configure settings and start testing your API integration.
                       </p>
                     </div>
-                    <div className="flex flex-wrap gap-2 justify-center">
-                      <div className="text-xs bg-background/60 px-3 py-1 rounded-full border border-border/30">
-                        Real-time testing
+                    <div className="flex flex-wrap gap-1 justify-center">
+                      <div className="text-xs bg-background/60 px-2 py-1 rounded-full border border-border/30">
+                        Real-time
                       </div>
-                      <div className="text-xs bg-background/60 px-3 py-1 rounded-full border border-border/30">
-                        Code generation
+                      <div className="text-xs bg-background/60 px-2 py-1 rounded-full border border-border/30">
+                        Code gen
                       </div>
-                      <div className="text-xs bg-background/60 px-3 py-1 rounded-full border border-border/30">
-                        Multiple models
+                      <div className="text-xs bg-background/60 px-2 py-1 rounded-full border border-border/30">
+                        Multi-model
                       </div>
                     </div>
                   </div>
                 </div>
               ) : (
-                <div className="space-y-3 h-full">
+                <div className="space-y-2 h-full">
                   {chatHistory.map((msg) => (
                     <div
                       key={msg.id}
                       className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
                     >
                       <div
-                        className={`max-w-[75%] rounded-xl p-3 ${
+                        className={`max-w-[70%] rounded-lg p-2 ${
                           msg.role === 'user'
                             ? 'bg-primary text-primary-foreground'
                             : 'bg-background/60 border border-border/30'
@@ -397,12 +397,12 @@ console.log(data);`
                   ))}
                   {isLoading && (
                     <div className="flex justify-start">
-                      <div className="bg-background/60 border border-border/30 rounded-xl p-3">
-                        <div className="flex items-center gap-2">
+                      <div className="bg-background/60 border border-border/30 rounded-lg p-2">
+                        <div className="flex items-center gap-1">
                           <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
                           <div className="w-2 h-2 bg-primary rounded-full animate-pulse" style={{animationDelay: '0.2s'}}></div>
-                          <div className="w-2 h-2 bg-primary rounded-full animate-pulse" style={{animationDelay: '0.4s'}}></div>
-                          <span className="text-xs text-foreground-secondary ml-2">AI is thinking...</span>
+                          <div className="w-1.5 h-1.5 bg-primary rounded-full animate-pulse" style={{animationDelay: '0.4s'}}></div>
+                          <span className="text-xs text-foreground-secondary ml-1">AI thinking...</span>
                         </div>
                       </div>
                     </div>
@@ -412,7 +412,7 @@ console.log(data);`
             </div>
 
             {/* Compact Input Area */}
-            <div className="p-4 border-t border-border/20">
+            <div className="p-3 border-t border-border/20">
               <div className="relative">
                 <Textarea
                   placeholder="Type your message... (Ctrl+Enter to send)"
@@ -423,8 +423,8 @@ console.log(data);`
                     textarea.style.height = 'auto'
                     textarea.style.height = Math.min(textarea.scrollHeight, 100) + 'px'
                   }}
-                  className="bg-background/60 border-border/50 focus:border-primary/50 resize-none min-h-[50px] max-h-[100px] pr-12 py-3 px-3 text-sm rounded-xl transition-all"
-                  rows={2}
+                  className="bg-background/60 border-border/50 focus:border-primary/50 resize-none min-h-[40px] max-h-[80px] pr-10 py-2 px-3 text-sm rounded-lg transition-all"
+                  rows={1}
                   onKeyDown={(e) => {
                     if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
                       e.preventDefault()
@@ -436,14 +436,14 @@ console.log(data);`
                 <Button
                   onClick={handleSendMessage}
                   disabled={!message.trim() || isLoading}
-                  className="absolute bottom-2 right-2 h-8 w-8 p-0 rounded-lg shadow-lg"
+                  className="absolute bottom-1.5 right-1.5 h-7 w-7 p-0 rounded-lg shadow-lg"
                 >
                   <Send className="w-3 h-3" />
                 </Button>
               </div>
               <div className="flex items-center justify-between mt-2">
                 <p className="text-xs text-foreground-tertiary">
-                  Press <kbd className="px-1 py-0.5 bg-background/60 border border-border/30 rounded text-xs">Ctrl</kbd> + <kbd className="px-1 py-0.5 bg-background/60 border border-border/30 rounded text-xs">Enter</kbd> to send
+                  <kbd className="px-1 py-0.5 bg-background/60 border border-border/30 rounded text-xs">Ctrl+Enter</kbd> to send
                 </p>
               </div>
             </div>
