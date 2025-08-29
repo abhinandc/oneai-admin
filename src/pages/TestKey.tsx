@@ -130,7 +130,7 @@ console.log(data);`
   }
 
   return (
-    <div className="h-[calc(100vh-9rem)] w-full space-y-4">
+    <div className="h-[calc(100vh-11rem)] w-full space-y-4">
       {/* Compact Header with Action Buttons */}
       <div className="flex items-center justify-between">
         <div>
@@ -169,7 +169,7 @@ console.log(data);`
         </div>
       </div>
 
-      <div className="grid grid-cols-12 gap-4 h-[calc(100%-4rem)]">
+      <div className="grid grid-cols-12 gap-4 h-[calc(100%-3rem)]">
         {/* Compact Left Sidebar - Essential Configurations */}
         <div className="col-span-3">
           <GlassCard className="p-3 h-full">
@@ -180,7 +180,7 @@ console.log(data);`
               <h2 className="text-base font-semibold text-foreground">Configuration</h2>
             </div>
             
-            <div className="grid grid-cols-2 gap-3 h-[calc(100%-2.5rem)]">
+            <div className="grid grid-cols-2 gap-3 h-[calc(100%-2rem)]">
               {/* Left Column - Essential Settings */}
               <div className="space-y-3">
                 {/* API Key Source */}
@@ -344,7 +344,7 @@ console.log(data);`
             </div>
 
             {/* Reduced Messages Area */}
-            <div className="flex-1 p-3 overflow-y-auto min-h-0 max-h-48">
+            <div className="flex-1 p-3 overflow-y-auto min-h-0 max-h-32">
               {chatHistory.length === 0 ? (
                 <div className="h-full flex items-center justify-center">
                   <div className="text-center space-y-3 max-w-sm">
