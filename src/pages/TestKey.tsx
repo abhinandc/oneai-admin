@@ -314,16 +314,16 @@ console.log(data);`
         {/* Expanded Main Content Area */}
         <div className="col-span-9">
           <GlassCard className="h-full flex flex-col">
-            {/* Compact Chat Header */}
-            <div className="p-3 border-b border-border/20">
+            {/* Chat Header */}
+            <div className="p-4 border-b border-border/20">
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <div className="w-5 h-5 rounded-lg bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center">
-                    <MessageCircle className="w-3 h-3 text-primary" />
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center">
+                    <MessageCircle className="w-4 h-4 text-primary" />
                   </div>
                   <div>
-                    <h2 className="text-base font-semibold text-foreground">AI Chat Interface</h2>
-                    <p className="text-xs text-foreground-secondary">
+                    <h2 className="text-lg font-semibold text-foreground">AI Chat Interface</h2>
+                    <p className="text-sm text-foreground-secondary">
                       {selectedModel} • {endpointType}
                     </p>
                   </div>
@@ -331,63 +331,63 @@ console.log(data);`
                 
                 <div className="flex items-center gap-2">
                   {chatHistory.length > 0 && (
-                    <div className="text-xs text-foreground-secondary bg-background/50 px-2 py-1 rounded-lg">
+                    <div className="text-sm text-foreground-secondary bg-background/50 px-3 py-1 rounded-lg">
                       {chatHistory.length} messages
                     </div>
                   )}
-                  <div className="flex items-center gap-1 text-xs">
-                    {apiKeySource && <span className="text-success bg-success/10 px-2 py-1 rounded-full">API Key Set</span>}
-                    {!apiKeySource && <span className="text-warning bg-warning/10 px-2 py-1 rounded-full">No API Key</span>}
+                  <div className="flex items-center gap-2 text-sm text-foreground-tertiary">
+                    {apiKeySource && <span className="text-success bg-success/10 px-3 py-1 rounded-full">API Connected</span>}
+                    {!apiKeySource && <span className="text-warning bg-warning/10 px-3 py-1 rounded-full">No API Key</span>}
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* Reduced Messages Area */}
-            <div className="flex-1 p-3 overflow-y-auto min-h-0 max-h-32">
+            {/* Messages Area */}
+            <div className="flex-1 p-6 overflow-y-auto min-h-0">
               {chatHistory.length === 0 ? (
                 <div className="h-full flex items-center justify-center">
-                  <div className="text-center space-y-3 max-w-sm">
-                    <div className="w-16 h-16 mx-auto rounded-xl bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center">
-                      <Zap className="w-8 h-8 text-primary" />
+                  <div className="text-center space-y-6 max-w-md">
+                    <div className="w-24 h-24 mx-auto rounded-3xl bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center">
+                      <Zap className="w-12 h-12 text-primary" />
                     </div>
                     <div>
-                      <h3 className="text-base font-semibold text-foreground mb-1">
+                      <h3 className="text-xl font-semibold text-foreground mb-2">
                         Ready to test your API
                       </h3>
-                      <p className="text-foreground-secondary text-sm leading-relaxed">
-                        Configure settings and start testing your API integration.
+                      <p className="text-foreground-secondary leading-relaxed">
+                        Configure your settings on the left, then start a conversation to test your API integration with real AI models.
                       </p>
                     </div>
-                    <div className="flex flex-wrap gap-1 justify-center">
-                      <div className="text-xs bg-background/60 px-2 py-1 rounded-full border border-border/30">
-                        Real-time
+                    <div className="flex flex-wrap gap-2 justify-center">
+                      <div className="text-xs bg-background/60 px-3 py-1 rounded-full border border-border/30">
+                        Real-time testing
                       </div>
-                      <div className="text-xs bg-background/60 px-2 py-1 rounded-full border border-border/30">
-                        Code gen
+                      <div className="text-xs bg-background/60 px-3 py-1 rounded-full border border-border/30">
+                        Code generation
                       </div>
-                      <div className="text-xs bg-background/60 px-2 py-1 rounded-full border border-border/30">
-                        Multi-model
+                      <div className="text-xs bg-background/60 px-3 py-1 rounded-full border border-border/30">
+                        Multiple models
                       </div>
                     </div>
                   </div>
                 </div>
               ) : (
-                <div className="space-y-2 h-full">
+                <div className="space-y-4">
                   {chatHistory.map((msg) => (
                     <div
                       key={msg.id}
                       className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
                     >
                       <div
-                        className={`max-w-[70%] rounded-lg p-2 ${
+                        className={`max-w-[80%] rounded-2xl p-4 ${
                           msg.role === 'user'
                             ? 'bg-primary text-primary-foreground'
                             : 'bg-background/60 border border-border/30'
                         }`}
                       >
-                        <p className="whitespace-pre-wrap text-sm">{msg.content}</p>
-                        <p className={`text-xs mt-1 opacity-70 ${
+                        <p className="whitespace-pre-wrap">{msg.content}</p>
+                        <p className={`text-xs mt-2 opacity-70 ${
                           msg.role === 'user' ? 'text-primary-foreground/70' : 'text-foreground-tertiary'
                         }`}>
                           {msg.timestamp.toLocaleTimeString()}
@@ -397,12 +397,12 @@ console.log(data);`
                   ))}
                   {isLoading && (
                     <div className="flex justify-start">
-                      <div className="bg-background/60 border border-border/30 rounded-lg p-2">
-                        <div className="flex items-center gap-1">
+                      <div className="bg-background/60 border border-border/30 rounded-2xl p-4">
+                        <div className="flex items-center gap-2">
                           <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
                           <div className="w-2 h-2 bg-primary rounded-full animate-pulse" style={{animationDelay: '0.2s'}}></div>
-                          <div className="w-1.5 h-1.5 bg-primary rounded-full animate-pulse" style={{animationDelay: '0.4s'}}></div>
-                          <span className="text-xs text-foreground-secondary ml-1">AI thinking...</span>
+                          <div className="w-2 h-2 bg-primary rounded-full animate-pulse" style={{animationDelay: '0.4s'}}></div>
+                          <span className="text-sm text-foreground-secondary ml-2">AI is thinking...</span>
                         </div>
                       </div>
                     </div>
@@ -411,8 +411,8 @@ console.log(data);`
               )}
             </div>
 
-            {/* Compact Input Area */}
-            <div className="p-3 border-t border-border/20">
+            {/* Enhanced Input Area */}
+            <div className="p-6 border-t border-border/20">
               <div className="relative">
                 <Textarea
                   placeholder="Type your message... (Ctrl+Enter to send)"
@@ -421,10 +421,10 @@ console.log(data);`
                     setMessage(e.target.value)
                     const textarea = e.target as HTMLTextAreaElement
                     textarea.style.height = 'auto'
-                    textarea.style.height = Math.min(textarea.scrollHeight, 100) + 'px'
+                    textarea.style.height = Math.min(textarea.scrollHeight, 120) + 'px'
                   }}
-                  className="bg-background/60 border-border/50 focus:border-primary/50 resize-none min-h-[40px] max-h-[80px] pr-10 py-2 px-3 text-sm rounded-lg transition-all"
-                  rows={1}
+                  className="bg-background/60 border-border/50 focus:border-primary/50 resize-none min-h-[60px] max-h-[120px] pr-16 py-4 px-4 text-base rounded-xl transition-all"
+                  rows={2}
                   onKeyDown={(e) => {
                     if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
                       e.preventDefault()
@@ -436,15 +436,19 @@ console.log(data);`
                 <Button
                   onClick={handleSendMessage}
                   disabled={!message.trim() || isLoading}
-                  className="absolute bottom-1.5 right-1.5 h-7 w-7 p-0 rounded-lg shadow-lg"
+                  className="absolute bottom-3 right-3 h-10 w-10 p-0 rounded-lg shadow-lg"
                 >
-                  <Send className="w-3 h-3" />
+                  <Send className="w-4 h-4" />
                 </Button>
               </div>
-              <div className="flex items-center justify-between mt-2">
+              <div className="flex items-center justify-between mt-3">
                 <p className="text-xs text-foreground-tertiary">
-                  <kbd className="px-1 py-0.5 bg-background/60 border border-border/30 rounded text-xs">Ctrl+Enter</kbd> to send
+                  Press <kbd className="px-1.5 py-0.5 bg-background/60 border border-border/30 rounded text-xs">Ctrl</kbd> + <kbd className="px-1.5 py-0.5 bg-background/60 border border-border/30 rounded text-xs">Enter</kbd> to send
                 </p>
+                <div className="flex items-center gap-2 text-xs text-foreground-tertiary">
+                  {apiKeySource && <span className="text-success">API Key Set</span>}
+                  {!apiKeySource && <span className="text-warning">No API Key</span>}
+                </div>
               </div>
             </div>
           </GlassCard>
