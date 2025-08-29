@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { useToast } from "@/components/ui/use-toast"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
@@ -60,12 +61,65 @@ const mockTeamMembers: TeamMember[] = [
 export default function Teams() {
   const [members, setMembers] = useState<TeamMember[]>(mockTeamMembers)
   const [inviteEmail, setInviteEmail] = useState("")
+  const [isInviting, setIsInviting] = useState(false)
+  const { toast } = useToast()
 
-  const handleInviteUser = () => {
-    if (inviteEmail.trim()) {
-      console.log("Inviting user:", inviteEmail)
-      // Add invitation logic here
+  const handleInviteUser = async () => {
+    const email = inviteEmail.trim()
+    
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!email) {
+      toast({
+        title: "Email required",
+        description: "Please enter an email address to send an invitation.",
+        variant: "destructive"
+      })
+      return
+    }
+    
+    if (!emailRegex.test(email)) {
+      toast({
+        title: "Invalid email",
+        description: "Please enter a valid email address.",
+        variant: "destructive"
+      })
+      return
+    }
+
+    // Check if user is already invited
+    const existingMember = members.find(m => m.email.toLowerCase() === email.toLowerCase())
+    if (existingMember) {
+      toast({
+        title: "User already exists",
+        description: "This user is already a member of your team.",
+        variant: "destructive"
+      })
+      return
+    }
+
+    setIsInviting(true)
+    
+    try {
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 1000))
+      
+      // For now, just show success message
+      toast({
+        title: "Invitation sent!",
+        description: `Invitation sent to ${email}. They will receive an email with instructions to join your team.`
+      })
+      
       setInviteEmail("")
+      console.log("Inviting user:", email)
+    } catch (error) {
+      toast({
+        title: "Failed to send invitation",
+        description: "Something went wrong. Please try again.",
+        variant: "destructive"
+      })
+    } finally {
+      setIsInviting(false)
     }
   }
 
@@ -172,9 +226,13 @@ export default function Teams() {
                   <option>Admin</option>
                 </select>
               </div>
-              <Button className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-sm" onClick={handleInviteUser}>
+              <Button 
+                className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-sm" 
+                onClick={handleInviteUser}
+                disabled={isInviting}
+              >
                 <Plus className="w-4 h-4 mr-2" />
-                Send Invite
+                {isInviting ? "Sending..." : "Send Invite"}
               </Button>
             </div>
           </div>
