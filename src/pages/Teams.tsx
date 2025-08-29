@@ -11,6 +11,13 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 import { GlassCard } from "@/components/ui/glass-card"
 import { 
   Plus, 
@@ -61,6 +68,7 @@ const mockTeamMembers: TeamMember[] = [
 export default function Teams() {
   const [members, setMembers] = useState<TeamMember[]>(mockTeamMembers)
   const [inviteEmail, setInviteEmail] = useState("")
+  const [selectedRole, setSelectedRole] = useState("member")
   const [isInviting, setIsInviting] = useState(false)
   const { toast } = useToast()
 
@@ -221,10 +229,15 @@ export default function Teams() {
               </div>
               <div className="space-y-2">
                 <label className="text-sm font-medium">Role</label>
-                <select className="w-full h-10 px-3 py-2 bg-background/50 border border-border/60 rounded-md text-sm">
-                  <option>Member</option>
-                  <option>Admin</option>
-                </select>
+                <Select value={selectedRole} onValueChange={setSelectedRole}>
+                  <SelectTrigger className="bg-background/50 border-border/60">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="member">Member</SelectItem>
+                    <SelectItem value="admin">Admin</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
               <Button 
                 className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-sm" 
