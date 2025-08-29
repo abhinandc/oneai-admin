@@ -61,7 +61,7 @@ export function SideNav() {
       : "apple-nav-item"
 
   return (
-    <Sidebar className="apple-sidebar w-64" collapsible="icon">
+    <Sidebar className="backdrop-blur-2xl bg-sidebar/60 border-r border-sidebar-border/30 w-64 shadow-xl" collapsible="icon">
       <SidebarContent className="p-4 space-y-6">
         {/* Collapse Toggle */}
         <div className="flex justify-end mb-4">

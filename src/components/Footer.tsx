@@ -2,8 +2,8 @@ import { Code } from "lucide-react"
 
 export function Footer() {
   return (
-    <footer className="mt-auto pt-8 pb-6 px-6">
-      <div className="border-t border-border/20 pt-6">
+    <footer className="backdrop-blur-2xl bg-background/80 border-t border-border/30 px-6 py-4 shadow-lg">
+      <div className="">
         <div className="flex flex-col md:flex-row justify-between items-center gap-4">
           <div className="flex items-center gap-2 text-sm text-foreground-secondary">
             <span>Product by OneOrigin</span>

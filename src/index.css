@@ -71,65 +71,65 @@
   }
 
   .dark {
-    /* Apple-inspired Dark Theme - Better balanced */
-    --background: 0 0% 11%;
-    --background-secondary: 0 0% 13%;
-    --background-tertiary: 0 0% 15%;
+    /* Stunning Dark Theme - Rich blacks with vibrant accents */
+    --background: 0 0% 8%;
+    --background-secondary: 0 0% 10%;
+    --background-tertiary: 0 0% 12%;
     
-    --foreground: 0 0% 92%;
-    --foreground-secondary: 0 0% 68%;
-    --foreground-tertiary: 0 0% 48%;
+    --foreground: 0 0% 96%;
+    --foreground-secondary: 0 0% 75%;
+    --foreground-tertiary: 0 0% 55%;
 
-    /* Dark surfaces with strong contrast */
-    --card: 0 0% 6%;
-    --card-foreground: 0 0% 96%;
-    --card-border: 0 0% 35%;
+    /* Rich dark surfaces with excellent contrast */
+    --card: 0 0% 4%;
+    --card-foreground: 0 0% 98%;
+    --card-border: 0 0% 20%;
 
-    --popover: 0 0% 14%;
-    --popover-foreground: 0 0% 92%;
+    --popover: 0 0% 6%;
+    --popover-foreground: 0 0% 96%;
 
-    /* Brighter blue for dark mode */
-    --primary: 213 94% 68%;
+    /* Vibrant blue for dark mode - more saturated */
+    --primary: 213 100% 70%;
     --primary-foreground: 0 0% 100%;
-    --primary-hover: 213 94% 73%;
-    --primary-active: 213 94% 63%;
+    --primary-hover: 213 100% 75%;
+    --primary-active: 213 100% 65%;
 
-    /* Dark grays with better contrast */
-    --secondary: 0 0% 19%;
-    --secondary-foreground: 0 0% 92%;
-    --secondary-hover: 0 0% 22%;
+    /* Rich dark grays with perfect contrast */
+    --secondary: 0 0% 14%;
+    --secondary-foreground: 0 0% 96%;
+    --secondary-hover: 0 0% 18%;
 
-    --accent: 0 0% 21%;
-    --accent-foreground: 0 0% 92%;
-    --accent-hover: 0 0% 24%;
+    --accent: 0 0% 16%;
+    --accent-foreground: 0 0% 96%;
+    --accent-hover: 0 0% 20%;
 
-    /* Dark status colors */
-    --success: 142 76% 46%;
+    /* Vibrant status colors for dark mode */
+    --success: 142 80% 50%;
     --success-foreground: 0 0% 100%;
-    --warning: 38 92% 60%;
+    --warning: 38 95% 65%;
     --warning-foreground: 0 0% 9%;
-    --destructive: 0 72% 61%;
+    --destructive: 0 80% 65%;
     --destructive-foreground: 0 0% 100%;
 
-    /* Dark form elements with enhanced contrast */
-    --muted: 0 0% 15%;
-    --muted-foreground: 0 0% 65%;
-    --border: 0 0% 30%;
-    --input: 0 0% 8%;
-    --input-border: 0 0% 35%;
-    --ring: 213 94% 68%;
+    /* Dark form elements with stunning contrast */
+    --muted: 0 0% 12%;
+    --muted-foreground: 0 0% 70%;
+    --border: 0 0% 25%;
+    --input: 0 0% 6%;
+    --input-border: 0 0% 25%;
+    --ring: 213 100% 70%;
 
-    /* Dark sidebar with better contrast */
-    --sidebar-background: 0 0% 12%;
-    --sidebar-foreground: 0 0% 92%;
-    --sidebar-border: 0 0% 20%;
-    --sidebar-accent: 0 0% 18%;
-    --sidebar-accent-foreground: 0 0% 92%;
+    /* Dark sidebar with premium feel */
+    --sidebar-background: 0 0% 6%;
+    --sidebar-foreground: 0 0% 96%;
+    --sidebar-border: 0 0% 15%;
+    --sidebar-accent: 0 0% 12%;
+    --sidebar-accent-foreground: 0 0% 96%;
 
-    /* Glass effects for dark mode with better contrast */
-    --glass-bg: 0 0% 8% / 0.90;
-    --glass-border: 0 0% 30% / 0.8;
-    --shadow-light: 0 0% 5%;
+    /* Enhanced glass effects for dark mode */
+    --glass-bg: 0 0% 4% / 0.95;
+    --glass-border: 0 0% 25% / 0.9;
+    --shadow-light: 0 0% 2%;
   }
 }
 
@@ -146,10 +146,11 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
-  /* Apple-style scrollbars */
+  /* Invisible scrollbars for stunning UI */
   ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+    width: 0px;
+    height: 0px;
+    background: transparent;
   }
 
   ::-webkit-scrollbar-track {
@@ -157,19 +158,22 @@
   }
 
   ::-webkit-scrollbar-thumb {
-    background: hsla(var(--border), 0.5);
-    border-radius: 4px;
-    transition: background 0.2s ease;
+    background: transparent;
   }
 
-  ::-webkit-scrollbar-thumb:hover {
-    background: hsla(var(--border), 0.7);
+  ::-webkit-scrollbar-corner {
+    background: transparent;
   }
 
-  /* Firefox scrollbars */
+  /* Firefox invisible scrollbars */
   * {
-    scrollbar-width: thin;
-    scrollbar-color: hsla(var(--border), 0.5) transparent;
+    scrollbar-width: none;
+    scrollbar-color: transparent transparent;
+  }
+
+  /* Ensure content is still scrollable */
+  html, body {
+    overflow: auto;
   }
 }
 

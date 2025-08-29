@@ -38,7 +38,7 @@ export function TopBar() {
   }, [])
 
   return (
-    <header className="apple-glass h-16 px-6 flex items-center justify-between sticky top-0 z-50">
+    <header className="backdrop-blur-2xl bg-background/80 border-b border-border/30 h-16 px-6 flex items-center justify-between z-50 shadow-sm">
       {/* Left Section */}
       <div className="flex items-center gap-4">
         {/* Brand */}

@@ -17,6 +17,13 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 import { GlassCard } from "@/components/ui/glass-card"
 import { 
   Plus, 
@@ -393,11 +400,16 @@ export default function InternalUsers() {
                   <div className="space-y-4">
                     <div className="space-y-2">
                       <label className="text-sm font-medium">Default Role</label>
-                      <select className="w-full p-2 glass-card bg-background/50 border border-card-border/50 rounded-md">
-                        <option>User</option>
-                        <option>Admin</option>
-                        <option>Viewer</option>
-                      </select>
+                      <Select defaultValue="user">
+                        <SelectTrigger className="glass-card bg-background/50 border-card-border/50">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent className="glass-card bg-background/95 backdrop-blur-md border-card-border/50 z-50">
+                          <SelectItem value="user">User</SelectItem>
+                          <SelectItem value="admin">Admin</SelectItem>
+                          <SelectItem value="viewer">Viewer</SelectItem>
+                        </SelectContent>
+                      </Select>
                     </div>
 
                     <div className="space-y-2">
@@ -412,10 +424,15 @@ export default function InternalUsers() {
                   <div className="space-y-4">
                     <div className="space-y-2">
                       <label className="text-sm font-medium">Default Team Assignment</label>
-                      <select className="w-full p-2 glass-card bg-background/50 border border-card-border/50 rounded-md">
-                        <option>No Default Team</option>
-                        <option>Default Team</option>
-                      </select>
+                      <Select defaultValue="none">
+                        <SelectTrigger className="glass-card bg-background/50 border-card-border/50">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent className="glass-card bg-background/95 backdrop-blur-md border-card-border/50 z-50">
+                          <SelectItem value="none">No Default Team</SelectItem>
+                          <SelectItem value="default">Default Team</SelectItem>
+                        </SelectContent>
+                      </Select>
                     </div>
 
                     <div className="space-y-2">

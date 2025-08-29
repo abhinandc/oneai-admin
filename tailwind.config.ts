@@ -144,6 +144,10 @@ export default {
 				'accordion-up': 'accordion-up 0.2s ease-out',
 				'fade-in': 'fade-in 0.3s ease-out',
 				'scale-in': 'scale-in 0.2s ease-out'
+			},
+			boxShadow: {
+				'3xl': '0 35px 60px -12px rgba(0, 0, 0, 0.25)',
+				'4xl': '0 45px 100px -12px rgba(0, 0, 0, 0.25)',
 			}
 		}
 	},
