@@ -6,49 +6,58 @@ import { Input } from "@/components/ui/input"
 import { GlassCard } from "@/components/ui/glass-card"
 import { Eye, EyeOff, Mail, Lock } from "lucide-react"
 
-export default function Login() {
+interface LoginProps {
+  onLogin?: (token: string) => void;
+}
+
+export default function Login({ onLogin }: LoginProps) {
   const navigate = useNavigate()
   const { theme } = useTheme()
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [showPassword, setShowPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState("")
 
   const handleEmailLogin = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsLoading(true)
     
     try {
-      // TODO: Replace with your actual authentication API call
-      const response = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password }),
-      })
+      // Master admin credential
+      const MASTER_EMAIL = 'abhinand@oneorigin.us';
+      const MASTER_PASSWORD = 'TempAdmin2025!';
       
-      if (response.ok) {
-        const data = await response.json()
-        // Store auth token/session as needed
-        localStorage.setItem('authToken', data.token)
-        navigate('/dashboard')
+      if (email === MASTER_EMAIL && password === MASTER_PASSWORD) {
+        // Store auth info
+        const token = 'admin-token-' + Date.now();
+        localStorage.setItem('authToken', token);
+        localStorage.setItem('userEmail', email);
+        localStorage.setItem('userRole', 'superadmin');
+        
+        // Call onLogin callback to update app state
+        onLogin?.(token);
+        
+        console.log('Email login successful for:', email);
       } else {
-        console.error('Login failed')
-        // Handle login error
+        setError(`Invalid credentials. Use:\nEmail: ${MASTER_EMAIL}\nPassword: ${MASTER_PASSWORD}`);
       }
     } catch (error) {
       console.error('Login error:', error)
-      // Handle login error - no automatic redirect
+      setError('Login failed. Please try again.');
     } finally {
       setIsLoading(false)
     }
   }
 
   const handleGoogleLogin = () => {
-    // TODO: Implement Google OAuth with your backend
-    console.log("Google login initiated")
-    // No automatic redirect - implement proper OAuth flow
+    console.log("Google OAuth initiated");
+    
+    // Set a flag that OAuth is in progress
+    localStorage.setItem('oauth_in_progress', 'true');
+    
+    // Simple redirect to oauth2-proxy - it handles everything
+    window.location.href = 'https://edgeadmin.oneorigin.us/oauth2/start?rd=/dashboard';
   }
 
   return (
