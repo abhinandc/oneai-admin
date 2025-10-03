@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { useToast } from "@/hooks/use-toast"
+import { Switch } from "@/components/ui/switch"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { GlassCard } from "@/components/ui/glass-card"
@@ -49,6 +50,16 @@ export default function Settings() {
     certificate: "",
     emailAttribute: "email",
     nameAttribute: "name"
+  })
+  const [uiAccessConfig, setUIAccessConfig] = useState({
+    requireMFA: false,
+    allowedRoles: ["admin", "user"],
+    ipRestrictionEnabled: false,
+    sessionTimeout: "24",
+    allowPublicSignup: false,
+    requireEmailVerification: true,
+    maxFailedAttempts: "5",
+    lockoutDuration: "30"
   })
   const navigate = useNavigate()
   const { toast } = useToast()
@@ -171,6 +182,15 @@ export default function Settings() {
       title: "UI Access Control Updated",
       description: "Access control settings have been saved successfully."
     })
+  }
+
+  const toggleRole = (role: string) => {
+    setUIAccessConfig(prev => ({
+      ...prev,
+      allowedRoles: prev.allowedRoles.includes(role)
+        ? prev.allowedRoles.filter(r => r !== role)
+        : [...prev.allowedRoles, role]
+    }))
   }
 
   const handleSaveSCIM = () => {
@@ -501,21 +521,209 @@ export default function Settings() {
 
           {/* UI Access Control Dialog */}
           <Dialog open={uiAccessDialogOpen} onOpenChange={setUIAccessDialogOpen}>
-            <DialogContent className="glass-card">
+            <DialogContent className="glass-card max-w-2xl max-h-[90vh] overflow-y-auto">
               <DialogHeader>
                 <DialogTitle>UI Access Control</DialogTitle>
                 <DialogDescription>
-                  Configure who can access the admin interface.
+                  Configure security settings and access permissions for the admin interface.
                 </DialogDescription>
               </DialogHeader>
-              <div className="space-y-4">
-                <p className="text-sm text-foreground-secondary">
-                  Access control settings will determine which users and roles can access specific features of the admin interface.
-                </p>
+              
+              <div className="space-y-6">
+                {/* Role-Based Access Control */}
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <Label className="text-base">Allowed Roles</Label>
+                      <p className="text-sm text-foreground-secondary">
+                        Select which roles can access the admin interface
+                      </p>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-2 gap-3">
+                    {["admin", "moderator", "user", "viewer"].map((role) => (
+                      <div 
+                        key={role}
+                        onClick={() => toggleRole(role)}
+                        className={`p-3 rounded-lg border cursor-pointer transition-all ${
+                          uiAccessConfig.allowedRoles.includes(role)
+                            ? "border-primary bg-primary/10"
+                            : "border-card-border/50 bg-glass/30 hover:border-card-border"
+                        }`}
+                      >
+                        <div className="flex items-center gap-2">
+                          <div className={`w-4 h-4 rounded border-2 flex items-center justify-center ${
+                            uiAccessConfig.allowedRoles.includes(role)
+                              ? "border-primary bg-primary"
+                              : "border-card-border"
+                          }`}>
+                            {uiAccessConfig.allowedRoles.includes(role) && (
+                              <Eye className="w-3 h-3 text-primary-foreground" />
+                            )}
+                          </div>
+                          <span className="font-medium capitalize">{role}</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Authentication Settings */}
+                <div className="border-t border-card-border/50 pt-4 space-y-4">
+                  <h4 className="text-sm font-semibold">Authentication Settings</h4>
+                  
+                  <div className="flex items-center justify-between">
+                    <div className="flex-1">
+                      <Label>Require Multi-Factor Authentication</Label>
+                      <p className="text-sm text-foreground-secondary">
+                        Force all users to enable MFA before accessing the interface
+                      </p>
+                    </div>
+                    <Switch
+                      checked={uiAccessConfig.requireMFA}
+                      onCheckedChange={(checked) =>
+                        setUIAccessConfig({ ...uiAccessConfig, requireMFA: checked })
+                      }
+                    />
+                  </div>
+
+                  <div className="flex items-center justify-between">
+                    <div className="flex-1">
+                      <Label>IP Restriction</Label>
+                      <p className="text-sm text-foreground-secondary">
+                        Only allow access from whitelisted IP addresses
+                      </p>
+                    </div>
+                    <Switch
+                      checked={uiAccessConfig.ipRestrictionEnabled}
+                      onCheckedChange={(checked) =>
+                        setUIAccessConfig({ ...uiAccessConfig, ipRestrictionEnabled: checked })
+                      }
+                    />
+                  </div>
+
+                  <div className="flex items-center justify-between">
+                    <div className="flex-1">
+                      <Label>Require Email Verification</Label>
+                      <p className="text-sm text-foreground-secondary">
+                        Users must verify their email before accessing the admin panel
+                      </p>
+                    </div>
+                    <Switch
+                      checked={uiAccessConfig.requireEmailVerification}
+                      onCheckedChange={(checked) =>
+                        setUIAccessConfig({ ...uiAccessConfig, requireEmailVerification: checked })
+                      }
+                    />
+                  </div>
+
+                  <div className="flex items-center justify-between">
+                    <div className="flex-1">
+                      <Label>Allow Public Signup</Label>
+                      <p className="text-sm text-foreground-secondary">
+                        Allow new users to self-register for admin access
+                      </p>
+                    </div>
+                    <Switch
+                      checked={uiAccessConfig.allowPublicSignup}
+                      onCheckedChange={(checked) =>
+                        setUIAccessConfig({ ...uiAccessConfig, allowPublicSignup: checked })
+                      }
+                    />
+                  </div>
+                </div>
+
+                {/* Session Management */}
+                <div className="border-t border-card-border/50 pt-4 space-y-4">
+                  <h4 className="text-sm font-semibold">Session Management</h4>
+                  
+                  <div className="space-y-2">
+                    <Label htmlFor="session-timeout">Session Timeout</Label>
+                    <Select
+                      value={uiAccessConfig.sessionTimeout}
+                      onValueChange={(value) =>
+                        setUIAccessConfig({ ...uiAccessConfig, sessionTimeout: value })
+                      }
+                    >
+                      <SelectTrigger className="glass-card bg-background/50 border-card-border/50">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent className="glass-card bg-background/95 backdrop-blur-md border-card-border/50">
+                        <SelectItem value="1">1 hour</SelectItem>
+                        <SelectItem value="4">4 hours</SelectItem>
+                        <SelectItem value="8">8 hours</SelectItem>
+                        <SelectItem value="24">24 hours</SelectItem>
+                        <SelectItem value="168">7 days</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <p className="text-xs text-foreground-secondary">
+                      How long before inactive users are logged out
+                    </p>
+                  </div>
+                </div>
+
+                {/* Security Policies */}
+                <div className="border-t border-card-border/50 pt-4 space-y-4">
+                  <h4 className="text-sm font-semibold">Security Policies</h4>
+                  
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="max-attempts">Max Failed Login Attempts</Label>
+                      <Select
+                        value={uiAccessConfig.maxFailedAttempts}
+                        onValueChange={(value) =>
+                          setUIAccessConfig({ ...uiAccessConfig, maxFailedAttempts: value })
+                        }
+                      >
+                        <SelectTrigger className="glass-card bg-background/50 border-card-border/50">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent className="glass-card bg-background/95 backdrop-blur-md border-card-border/50">
+                          <SelectItem value="3">3 attempts</SelectItem>
+                          <SelectItem value="5">5 attempts</SelectItem>
+                          <SelectItem value="10">10 attempts</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="lockout-duration">Account Lockout Duration</Label>
+                      <Select
+                        value={uiAccessConfig.lockoutDuration}
+                        onValueChange={(value) =>
+                          setUIAccessConfig({ ...uiAccessConfig, lockoutDuration: value })
+                        }
+                      >
+                        <SelectTrigger className="glass-card bg-background/50 border-card-border/50">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent className="glass-card bg-background/95 backdrop-blur-md border-card-border/50">
+                          <SelectItem value="15">15 minutes</SelectItem>
+                          <SelectItem value="30">30 minutes</SelectItem>
+                          <SelectItem value="60">1 hour</SelectItem>
+                          <SelectItem value="1440">24 hours</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Info Box */}
+                <div className="flex items-start gap-3 p-3 rounded-lg bg-blue-50/50 dark:bg-blue-900/10 border border-blue-200/50 dark:border-blue-800/50">
+                  <Info className="w-5 h-5 text-blue-600 dark:text-blue-400 mt-0.5 flex-shrink-0" />
+                  <div className="text-sm text-blue-800 dark:text-blue-200">
+                    <strong>Note:</strong> These settings apply to all admin interface access. Changes take effect immediately for new sessions.
+                  </div>
+                </div>
               </div>
+
               <DialogFooter>
-                <Button variant="outline" onClick={() => setUIAccessDialogOpen(false)}>Cancel</Button>
-                <Button onClick={handleSaveUIAccess}>Save Settings</Button>
+                <Button variant="outline" onClick={() => setUIAccessDialogOpen(false)}>
+                  Cancel
+                </Button>
+                <Button onClick={handleSaveUIAccess}>
+                  Save Settings
+                </Button>
               </DialogFooter>
             </DialogContent>
           </Dialog>
