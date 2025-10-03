@@ -48,7 +48,7 @@ export function TopBar() {
         {/* Brand */}
         <div className="flex items-center">
           <span className="font-display font-semibold text-lg text-foreground tracking-tight">
-            OneAI <span className="text-foreground-secondary">|</span> Admin
+            ZoneAI <span className="text-foreground-secondary">|</span> Admin
           </span>
         </div>
       </div>
