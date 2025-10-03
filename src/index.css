@@ -81,75 +81,75 @@
   }
 
   .dark {
-    /* Liquid Glass Dark Theme - Deep, rich, and luminous */
-    --background: 220 18% 8%;
-    --background-secondary: 220 18% 10%;
-    --background-tertiary: 220 18% 12%;
+    /* Liquid Glass Dark Theme - Premium contrast and depth */
+    --background: 222 20% 6%;
+    --background-secondary: 222 20% 8%;
+    --background-tertiary: 222 18% 11%;
     
-    --foreground: 220 10% 97%;
-    --foreground-secondary: 220 8% 76%;
-    --foreground-tertiary: 220 6% 58%;
+    --foreground: 220 15% 98%;
+    --foreground-secondary: 220 12% 80%;
+    --foreground-tertiary: 220 10% 62%;
 
-    /* Deep glass surfaces */
-    --card: 220 18% 5%;
-    --card-foreground: 220 10% 97%;
-    --card-border: 220 12% 22%;
+    /* Rich glass surfaces with high contrast */
+    --card: 222 20% 9%;
+    --card-foreground: 220 15% 98%;
+    --card-border: 220 15% 28%;
 
-    --popover: 220 18% 7%;
-    --popover-foreground: 220 10% 97%;
+    --popover: 222 20% 10%;
+    --popover-foreground: 220 15% 98%;
 
-    /* Luminous blue for dark mode */
-    --primary: 213 100% 72%;
-    --primary-foreground: 0 0% 100%;
-    --primary-hover: 213 100% 77%;
-    --primary-active: 213 100% 67%;
-    --primary-glow: 213 100% 82%;
+    /* Vibrant, luminous blue */
+    --primary: 213 100% 68%;
+    --primary-foreground: 222 20% 6%;
+    --primary-hover: 213 100% 73%;
+    --primary-active: 213 100% 63%;
+    --primary-glow: 213 100% 78%;
 
-    /* Rich dark surfaces */
-    --secondary: 220 15% 15%;
-    --secondary-foreground: 220 10% 97%;
-    --secondary-hover: 220 15% 19%;
+    /* High contrast surfaces */
+    --secondary: 220 18% 16%;
+    --secondary-foreground: 220 15% 98%;
+    --secondary-hover: 220 18% 21%;
 
-    --accent: 220 15% 17%;
-    --accent-foreground: 220 10% 97%;
-    --accent-hover: 220 15% 21%;
+    --accent: 220 18% 18%;
+    --accent-foreground: 220 15% 98%;
+    --accent-hover: 220 18% 24%;
 
-    /* Vibrant status colors */
-    --success: 142 80% 52%;
-    --success-foreground: 0 0% 100%;
-    --success-glow: 142 80% 88%;
-    --warning: 38 95% 68%;
-    --warning-foreground: 220 18% 8%;
-    --warning-glow: 38 95% 88%;
-    --destructive: 0 80% 68%;
-    --destructive-foreground: 0 0% 100%;
-    --destructive-glow: 0 80% 88%;
+    /* Bold, vibrant status colors */
+    --success: 142 85% 48%;
+    --success-foreground: 222 20% 6%;
+    --success-glow: 142 85% 75%;
+    --warning: 38 100% 62%;
+    --warning-foreground: 222 20% 6%;
+    --warning-glow: 38 100% 80%;
+    --destructive: 0 85% 62%;
+    --destructive-foreground: 222 20% 6%;
+    --destructive-glow: 0 85% 80%;
 
-    /* Dark form elements */
-    --muted: 220 15% 13%;
-    --muted-foreground: 220 8% 72%;
-    --border: 220 12% 26%;
-    --input: 220 18% 7%;
-    --input-border: 220 12% 26%;
-    --ring: 213 100% 72%;
+    /* High contrast form elements */
+    --muted: 220 18% 15%;
+    --muted-foreground: 220 12% 78%;
+    --border: 220 15% 30%;
+    --input: 222 20% 10%;
+    --input-border: 220 15% 32%;
+    --ring: 213 100% 68%;
 
-    /* Dark sidebar - Deep glass */
-    --sidebar-background: 220 18% 7%;
-    --sidebar-foreground: 220 10% 97%;
-    --sidebar-border: 220 12% 18%;
-    --sidebar-accent: 220 15% 13%;
-    --sidebar-accent-foreground: 220 10% 97%;
+    /* Premium dark sidebar */
+    --sidebar-background: 222 22% 7%;
+    --sidebar-foreground: 220 15% 98%;
+    --sidebar-border: 220 15% 22%;
+    --sidebar-accent: 220 18% 14%;
+    --sidebar-accent-foreground: 220 15% 98%;
 
-    /* Enhanced Liquid Glass for dark mode */
-    --glass-bg: 220 18% 5% / 0.6;
-    --glass-border: 220 12% 26% / 0.4;
-    --glass-shadow: 220 25% 4%;
-    --frosted-bg: 220 18% 8% / 0.85;
+    /* Premium Liquid Glass for dark mode */
+    --glass-bg: 222 22% 8% / 0.5;
+    --glass-border: 220 15% 35% / 0.3;
+    --glass-shadow: 222 30% 3%;
+    --frosted-bg: 222 20% 9% / 0.8;
     
-    /* Luminous glow effects */
-    --glow-primary: 213 100% 72% / 0.25;
-    --glow-success: 142 80% 52% / 0.2;
-    --glow-warning: 38 95% 68% / 0.2;
+    /* Intense luminous glow effects */
+    --glow-primary: 213 100% 68% / 0.35;
+    --glow-success: 142 85% 48% / 0.25;
+    --glow-warning: 38 100% 62% / 0.25;
   }
 }
 
@@ -203,32 +203,32 @@
     background: hsla(var(--glass-bg));
     border: 1px solid hsla(var(--glass-border));
     @apply rounded-3xl;
-    backdrop-filter: blur(40px) saturate(180%);
-    -webkit-backdrop-filter: blur(40px) saturate(180%);
+    backdrop-filter: blur(50px) saturate(200%);
+    -webkit-backdrop-filter: blur(50px) saturate(200%);
     box-shadow: 
-      0 8px 32px -8px hsla(var(--glass-shadow), 0.15),
+      0 10px 40px -10px hsla(var(--glass-shadow), 0.2),
       0 0 0 1px hsla(var(--glass-border)),
-      inset 0 1px 0 0 hsla(0 0% 100% / 0.05);
+      inset 0 2px 0 0 hsla(0 0% 100% / 0.08);
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   }
   
   .liquid-glass-card:hover {
     transform: translateY(-4px) scale(1.01);
     box-shadow: 
-      0 20px 60px -12px hsla(var(--glass-shadow), 0.25),
-      0 0 0 1px hsla(var(--primary) / 0.2),
-      inset 0 1px 0 0 hsla(0 0% 100% / 0.08);
+      0 24px 70px -15px hsla(var(--glass-shadow), 0.35),
+      0 0 0 1px hsla(var(--primary) / 0.25),
+      inset 0 2px 0 0 hsla(0 0% 100% / 0.12);
   }
 
   /* Frosted glass variant - More subtle */
   .frosted-glass {
     background: hsla(var(--frosted-bg));
-    backdrop-filter: blur(60px) saturate(150%);
-    -webkit-backdrop-filter: blur(60px) saturate(150%);
-    @apply border border-border/30 rounded-2xl;
+    backdrop-filter: blur(70px) saturate(160%);
+    -webkit-backdrop-filter: blur(70px) saturate(160%);
+    @apply border border-border/40 rounded-2xl;
     box-shadow: 
-      0 4px 16px -4px hsla(var(--glass-shadow), 0.1),
-      inset 0 1px 0 0 hsla(0 0% 100% / 0.03);
+      0 6px 20px -6px hsla(var(--glass-shadow), 0.15),
+      inset 0 1px 0 0 hsla(0 0% 100% / 0.06);
   }
   
   /* Apple-style cards - Enhanced with liquid glass */
@@ -240,19 +240,19 @@
   .liquid-button {
     @apply rounded-2xl px-5 py-3 font-semibold transition-all duration-300;
     background: hsla(var(--glass-bg));
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(30px) saturate(180%);
+    -webkit-backdrop-filter: blur(30px) saturate(180%);
     border: 1px solid hsla(var(--glass-border));
     box-shadow: 
-      0 2px 8px hsla(var(--glass-shadow), 0.1),
-      inset 0 1px 0 hsla(0 0% 100% / 0.05);
+      0 3px 10px hsla(var(--glass-shadow), 0.15),
+      inset 0 1px 0 hsla(0 0% 100% / 0.08);
   }
   
   .liquid-button:hover {
     transform: translateY(-1px);
     box-shadow: 
-      0 8px 24px hsla(var(--glass-shadow), 0.15),
-      inset 0 1px 0 hsla(0 0% 100% / 0.08);
+      0 10px 30px hsla(var(--glass-shadow), 0.25),
+      inset 0 1px 0 hsla(0 0% 100% / 0.12);
   }
 
   .liquid-button:active {
@@ -261,18 +261,18 @@
 
   /* Primary liquid button with glow */
   .liquid-button-primary {
-    @apply liquid-button bg-primary text-primary-foreground border-0;
+    @apply liquid-button bg-primary text-primary-foreground border-0 font-bold;
     box-shadow: 
-      0 4px 16px hsla(var(--glow-primary)),
-      0 2px 8px hsla(var(--primary) / 0.3),
-      inset 0 1px 0 hsla(0 0% 100% / 0.2);
+      0 6px 20px hsla(var(--glow-primary)),
+      0 3px 12px hsla(var(--primary) / 0.4),
+      inset 0 1px 0 hsla(0 0% 100% / 0.25);
   }
 
   .liquid-button-primary:hover {
     box-shadow: 
-      0 8px 32px hsla(var(--glow-primary)),
-      0 4px 16px hsla(var(--primary) / 0.4),
-      inset 0 1px 0 hsla(0 0% 100% / 0.3);
+      0 10px 40px hsla(var(--glow-primary)),
+      0 5px 20px hsla(var(--primary) / 0.5),
+      inset 0 1px 0 hsla(0 0% 100% / 0.35);
   }
   
   /* Apple-style buttons - Updated with liquid glass */
@@ -287,12 +287,12 @@
   /* Liquid Glass sidebar */
   .liquid-sidebar {
     background: hsla(var(--glass-bg));
-    backdrop-filter: blur(60px) saturate(180%);
-    -webkit-backdrop-filter: blur(60px) saturate(180%);
-    @apply border-r border-border/20;
+    backdrop-filter: blur(70px) saturate(200%);
+    -webkit-backdrop-filter: blur(70px) saturate(200%);
+    @apply border-r border-border/30;
     box-shadow: 
-      inset -1px 0 0 hsla(var(--border) / 0.1),
-      4px 0 24px -8px hsla(var(--glass-shadow), 0.1);
+      inset -1px 0 0 hsla(var(--border) / 0.15),
+      6px 0 30px -10px hsla(var(--glass-shadow), 0.15);
   }
   
   .apple-sidebar {
@@ -323,15 +323,15 @@
   
   .liquid-nav-item-active {
     @apply liquid-nav-item text-primary;
-    font-weight: 600;
-    background: hsla(var(--primary) / 0.08);
+    font-weight: 700;
+    background: hsla(var(--primary) / 0.12);
     box-shadow: 
-      0 2px 12px hsla(var(--glow-primary)),
-      inset 0 1px 0 hsla(var(--primary) / 0.1);
+      0 3px 15px hsla(var(--glow-primary)),
+      inset 0 1px 0 hsla(var(--primary) / 0.15);
   }
 
   .liquid-nav-item-active::before {
-    background: hsla(var(--primary) / 0.12);
+    background: hsla(var(--primary) / 0.18);
   }
   
   .apple-nav-item {
@@ -357,24 +357,24 @@
   
   /* Liquid Glass inputs */
   .liquid-input {
-    background: hsla(var(--input) / 0.5);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    @apply border border-input-border/50 rounded-2xl px-5 py-3.5;
-    @apply focus:ring-2 focus:ring-primary/30 focus:border-primary/50;
+    background: hsla(var(--input) / 0.6);
+    backdrop-filter: blur(30px) saturate(180%);
+    -webkit-backdrop-filter: blur(30px) saturate(180%);
+    @apply border border-input-border/60 rounded-2xl px-5 py-3.5;
+    @apply focus:ring-2 focus:ring-primary/40 focus:border-primary/60;
     @apply transition-all duration-300;
     font-family: 'SF Pro Text', 'Inter', sans-serif;
     box-shadow: 
-      0 2px 8px hsla(var(--glass-shadow), 0.05),
-      inset 0 1px 2px hsla(var(--glass-shadow), 0.05);
+      0 3px 10px hsla(var(--glass-shadow), 0.08),
+      inset 0 1px 3px hsla(var(--glass-shadow), 0.08);
   }
   
   .liquid-input:focus {
-    background: hsla(var(--input) / 0.8);
+    background: hsla(var(--input) / 0.9);
     box-shadow: 
-      0 0 0 4px hsla(var(--glow-primary)),
-      0 2px 12px hsla(var(--glass-shadow), 0.1),
-      inset 0 1px 2px hsla(0 0% 0% / 0.05);
+      0 0 0 5px hsla(var(--glow-primary)),
+      0 3px 15px hsla(var(--glass-shadow), 0.15),
+      inset 0 1px 3px hsla(0 0% 0% / 0.08);
   }
   
   .chatgpt-input {
