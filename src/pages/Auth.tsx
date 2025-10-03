@@ -26,6 +26,19 @@ export default function Auth() {
   const [signupPassword, setSignupPassword] = useState("");
   const [fullName, setFullName] = useState("");
 
+  // Password reset state
+  const [isPasswordReset, setIsPasswordReset] = useState(false);
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  // Check if user is coming from password reset email
+  useState(() => {
+    const hashParams = new URLSearchParams(window.location.hash.substring(1));
+    if (hashParams.get('type') === 'recovery') {
+      setIsPasswordReset(true);
+    }
+  });
+
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     
@@ -120,6 +133,74 @@ export default function Auth() {
     }
   };
 
+  const handleUpdatePassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!newPassword || !confirmPassword) {
+      toast({
+        title: "Missing Information",
+        description: "Please fill in both password fields",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (newPassword !== confirmPassword) {
+      toast({
+        title: "Passwords Don't Match",
+        description: "Please ensure both passwords are the same",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (newPassword.length < 6) {
+      toast({
+        title: "Weak Password",
+        description: "Password must be at least 6 characters",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const { error } = await supabase.auth.updateUser({
+        password: newPassword,
+      });
+
+      if (error) {
+        toast({
+          title: "Update Failed",
+          description: error.message,
+          variant: "destructive",
+        });
+        return;
+      }
+
+      toast({
+        title: "Password Updated!",
+        description: "Your password has been successfully reset",
+      });
+      
+      // Clear the hash and redirect to login
+      window.location.hash = '';
+      setIsPasswordReset(false);
+      setNewPassword("");
+      setConfirmPassword("");
+    } catch (error) {
+      console.error("Password update error:", error);
+      toast({
+        title: "Error",
+        description: "An unexpected error occurred",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -181,6 +262,72 @@ export default function Auth() {
       setLoading(false);
     }
   };
+
+  // Show password reset form if coming from email
+  if (isPasswordReset) {
+    return (
+      <div className="min-h-screen flex items-center justify-center p-6 bg-gradient-to-br from-background via-background/95 to-primary/5">
+        <GlassCard className="w-full max-w-md p-8">
+          <div className="flex flex-col items-center mb-8">
+            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center mb-4">
+              <Lock className="w-8 h-8 text-primary" />
+            </div>
+            <h1 className="text-3xl font-bold text-foreground">Reset Password</h1>
+            <p className="text-foreground-secondary mt-2">Enter your new password</p>
+          </div>
+
+          <form onSubmit={handleUpdatePassword} className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="new-password">New Password</Label>
+              <div className="relative">
+                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-foreground-tertiary" />
+                <Input
+                  id="new-password"
+                  type="password"
+                  placeholder="••••••••"
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                  className="pl-10"
+                  disabled={loading}
+                  required
+                  minLength={6}
+                />
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="confirm-password">Confirm Password</Label>
+              <div className="relative">
+                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-foreground-tertiary" />
+                <Input
+                  id="confirm-password"
+                  type="password"
+                  placeholder="••••••••"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  className="pl-10"
+                  disabled={loading}
+                  required
+                  minLength={6}
+                />
+              </div>
+              <p className="text-xs text-foreground-tertiary">
+                Must be at least 6 characters
+              </p>
+            </div>
+
+            <Button
+              type="submit"
+              className="w-full"
+              disabled={loading}
+            >
+              {loading ? "Updating..." : "Update Password"}
+            </Button>
+          </form>
+        </GlassCard>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center p-6 bg-gradient-to-br from-background via-background/95 to-primary/5">
