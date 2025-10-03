@@ -75,9 +75,7 @@ export default function Login({
           </div>
           
           <h1 className="text-5xl font-bold text-foreground">ZoneAI Admin Interface</h1>
-          <p className="text-foreground-secondary">
-            Sign in to your OneAI account
-          </p>
+          <p className="text-foreground-secondary">Sign in to your ZoneAI  Admin account</p>
         </div>
 
         {/* Login Form */}
@@ -99,9 +97,7 @@ export default function Login({
               <div className="w-full border-t border-border/50" />
             </div>
             <div className="relative flex justify-center text-sm">
-              <span className="bg-card px-4 text-foreground-tertiary">
-                or continue with email
-              </span>
+              <span className="bg-card px-4 text-foreground-tertiary">or continue with your OneOrigin email</span>
             </div>
           </div>
 
