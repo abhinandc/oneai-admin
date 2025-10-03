@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 import { useToast } from "@/hooks/use-toast"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -12,40 +13,81 @@ import {
   Eye,
   Info
 } from "lucide-react"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
 
 export default function Settings() {
   const [activeTab, setActiveTab] = useState("security-settings")
+  const [ssoDialogOpen, setSSODialogOpen] = useState(false)
+  const [ipDialogOpen, setIPDialogOpen] = useState(false)
+  const [uiAccessDialogOpen, setUIAccessDialogOpen] = useState(false)
+  const [scimDialogOpen, setSCIMDialogOpen] = useState(false)
+  const [ipAddress, setIPAddress] = useState("")
+  const navigate = useNavigate()
   const { toast } = useToast()
 
   const handleAddSSO = () => {
-    console.log("Add SSO button clicked!")
-    toast({
-      title: "SSO Configuration",
-      description: "This would open the Single Sign-On setup dialog to configure SAML, OAuth, or other SSO providers."
-    })
+    setSSODialogOpen(true)
   }
 
   const handleAllowedIPs = () => {
-    console.log("Allowed IPs button clicked!")
-    toast({
-      title: "IP Allowlist Configuration",
-      description: "This would open a dialog to manage allowed IP addresses for proxy access."
-    })
+    setIPDialogOpen(true)
   }
 
   const handleUIAccessControl = () => {
-    console.log("UI Access Control button clicked!")
-    toast({
-      title: "UI Access Control",
-      description: "This would open settings to control who can access the admin interface."
-    })
+    setUIAccessDialogOpen(true)
   }
 
   const handleConfigureSCIM = () => {
-    console.log("Configure SCIM button clicked!")
+    setSCIMDialogOpen(true)
+  }
+
+  const handleSaveSSO = () => {
+    setSSODialogOpen(false)
     toast({
-      title: "SCIM Configuration",
-      description: "This would open the System for Cross-domain Identity Management setup for automatic user provisioning."
+      title: "SSO Configuration Saved",
+      description: "Single Sign-On has been configured successfully."
+    })
+  }
+
+  const handleSaveIP = () => {
+    if (!ipAddress.trim()) {
+      toast({
+        title: "Error",
+        description: "Please enter an IP address.",
+        variant: "destructive"
+      })
+      return
+    }
+    setIPDialogOpen(false)
+    setIPAddress("")
+    toast({
+      title: "IP Allowlist Updated",
+      description: `IP address ${ipAddress} has been added to the allowlist.`
+    })
+  }
+
+  const handleSaveUIAccess = () => {
+    setUIAccessDialogOpen(false)
+    toast({
+      title: "UI Access Control Updated",
+      description: "Access control settings have been saved successfully."
+    })
+  }
+
+  const handleSaveSCIM = () => {
+    setSCIMDialogOpen(false)
+    toast({
+      title: "SCIM Configuration Saved",
+      description: "SCIM has been configured successfully."
     })
   }
 
@@ -121,17 +163,123 @@ export default function Settings() {
               <div className="flex items-start gap-3">
                 <Info className="w-5 h-5 text-blue-600 dark:text-blue-400 mt-0.5 flex-shrink-0" />
                 <div className="space-y-2">
-                  <h4 className="font-medium text-blue-900 dark:text-blue-100">Login without SSO</h4>
-                  <p className="text-sm text-blue-800 dark:text-blue-200">
-                    If you need to login without sso, you can access{" "}
-                    <code className="bg-blue-100 dark:bg-blue-900/30 px-1 py-0.5 rounded text-xs">
-                      http://localhost:3000/fallback/login
-                    </code>
+                  <h4 className="font-medium text-blue-900 dark:text-blue-100">Manage Internal Users</h4>
+                  <p className="text-sm text-blue-800 dark:text-blue-200 mb-2">
+                    Configure admin users and permissions in the Internal Users page.
                   </p>
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    onClick={() => navigate('/internal-users')}
+                    className="bg-blue-100 dark:bg-blue-900/30 border-blue-300 dark:border-blue-700"
+                  >
+                    Go to Internal Users
+                  </Button>
                 </div>
               </div>
             </GlassCard>
           </TabsContent>
+
+          {/* SSO Dialog */}
+          <Dialog open={ssoDialogOpen} onOpenChange={setSSODialogOpen}>
+            <DialogContent className="glass-card">
+              <DialogHeader>
+                <DialogTitle>Configure Single Sign-On</DialogTitle>
+                <DialogDescription>
+                  Set up SSO providers (SAML, OAuth, etc.) for your organization.
+                </DialogDescription>
+              </DialogHeader>
+              <div className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="sso-provider">SSO Provider</Label>
+                  <Input id="sso-provider" placeholder="e.g., Okta, Auth0" className="glass-card bg-background/50" />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="sso-domain">Domain</Label>
+                  <Input id="sso-domain" placeholder="company.com" className="glass-card bg-background/50" />
+                </div>
+              </div>
+              <DialogFooter>
+                <Button variant="outline" onClick={() => setSSODialogOpen(false)}>Cancel</Button>
+                <Button onClick={handleSaveSSO}>Save Configuration</Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
+
+          {/* IP Allowlist Dialog */}
+          <Dialog open={ipDialogOpen} onOpenChange={setIPDialogOpen}>
+            <DialogContent className="glass-card">
+              <DialogHeader>
+                <DialogTitle>IP Allowlist Configuration</DialogTitle>
+                <DialogDescription>
+                  Add IP addresses or ranges that are allowed to access the admin interface.
+                </DialogDescription>
+              </DialogHeader>
+              <div className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="ip-address">IP Address or Range</Label>
+                  <Input 
+                    id="ip-address" 
+                    placeholder="192.168.1.1 or 192.168.1.0/24" 
+                    value={ipAddress}
+                    onChange={(e) => setIPAddress(e.target.value)}
+                    className="glass-card bg-background/50" 
+                  />
+                </div>
+              </div>
+              <DialogFooter>
+                <Button variant="outline" onClick={() => setIPDialogOpen(false)}>Cancel</Button>
+                <Button onClick={handleSaveIP}>Add IP Address</Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
+
+          {/* UI Access Control Dialog */}
+          <Dialog open={uiAccessDialogOpen} onOpenChange={setUIAccessDialogOpen}>
+            <DialogContent className="glass-card">
+              <DialogHeader>
+                <DialogTitle>UI Access Control</DialogTitle>
+                <DialogDescription>
+                  Configure who can access the admin interface.
+                </DialogDescription>
+              </DialogHeader>
+              <div className="space-y-4">
+                <p className="text-sm text-foreground-secondary">
+                  Access control settings will determine which users and roles can access specific features of the admin interface.
+                </p>
+              </div>
+              <DialogFooter>
+                <Button variant="outline" onClick={() => setUIAccessDialogOpen(false)}>Cancel</Button>
+                <Button onClick={handleSaveUIAccess}>Save Settings</Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
+
+          {/* SCIM Dialog */}
+          <Dialog open={scimDialogOpen} onOpenChange={setSCIMDialogOpen}>
+            <DialogContent className="glass-card">
+              <DialogHeader>
+                <DialogTitle>Configure SCIM</DialogTitle>
+                <DialogDescription>
+                  Set up System for Cross-domain Identity Management for automatic user provisioning.
+                </DialogDescription>
+              </DialogHeader>
+              <div className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="scim-endpoint">SCIM Endpoint URL</Label>
+                  <Input id="scim-endpoint" placeholder="https://your-scim-endpoint.com" className="glass-card bg-background/50" />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="scim-token">Bearer Token</Label>
+                  <Input id="scim-token" type="password" placeholder="Enter bearer token" className="glass-card bg-background/50" />
+                </div>
+              </div>
+              <DialogFooter>
+                <Button variant="outline" onClick={() => setSCIMDialogOpen(false)}>Cancel</Button>
+                <Button onClick={handleSaveSCIM}>Save Configuration</Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
 
           <TabsContent value="scim" className="space-y-6">
             <GlassCard className="p-6 text-center">

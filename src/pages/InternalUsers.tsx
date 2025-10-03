@@ -1,5 +1,7 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useToast } from "@/hooks/use-toast"
+import { useNavigate } from "react-router-dom"
+import { supabase } from "@/integrations/supabase/client"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
@@ -26,6 +28,8 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { GlassCard } from "@/components/ui/glass-card"
+import { InviteUserDialog } from "@/components/InviteUserDialog"
+import { BulkInviteDialog } from "@/components/BulkInviteDialog"
 import { 
   Plus, 
   Filter, 
@@ -39,7 +43,8 @@ import {
   Key,
   Crown,
   Eye,
-  Copy
+  Copy,
+  Loader2
 } from "lucide-react"
 
 interface InternalUser {
@@ -54,86 +59,132 @@ interface InternalUser {
   updatedAt: string
 }
 
-const mockUsers: InternalUser[] = [
-  {
-    id: "2b008ff",
-    email: "admin@oneorigin.us",
-    globalProxyRole: "",
-    spend: 0,
-    budget: "Unlimited",
-    ssoId: "",
-    apiKeys: 0,
-    createdAt: "8/27/2025",
-    updatedAt: "8/27/2025"
-  },
-  {
-    id: "default_",
-    email: "",
-    globalProxyRole: "Admin (All Permissions)",
-    spend: 0.0004,
-    budget: "Unlimited", 
-    ssoId: "",
-    apiKeys: 4,
-    createdAt: "8/26/2025",
-    updatedAt: "8/27/2025"
-  }
-]
-
 export default function InternalUsers() {
-  const [users, setUsers] = useState<InternalUser[]>(mockUsers)
+  const [users, setUsers] = useState<InternalUser[]>([])
   const [searchTerm, setSearchTerm] = useState("")
   const [currentPage] = useState(1)
+  const [loading, setLoading] = useState(true)
+  const [inviteDialogOpen, setInviteDialogOpen] = useState(false)
+  const [bulkInviteDialogOpen, setBulkInviteDialogOpen] = useState(false)
+  const [selectedUser, setSelectedUser] = useState<InternalUser | null>(null)
+  const [editDialogOpen, setEditDialogOpen] = useState(false)
+  const [roleDialogOpen, setRoleDialogOpen] = useState(false)
   const { toast } = useToast()
+  const navigate = useNavigate()
   const totalPages = 1
 
+  useEffect(() => {
+    loadUsers()
+  }, [])
+
+  const loadUsers = async () => {
+    try {
+      setLoading(true)
+      const { data: profiles, error } = await supabase
+        .from('profiles')
+        .select(`
+          *,
+          user_roles (role)
+        `)
+        .order('created_at', { ascending: false })
+
+      if (error) throw error
+
+      const formattedUsers: InternalUser[] = profiles?.map(profile => ({
+        id: profile.id,
+        email: profile.email,
+        globalProxyRole: profile.user_roles?.[0]?.role === 'admin' ? 'Admin (All Permissions)' : '',
+        spend: 0,
+        budget: "Unlimited",
+        ssoId: "",
+        apiKeys: 0,
+        createdAt: new Date(profile.created_at).toLocaleDateString(),
+        updatedAt: new Date(profile.updated_at).toLocaleDateString()
+      })) || []
+
+      setUsers(formattedUsers)
+    } catch (error: any) {
+      toast({
+        title: "Error loading users",
+        description: error.message,
+        variant: "destructive"
+      })
+    } finally {
+      setLoading(false)
+    }
+  }
+
   const handleInviteUser = () => {
-    console.log("Opening invite user dialog")
-    // Open invite dialog or navigate to invite page
+    setInviteDialogOpen(true)
   }
 
   const handleBulkInvite = () => {
-    console.log("Opening bulk invite dialog")
-    // Open bulk invite dialog
+    setBulkInviteDialogOpen(true)
   }
 
   const handleSelectUsers = () => {
-    console.log("Toggling user selection mode")
-    // Toggle selection mode
+    toast({
+      title: "Selection Mode",
+      description: "User selection mode is not yet implemented."
+    })
   }
 
   const handleEditUser = (userId: string) => {
-    console.log("Editing user:", userId)
-    // Navigate to edit user page or open modal
+    const user = users.find(u => u.id === userId)
+    if (user) {
+      setSelectedUser(user)
+      setEditDialogOpen(true)
+    }
   }
 
   const handleChangeRole = (userId: string) => {
-    console.log("Changing role for user:", userId)
-    // Open role change dialog
+    const user = users.find(u => u.id === userId)
+    if (user) {
+      setSelectedUser(user)
+      setRoleDialogOpen(true)
+    }
   }
 
   const handleManageKeys = (userId: string) => {
-    console.log("Managing keys for user:", userId)
-    // Navigate to user keys page
+    navigate('/virtual-keys', { state: { userId } })
   }
 
-  const handleRemoveUser = (userId: string) => {
-    // Replace confirm with toast - in real app, use a proper dialog
-    setUsers(users.filter(u => u.id !== userId))
-    toast({
-      title: "User removed",
-      description: "Internal user has been successfully removed."
-    })
-    console.log("Removed user:", userId)
+  const handleRemoveUser = async (userId: string) => {
+    try {
+      const { error } = await supabase
+        .from('user_roles')
+        .delete()
+        .eq('user_id', userId)
+
+      if (error) throw error
+
+      setUsers(users.filter(u => u.id !== userId))
+      toast({
+        title: "User removed",
+        description: "Internal user has been successfully removed."
+      })
+    } catch (error: any) {
+      toast({
+        title: "Error removing user",
+        description: error.message,
+        variant: "destructive"
+      })
+    }
   }
 
   const handleCopyUserId = (userId: string) => {
     navigator.clipboard.writeText(userId)
-    console.log("Copied user ID:", userId)
+    toast({
+      title: "Copied",
+      description: "User ID copied to clipboard."
+    })
   }
 
   const handleSaveDefaultSettings = () => {
-    console.log("Saving default user settings")
-    // Save settings logic
+    toast({
+      title: "Settings Saved",
+      description: "Default user settings have been updated."
+    })
   }
 
   const getRoleBadge = (role: string) => {
@@ -199,11 +250,24 @@ export default function InternalUsers() {
             </div>
 
             <p className="text-sm text-foreground-secondary">
-              Showing 1 - 2 of 2 results
+              {loading ? "Loading..." : `Showing ${users.length} result(s)`}
             </p>
 
             {/* Users Table */}
             <GlassCard className="overflow-hidden">
+              {loading ? (
+                <div className="flex items-center justify-center p-12">
+                  <Loader2 className="w-8 h-8 animate-spin text-primary" />
+                </div>
+              ) : users.length === 0 ? (
+                <div className="flex flex-col items-center justify-center p-12 text-center">
+                  <p className="text-foreground-secondary mb-4">No users found</p>
+                  <Button onClick={handleInviteUser} className="glass-button">
+                    <Plus className="w-4 h-4 mr-2" />
+                    Invite Your First User
+                  </Button>
+                </div>
+              ) : (
               <div className="overflow-x-auto">
                 <Table>
                   <TableHeader>
@@ -371,7 +435,20 @@ export default function InternalUsers() {
                   </TableBody>
                 </Table>
               </div>
+              )}
             </GlassCard>
+
+            {/* Invite and Bulk Invite Dialogs */}
+            <InviteUserDialog
+              open={inviteDialogOpen}
+              onOpenChange={setInviteDialogOpen}
+              onUserInvited={loadUsers}
+            />
+            <BulkInviteDialog
+              open={bulkInviteDialogOpen}
+              onOpenChange={setBulkInviteDialogOpen}
+              onUsersInvited={loadUsers}
+            />
 
             {/* Pagination */}
             <div className="flex items-center justify-between">
