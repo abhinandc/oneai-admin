@@ -29,7 +29,14 @@ import litellmApi from "@/services/litellmApi"
 export default function Dashboard() {
   const navigate = useNavigate()
   const [loading, setLoading] = useState(true)
-  const [dashboardData, setDashboardData] = useState<any>(null)
+  const [keys, setKeys] = useState<any[]>([])
+  const [models, setModels] = useState<any[]>([])
+  const [usage, setUsage] = useState<any[]>([])
+  const [users, setUsers] = useState<any[]>([])
+  const [keysLoading, setKeysLoading] = useState(true)
+  const [modelsLoading, setModelsLoading] = useState(true)
+  const [usageLoading, setUsageLoading] = useState(true)
+  const [usersLoading, setUsersLoading] = useState(true)
   
   const [stats, setStats] = useState([
     { label: "Total API Keys", value: "0", change: "+0", icon: Key, trend: "up", color: "text-blue-500" },
@@ -44,6 +51,33 @@ export default function Dashboard() {
     { label: "Error Rate", value: "0%", status: "healthy", icon: AlertTriangle },
     { label: "Monthly Cost", value: "$0", status: "warning", icon: DollarSign },
   ])
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [keysRes, modelsRes, spendRes, teamRes] = await Promise.all([
+          litellmApi.getKeys(),
+          litellmApi.getModels(),
+          litellmApi.getSpend(),
+          litellmApi.getTeamMembers(),
+        ])
+        
+        setKeys(keysRes.data?.data || [])
+        setModels(modelsRes.data?.data || [])
+        setUsage(spendRes.data?.data || [])
+        setUsers(teamRes.data?.team_members || [])
+      } catch (error) {
+        console.error('Error fetching dashboard data:', error)
+      } finally {
+        setKeysLoading(false)
+        setModelsLoading(false)
+        setUsageLoading(false)
+        setUsersLoading(false)
+      }
+    }
+    
+    fetchData()
+  }, [])
 
   useEffect(() => {
     // Calculate real stats from API data
@@ -232,10 +266,6 @@ export default function Dashboard() {
       <GlassCard className="p-6">
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-xl font-semibold text-foreground">System Health</h2>
-          <Button variant="outline" size="sm">
-            <RotateCcw className="w-4 h-4 mr-2" />
-            Refresh
-          </Button>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {systemHealth.map((health, index) => {
