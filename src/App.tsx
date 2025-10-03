@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ThemeProvider } from "next-themes";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Layout } from "@/components/Layout";
+import { ProtectedRoute } from "@/components/ProtectedRoute";
 import Dashboard from "./pages/Dashboard";
 import VirtualKeys from "./pages/VirtualKeys";
 import TestKey from "./pages/TestKey";
@@ -19,7 +20,7 @@ import Settings from "./pages/Settings";
 import Users from "./pages/admin/Users";
 import Billing from "./pages/admin/Billing";
 import AdminSettings from "./pages/admin/Settings";
-import Login from "./pages/Login";
+import Auth from "./pages/Auth";
 import Teams from "./pages/Teams";
 import NotFound from "./pages/NotFound";
 
@@ -33,32 +34,38 @@ const App = () => (
         <Sonner />
         <BrowserRouter>
           <Routes>
-            {/* Login route without navigation */}
-            <Route path="/" element={<Login />} />
+            {/* Auth route without navigation */}
+            <Route path="/" element={<Auth />} />
+            <Route path="/auth" element={<Auth />} />
             
-            {/* All other routes with navigation layout */}
-            <Route path="/*" element={
-              <Layout>
-                <Routes>
-                  <Route path="/dashboard" element={<Dashboard />} />
-                  <Route path="/keys/virtual" element={<VirtualKeys />} />
-                  <Route path="/keys/test" element={<TestKey />} />
-                  <Route path="/models" element={<ModelsEndpoints />} />
-                  <Route path="/usage" element={<Usage />} />
-                  <Route path="/internal-users" element={<InternalUsers />} />
-                  <Route path="/model-hub" element={<ModelHub />} />
-                  <Route path="/logs" element={<Logs />} />
-                  <Route path="/guardrails" element={<Guardrails />} />
-                  <Route path="/tools/mcp-servers" element={<MCPServers />} />
-                  <Route path="/settings" element={<Settings />} />
-                  <Route path="/admin/users" element={<Users />} />
-                  <Route path="/admin/billing" element={<Billing />} />
-                  <Route path="/admin/settings" element={<AdminSettings />} />
-                  <Route path="/teams" element={<Teams />} />
-                  <Route path="*" element={<NotFound />} />
-                </Routes>
-              </Layout>
-            } />
+            {/* All other routes with navigation layout and authentication protection */}
+            <Route
+              path="/*"
+              element={
+                <ProtectedRoute>
+                  <Layout>
+                    <Routes>
+                      <Route path="/dashboard" element={<Dashboard />} />
+                      <Route path="/keys/virtual" element={<VirtualKeys />} />
+                      <Route path="/keys/test" element={<TestKey />} />
+                      <Route path="/models" element={<ModelsEndpoints />} />
+                      <Route path="/usage" element={<Usage />} />
+                      <Route path="/internal-users" element={<InternalUsers />} />
+                      <Route path="/model-hub" element={<ModelHub />} />
+                      <Route path="/logs" element={<Logs />} />
+                      <Route path="/guardrails" element={<Guardrails />} />
+                      <Route path="/tools/mcp-servers" element={<MCPServers />} />
+                      <Route path="/settings" element={<Settings />} />
+                      <Route path="/admin/users" element={<Users />} />
+                      <Route path="/admin/billing" element={<Billing />} />
+                      <Route path="/admin/settings" element={<AdminSettings />} />
+                      <Route path="/teams" element={<Teams />} />
+                      <Route path="*" element={<NotFound />} />
+                    </Routes>
+                  </Layout>
+                </ProtectedRoute>
+              }
+            />
           </Routes>
         </BrowserRouter>
       </TooltipProvider>
