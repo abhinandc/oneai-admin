@@ -219,14 +219,14 @@ export default function Dashboard() {
         return "bg-gray-500/10 border-gray-500/20";
     }
   };
-  return <div className="space-y-8">
+  return <div className="space-y-8 animate-fade-in">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-foreground">Dashboard</h1>
-          <p className="text-foreground-secondary mt-2">Welcome to your ZoneAI administration panel</p>
+          <h1 className="heading-lg text-foreground">Dashboard</h1>
+          <p className="text-foreground-secondary mt-2 text-lg">Welcome to your ZoneAI administration panel</p>
         </div>
-        <Button onClick={() => navigate("/keys/virtual")} className="bg-primary hover:bg-primary/90">
+        <Button onClick={() => navigate("/keys/virtual")} className="liquid-button-primary shadow-2xl">
           <Plus className="w-4 h-4 mr-2" />
           Create API Key
         </Button>
@@ -236,18 +236,18 @@ export default function Dashboard() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {stats.map((stat, index) => {
         const IconComponent = stat.icon;
-        return <GlassCard key={index} className="p-6">
+        return <GlassCard key={index} className="p-7 hover:scale-[1.02] transition-all duration-500">
               <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm text-foreground-secondary">{stat.label}</p>
-                  <p className="text-2xl font-bold text-foreground mt-1">{stat.value}</p>
-                  {stat.change && <div className="flex items-center mt-2">
-                      <TrendingUp className="w-4 h-4 text-green-500 mr-1" />
-                      <span className="text-sm text-green-500">{stat.change}</span>
+                <div className="flex-1">
+                  <p className="text-sm font-semibold text-foreground-secondary uppercase tracking-wider">{stat.label}</p>
+                  <p className="text-3xl font-bold text-foreground mt-2">{stat.value}</p>
+                  {stat.change && <div className="flex items-center mt-3">
+                      <TrendingUp className="w-4 h-4 text-success mr-1.5" />
+                      <span className="text-sm font-semibold text-success">{stat.change}</span>
                     </div>}
                 </div>
-                <div className={`p-3 rounded-xl ${stat.color.replace('text-', 'bg-')}/10`}>
-                  <IconComponent className={`w-6 h-6 ${stat.color}`} />
+                <div className={`p-4 rounded-2xl ${stat.color.replace('text-', 'bg-')}/10 backdrop-blur-sm`}>
+                  <IconComponent className={`w-7 h-7 ${stat.color}`} />
                 </div>
               </div>
             </GlassCard>;
@@ -255,20 +255,20 @@ export default function Dashboard() {
       </div>
 
       {/* System Health */}
-      <GlassCard className="p-6">
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="text-xl font-semibold text-foreground">System Health</h2>
+      <GlassCard className="p-8">
+        <div className="flex items-center justify-between mb-8">
+          <h2 className="heading-md text-foreground">System Health</h2>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
           {systemHealth.map((health, index) => {
           const IconComponent = health.icon;
-          return <div key={index} className="flex items-center space-x-3 p-4 rounded-lg border border-border/50">
-                <div className={`p-2 rounded-lg ${health.status === 'healthy' ? 'bg-green-500/10' : 'bg-yellow-500/10'}`}>
-                  <IconComponent className={`w-4 h-4 ${health.status === 'healthy' ? 'text-green-500' : 'text-yellow-500'}`} />
+          return <div key={index} className="flex items-center space-x-4 p-5 rounded-2xl border border-border/30 frosted-glass hover:border-primary/30 transition-all duration-300">
+                <div className={`p-3 rounded-xl ${health.status === 'healthy' ? 'bg-success/10' : 'bg-warning/10'}`}>
+                  <IconComponent className={`w-5 h-5 ${health.status === 'healthy' ? 'text-success' : 'text-warning'}`} />
                 </div>
                 <div>
-                  <p className="text-sm text-foreground-secondary">{health.label}</p>
-                  <p className="font-semibold text-foreground">{health.value}</p>
+                  <p className="text-sm font-semibold text-foreground-secondary uppercase tracking-wide">{health.label}</p>
+                  <p className="font-bold text-lg text-foreground mt-1">{health.value}</p>
                 </div>
               </div>;
         })}
@@ -276,25 +276,25 @@ export default function Dashboard() {
       </GlassCard>
 
       {/* Quick Actions */}
-      <GlassCard className="p-6">
-        <h2 className="text-xl font-semibold text-foreground mb-6">Quick Actions</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <GlassCard className="p-8">
+        <h2 className="heading-md text-foreground mb-8">Quick Actions</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
           {quickActions.map((action, index) => {
           const IconComponent = action.icon;
-          return <button key={index} onClick={() => navigate(action.route)} className="text-left p-4 rounded-lg border border-border/50 hover:border-primary/30 transition-colors group">
-                <div className="flex items-start space-x-3">
-                  <div className={`p-2 rounded-lg ${action.color}`}>
-                    <IconComponent className="w-5 h-5" />
+          return <button key={index} onClick={() => navigate(action.route)} className="text-left p-6 rounded-2xl border border-border/30 hover:border-primary/50 transition-all duration-300 group frosted-glass hover:shadow-2xl hover:scale-[1.02]">
+                <div className="flex items-start space-x-4">
+                  <div className={`p-3 rounded-xl ${action.color} transition-transform group-hover:scale-110`}>
+                    <IconComponent className="w-6 h-6" />
                   </div>
                   <div className="flex-1">
-                    <h3 className="font-semibold text-foreground group-hover:text-primary transition-colors">
+                    <h3 className="font-bold text-foreground group-hover:text-primary transition-colors text-lg">
                       {action.title}
                     </h3>
-                    <p className="text-sm text-foreground-secondary mt-1">
+                    <p className="text-sm text-foreground-secondary mt-2">
                       {action.description}
                     </p>
                   </div>
-                  <ArrowRight className="w-4 h-4 text-foreground-tertiary group-hover:text-primary transition-colors" />
+                  <ArrowRight className="w-5 h-5 text-foreground-tertiary group-hover:text-primary transition-all group-hover:translate-x-1" />
                 </div>
               </button>;
         })}
@@ -302,24 +302,24 @@ export default function Dashboard() {
       </GlassCard>
 
       {/* Recent Activity */}
-      <GlassCard className="p-6">
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="text-xl font-semibold text-foreground">Recent Activity</h2>
-          <Button variant="outline" size="sm" onClick={() => navigate("/logs")}>
+      <GlassCard className="p-8">
+        <div className="flex items-center justify-between mb-8">
+          <h2 className="heading-md text-foreground">Recent Activity</h2>
+          <Button variant="outline" size="sm" onClick={() => navigate("/logs")} className="liquid-button">
             <Eye className="w-4 h-4 mr-2" />
             View All
           </Button>
         </div>
-        <div className="space-y-3">
-          {recentActivity.map((activity, index) => <div key={index} className={`flex items-center justify-between p-4 rounded-lg border ${getActivityColor(activity.type)}`}>
-              <div className="flex items-center space-x-3">
-                <div className="w-2 h-2 rounded-full bg-current opacity-60" />
+        <div className="space-y-4">
+          {recentActivity.map((activity, index) => <div key={index} className={`flex items-center justify-between p-5 rounded-2xl border ${getActivityColor(activity.type)} transition-all duration-300 hover:scale-[1.01]`}>
+              <div className="flex items-center space-x-4">
+                <div className="w-3 h-3 rounded-full bg-current opacity-70 animate-pulse" />
                 <div>
-                  <p className="font-medium text-foreground">{activity.action}</p>
-                  <p className="text-sm text-foreground-secondary">by {activity.user}</p>
+                  <p className="font-semibold text-foreground text-base">{activity.action}</p>
+                  <p className="text-sm text-foreground-secondary mt-1">by {activity.user}</p>
                 </div>
               </div>
-              <span className="text-sm text-foreground-tertiary">{activity.time}</span>
+              <span className="text-sm font-medium text-foreground-tertiary">{activity.time}</span>
             </div>)}
         </div>
       </GlassCard>

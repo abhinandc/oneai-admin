@@ -42,7 +42,7 @@ export function TopBar() {
   }, [])
 
   return (
-    <header className="backdrop-blur-2xl bg-background/80 border-b border-border/30 h-16 px-6 flex items-center justify-between z-50 shadow-sm">
+    <header className="frosted-glass border-b border-border/20 h-16 px-6 flex items-center justify-between z-50 sticky top-0">
       {/* Left Section */}
       <div className="flex items-center gap-4">
         {/* Brand */}
@@ -55,14 +55,14 @@ export function TopBar() {
 
       {/* Center - Search */}
       <div className="flex-1 max-w-lg mx-8">
-        <div className="relative">
-          <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-4 h-4 text-foreground-tertiary" />
+        <div className="relative group">
+          <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-4 h-4 text-foreground-tertiary transition-colors group-hover:text-primary" />
           <Input
             placeholder="Search..."
-            className="chatgpt-input pl-12 pr-16 bg-background/80 border-border/50 focus:bg-background focus:border-primary/30 h-11"
+            className="liquid-input pl-12 pr-16 h-11"
           />
           <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
-            <Badge variant="secondary" className="text-xs font-mono bg-muted/60 border-border/30 px-2 py-1">
+            <Badge variant="secondary" className="text-xs font-mono frosted-glass px-2.5 py-1 font-semibold">
               <Command className="w-3 h-3 mr-1" />
               K
             </Badge>
@@ -76,13 +76,13 @@ export function TopBar() {
         <Button 
           variant="ghost" 
           size="icon" 
-          className="apple-button w-10 h-10 p-0"
+          className="liquid-button w-11 h-11 p-0 hover:scale-105 transition-transform"
           onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
         >
           {mounted && theme === "dark" ? (
-            <Sun className="h-5 w-5" />
+            <Sun className="h-5 w-5 text-amber-500" />
           ) : (
-            <Moon className="h-5 w-5" />
+            <Moon className="h-5 w-5 text-indigo-600" />
           )}
         </Button>
 
@@ -90,11 +90,11 @@ export function TopBar() {
         <Button 
           variant="ghost" 
           size="icon" 
-          className="apple-button w-10 h-10 p-0 relative"
+          className="liquid-button w-11 h-11 p-0 relative hover:scale-105 transition-transform"
           onClick={handleNotificationClick}
         >
           <Bell className="h-5 w-5" />
-          <Badge className="absolute -top-1 -right-1 w-5 h-5 p-0 flex items-center justify-center text-xs bg-destructive text-destructive-foreground">
+          <Badge className="absolute -top-1 -right-1 w-5 h-5 p-0 flex items-center justify-center text-xs bg-destructive text-destructive-foreground border-0 shadow-lg glow-primary">
             3
           </Badge>
         </Button>
@@ -102,13 +102,13 @@ export function TopBar() {
         {/* User Menu */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="icon" className="apple-button w-10 h-10 p-0">
+            <Button variant="ghost" size="icon" className="liquid-button w-11 h-11 p-0 hover:scale-105 transition-transform">
               <User className="h-5 w-5" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent 
             align="end" 
-            className="apple-glass bg-background/95 backdrop-blur-xl border-border/50 w-56 shadow-lg"
+            className="frosted-glass w-56 shadow-2xl p-2 rounded-2xl"
           >
             <DropdownMenuItem 
               className="apple-nav-item"

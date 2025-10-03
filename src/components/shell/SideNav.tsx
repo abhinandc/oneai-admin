@@ -62,11 +62,11 @@ export function SideNav() {
       : "apple-nav-item"
 
   return (
-    <Sidebar className="backdrop-blur-2xl bg-sidebar/60 border-r border-sidebar-border/30 w-64 shadow-xl" collapsible="icon">
+    <Sidebar className="liquid-sidebar w-64 shadow-2xl" collapsible="icon">
       <SidebarContent className="p-4 space-y-6">
         {/* Collapse Toggle */}
         <div className="flex justify-end mb-4">
-          <SidebarTrigger className="flex items-center justify-center w-10 h-10 rounded-lg bg-background/50 hover:bg-background/80 transition-colors">
+          <SidebarTrigger className="liquid-button w-11 h-11 p-0 hover:scale-105 transition-transform">
             <Menu className="w-5 h-5 text-foreground" />
           </SidebarTrigger>
         </div>
@@ -156,7 +156,7 @@ export function SideNav() {
       </SidebarContent>
 
       {/* OneOrigin Logo - FOOTER HEIGHT ALIGNMENT */}
-      <div className="absolute bottom-0 left-0 right-0 p-2 pb-4 border-t border-border/10 bg-background/95 backdrop-blur-sm">
+      <div className="absolute bottom-0 left-0 right-0 p-3 pb-5 border-t border-border/10 frosted-glass">
         <div className="flex justify-center items-center">
           <img 
             src={theme === 'dark' ? '/lovable-uploads/dc8ec67b-6ec3-466b-9fd1-c30ca88ce7f9.png' : '/lovable-uploads/6769a209-c508-4221-a988-13dc68d43d9f.png'}
