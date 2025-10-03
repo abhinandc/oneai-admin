@@ -80,9 +80,9 @@ export function InviteUserDialog({ open, onOpenChange, onUserInvited }: InviteUs
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="glass-card">
         <DialogHeader>
-          <DialogTitle>Invite User</DialogTitle>
+          <DialogTitle>Invite Employee</DialogTitle>
           <DialogDescription>
-            Send an invitation to a new internal user
+            Send an invitation to a new internal employee
           </DialogDescription>
         </DialogHeader>
 
@@ -106,7 +106,7 @@ export function InviteUserDialog({ open, onOpenChange, onUserInvited }: InviteUs
                 <SelectValue />
               </SelectTrigger>
               <SelectContent className="glass-card bg-background/95 backdrop-blur-md border-card-border/50">
-                <SelectItem value="user">User</SelectItem>
+                <SelectItem value="employee">Employee</SelectItem>
                 <SelectItem value="admin">Admin</SelectItem>
               </SelectContent>
             </Select>

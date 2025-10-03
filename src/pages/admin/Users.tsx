@@ -26,14 +26,14 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 
-const mockUsers = [
+const mockEmployees = [
   { id: 1, name: "Alice Johnson", email: "alice@oneai.com", role: "Admin", tenant: "Enterprise", vip: true, status: "Active" },
-  { id: 2, name: "Bob Smith", email: "bob@startup.com", role: "User", tenant: "Startup", vip: false, status: "Active" },
+  { id: 2, name: "Bob Smith", email: "bob@startup.com", role: "Employee", tenant: "Startup", vip: false, status: "Active" },
   { id: 3, name: "Carol Davis", email: "carol@corp.com", role: "Editor", tenant: "Corporate", vip: true, status: "Inactive" },
   { id: 4, name: "David Wilson", email: "david@oneai.com", role: "Admin", tenant: "Enterprise", vip: false, status: "Active" },
 ]
 
-const roles = ["Admin", "Editor", "User", "Viewer"]
+const roles = ["Admin", "Editor", "Employee", "Viewer"]
 const tenants = ["Enterprise", "Corporate", "Startup", "Free"]
 
 export default function Users() {
@@ -44,7 +44,7 @@ export default function Users() {
     switch (role) {
       case "Admin": return "default"
       case "Editor": return "secondary" 
-      case "User": return "outline"
+      case "Employee": return "outline"
       default: return "outline"
     }
   }
@@ -59,15 +59,15 @@ export default function Users() {
         <div>
           <h1 className="text-3xl font-bold text-foreground flex items-center gap-3">
             <UsersIcon className="w-8 h-8" />
-            Users & Roles
+            Employees & Roles
           </h1>
           <p className="text-foreground-secondary mt-1">
-            Manage user accounts, roles, and tenant assignments
+            Manage employee accounts, roles, and tenant assignments
           </p>
         </div>
         <Button className="glass-button">
           <UsersIcon className="w-4 h-4 mr-2" />
-          Add User
+          Add Employee
         </Button>
       </div>
 
@@ -75,7 +75,7 @@ export default function Users() {
       <GlassCard className="p-6">
         <div className="flex gap-4 items-center">
           <Input
-            placeholder="Search users..."
+            placeholder="Search employees..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="max-w-xs bg-glass/60 border-input-border"
@@ -94,12 +94,12 @@ export default function Users() {
         </div>
       </GlassCard>
 
-      {/* Users Table */}
+      {/* Employees Table */}
       <GlassCard className="p-6">
         <Table>
           <TableHeader>
             <TableRow className="border-card-border/30">
-              <TableHead className="text-foreground-secondary font-medium">User</TableHead>
+              <TableHead className="text-foreground-secondary font-medium">Employee</TableHead>
               <TableHead className="text-foreground-secondary font-medium">Role</TableHead>
               <TableHead className="text-foreground-secondary font-medium">Tenant</TableHead>
               <TableHead className="text-foreground-secondary font-medium">Status</TableHead>
@@ -108,30 +108,30 @@ export default function Users() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {mockUsers.map((user) => (
-              <TableRow key={user.id} className="border-card-border/20 hover:bg-glass-hover/30">
+            {mockEmployees.map((employee) => (
+              <TableRow key={employee.id} className="border-card-border/20 hover:bg-glass-hover/30">
                 <TableCell>
                   <div className="space-y-1">
-                    <div className="font-medium text-foreground">{user.name}</div>
-                    <div className="text-sm text-foreground-secondary">{user.email}</div>
+                    <div className="font-medium text-foreground">{employee.name}</div>
+                    <div className="text-sm text-foreground-secondary">{employee.email}</div>
                   </div>
                 </TableCell>
                 <TableCell>
-                  <Badge variant={getRoleBadgeVariant(user.role)} className="glass-button">
+                  <Badge variant={getRoleBadgeVariant(employee.role)} className="glass-button">
                     <Shield className="w-3 h-3 mr-1" />
-                    {user.role}
+                    {employee.role}
                   </Badge>
                 </TableCell>
                 <TableCell>
-                  <span className="text-foreground-secondary font-medium">{user.tenant}</span>
+                  <span className="text-foreground-secondary font-medium">{employee.tenant}</span>
                 </TableCell>
                 <TableCell>
-                  <Badge variant={getStatusBadgeVariant(user.status)}>
-                    {user.status}
+                  <Badge variant={getStatusBadgeVariant(employee.status)}>
+                    {employee.status}
                   </Badge>
                 </TableCell>
                 <TableCell>
-                  {user.vip && (
+                  {employee.vip && (
                     <Badge variant="outline" className="bg-warning/20 text-warning border-warning/30">
                       <Crown className="w-3 h-3 mr-1" />
                       VIP
