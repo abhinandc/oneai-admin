@@ -1,4 +1,4 @@
 project_id = "lejhtsquxmbngraojpyy"
 
-[functions.litellm-proxy]
+[functions.master-ai-proxy]
 verify_jwt = true

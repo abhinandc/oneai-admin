@@ -1,4 +1,4 @@
-// Supabase-backed LiteLLM API Service
+// Supabase-backed Master AI Orchestrator API Service
 import { supabase } from "@/integrations/supabase/client";
 
 interface ApiResponse<T> {
@@ -6,11 +6,11 @@ interface ApiResponse<T> {
   error?: string;
 }
 
-class SupabaseLiteLLMApiService {
+class SupabaseMasterAIApiService {
   // Helper method for proxied API calls through Supabase edge function
   private async request<T>(endpoint: string, method: string = 'GET', body?: any): Promise<ApiResponse<T>> {
     try {
-      const { data, error } = await supabase.functions.invoke('litellm-proxy', {
+      const { data, error } = await supabase.functions.invoke('master-ai-proxy', {
         body: {
           endpoint,
           method,
@@ -160,5 +160,5 @@ class SupabaseLiteLLMApiService {
   }
 }
 
-export const supabaseLitellmApi = new SupabaseLiteLLMApiService();
-export default supabaseLitellmApi;
+export const supabaseMasterAIApi = new SupabaseMasterAIApiService();
+export default supabaseMasterAIApi;

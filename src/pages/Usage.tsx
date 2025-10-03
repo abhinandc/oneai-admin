@@ -211,7 +211,7 @@ export default function Usage() {
                     <div className="space-y-3">
                       <div className="grid grid-cols-2 gap-4 text-sm font-medium text-foreground-secondary border-b border-card-border/50 pb-2">
                         <span>Public Model Name</span>
-                        <span>LiteLLM Model Name</span>
+                        <span>Model Name</span>
                       </div>
                       {topModels.slice(0, 3).map((model, index) => (
                         <div key={index} className="grid grid-cols-2 gap-4 text-sm">

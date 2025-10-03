@@ -1,8 +1,8 @@
 // OneAI Admin API Service
-// Connects to LiteLLM backend for admin operations
+// Connects to Master AI Orchestrator backend for admin operations
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '/api';
-const LITELLM_MASTER_KEY = 'ZmM2jGn1wXqVzaxKdDTCvR7YgU9Lkbs3hQfeuSJFP40IBp6i';
+const MASTER_AI_KEY = 'ZmM2jGn1wXqVzaxKdDTCvR7YgU9Lkbs3hQfeuSJFP40IBp6i';
 
 // Types
 export interface VirtualKey {
@@ -22,7 +22,7 @@ export interface VirtualKey {
 
 export interface ModelEndpoint {
   model_name: string;
-  litellm_params: {
+  orchestrator_params: {
     model: string;
     api_base?: string;
     api_key?: string;
@@ -65,7 +65,7 @@ class OneAIAdminAPI {
 
   constructor() {
     this.baseURL = API_BASE_URL;
-    this.masterKey = LITELLM_MASTER_KEY;
+    this.masterKey = MASTER_AI_KEY;
   }
 
   private async request(endpoint: string, options: RequestInit = {}): Promise<any> {

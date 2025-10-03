@@ -589,14 +589,14 @@ export default function ModelsEndpoints() {
                 <div className="space-y-4">
                   <div className="space-y-2">
                     <Label className="text-sm font-medium">
-                      LiteLLM Model Name(s) <HelpCircle className="inline w-3 h-3 ml-1 opacity-50" />
+                      Model Name(s) <HelpCircle className="inline w-3 h-3 ml-1 opacity-50" />
                     </Label>
                     <Input
                       placeholder="gpt-3.5-turbo"
                       className="glass-card bg-background/50"
                     />
                     <div className="text-xs text-foreground-secondary">
-                      The model name LiteLLM will send to the LLM API
+                      The model name sent to the LLM API
                     </div>
                   </div>
 
@@ -609,7 +609,7 @@ export default function ModelsEndpoints() {
                     </div>
                     <div className="space-y-2">
                       <Label className="text-sm">
-                        LiteLLM Model Name <HelpCircle className="inline w-3 h-3 ml-1 opacity-50" />
+                        Model Name <HelpCircle className="inline w-3 h-3 ml-1 opacity-50" />
                       </Label>
                       <Input
                         placeholder="No data"
@@ -622,7 +622,7 @@ export default function ModelsEndpoints() {
                     <Label className="text-sm">Mode:</Label>
                     <Input className="glass-card bg-background/50" />
                     <div className="text-xs text-foreground-secondary">
-                      Optional - LiteLLM endpoint to use when health checking this model.{" "}
+                      Optional - Endpoint to use when health checking this model.{" "}
                       <a href="#" className="text-primary hover:underline">Learn more</a>
                     </div>
                   </div>

@@ -142,7 +142,7 @@ export default function Auth() {
             <Bot className="w-8 h-8 text-primary" />
           </div>
           <h1 className="text-3xl font-bold text-foreground">ZoneAI Admin</h1>
-          <p className="text-foreground-secondary mt-2">LiteLLM Management Portal</p>
+          <p className="text-foreground-secondary mt-2">Master AI Orchestrator Portal</p>
         </div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">

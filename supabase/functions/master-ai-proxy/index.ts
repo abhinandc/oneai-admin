@@ -47,7 +47,7 @@ serve(async (req) => {
     await supabaseClient.from('activity_logs').insert({
       user_id: user.id,
       action: 'API Request',
-      resource_type: 'litellm',
+      resource_type: 'master_ai',
       details: {
         method: req.method,
         url: req.url,
@@ -62,17 +62,17 @@ serve(async (req) => {
       throw new Error('Missing endpoint parameter');
     }
 
-    const LITELLM_BASE_URL = 'http://localhost:4000/api';
-    const MASTER_KEY = Deno.env.get('LITELLM_MASTER_KEY');
+    const API_BASE_URL = 'http://localhost:4000/api';
+    const MASTER_KEY = Deno.env.get('MASTER_AI_KEY');
 
     if (!MASTER_KEY) {
-      throw new Error('LiteLLM master key not configured');
+      throw new Error('Master AI key not configured');
     }
 
-    console.log(`Proxying request to: ${LITELLM_BASE_URL}${endpoint}`);
+    console.log(`Proxying request to: ${API_BASE_URL}${endpoint}`);
 
-    // Make request to LiteLLM API
-    const response = await fetch(`${LITELLM_BASE_URL}${endpoint}`, {
+    // Make request to Master AI Orchestrator API
+    const response = await fetch(`${API_BASE_URL}${endpoint}`, {
       method: method || 'GET',
       headers: {
         'Authorization': `Bearer ${MASTER_KEY}`,
@@ -83,9 +83,9 @@ serve(async (req) => {
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error('LiteLLM API error:', response.status, errorText);
+      console.error('Master AI API error:', response.status, errorText);
       return new Response(
-        JSON.stringify({ error: `LiteLLM API error: ${response.statusText}`, details: errorText }),
+        JSON.stringify({ error: `Master AI API error: ${response.statusText}`, details: errorText }),
         {
           status: response.status,
           headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -103,7 +103,7 @@ serve(async (req) => {
     );
 
   } catch (error) {
-    console.error('Error in litellm-proxy function:', error);
+    console.error('Error in master-ai-proxy function:', error);
     return new Response(
       JSON.stringify({ error: error instanceof Error ? error.message : 'Unknown error' }),
       {

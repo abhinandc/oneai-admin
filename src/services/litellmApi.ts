@@ -1,5 +1,5 @@
-// LiteLLM API Service
-const LITELLM_BASE_URL = '/api';
+// Master AI Orchestrator API Service
+const API_BASE_URL = '/api';
 const MASTER_KEY = 'ZmM2jGn1wXqVzaxKdDTCvR7YgU9Lkbs3hQfeuSJFP40IBp6i';
 
 interface ApiResponse<T> {
@@ -7,7 +7,7 @@ interface ApiResponse<T> {
   error?: string;
 }
 
-class LiteLLMApiService {
+class MasterAIApiService {
   private headers = {
     'Authorization': `Bearer ${MASTER_KEY}`,
     'Content-Type': 'application/json',
@@ -16,7 +16,7 @@ class LiteLLMApiService {
   // Helper method for API calls
   private async request<T>(endpoint: string, options: RequestInit = {}): Promise<ApiResponse<T>> {
     try {
-      const response = await fetch(`${LITELLM_BASE_URL}${endpoint}`, {
+      const response = await fetch(`${API_BASE_URL}${endpoint}`, {
         ...options,
         headers: {
           ...this.headers,
@@ -181,5 +181,5 @@ class LiteLLMApiService {
   }
 }
 
-export const litellmApi = new LiteLLMApiService();
-export default litellmApi;
+export const masterAIApi = new MasterAIApiService();
+export default masterAIApi;

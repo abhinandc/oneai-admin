@@ -57,7 +57,7 @@ interface InternalUser {
 const mockUsers: InternalUser[] = [
   {
     id: "2b008ff",
-    email: "admin@litellm.us",
+    email: "admin@oneorigin.us",
     globalProxyRole: "",
     spend: 0,
     budget: "Unlimited",

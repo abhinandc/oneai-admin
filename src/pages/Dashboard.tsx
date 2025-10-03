@@ -4,7 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import litellmApi from "@/services/litellmApi";
+import masterAIApi from "@/services/litellmApi";
 export default function Dashboard() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
@@ -69,7 +69,7 @@ export default function Dashboard() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [keysRes, modelsRes, spendRes, teamRes] = await Promise.all([litellmApi.getKeys(), litellmApi.getModels(), litellmApi.getSpend(), litellmApi.getTeamMembers()]);
+        const [keysRes, modelsRes, spendRes, teamRes] = await Promise.all([masterAIApi.getKeys(), masterAIApi.getModels(), masterAIApi.getSpend(), masterAIApi.getTeamMembers()]);
         setKeys(keysRes.data?.data || []);
         setModels(modelsRes.data?.data || []);
         setUsage(spendRes.data?.data || []);
