@@ -254,6 +254,3 @@ class OneAIAdminAPI {
 
 // Export singleton instance
 export const adminAPI = new OneAIAdminAPI();
-
-// Export types for use in components
-export type { VirtualKey, ModelEndpoint, UsageData, User };
