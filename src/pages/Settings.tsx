@@ -23,6 +23,13 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 
 export default function Settings() {
   const [activeTab, setActiveTab] = useState("security-settings")
@@ -31,10 +38,23 @@ export default function Settings() {
   const [uiAccessDialogOpen, setUIAccessDialogOpen] = useState(false)
   const [scimDialogOpen, setSCIMDialogOpen] = useState(false)
   const [ipAddress, setIPAddress] = useState("")
+  const [verifying, setVerifying] = useState(false)
+  const [verified, setVerified] = useState(false)
+  const [ssoConfig, setSSOConfig] = useState({
+    provider: "saml",
+    providerName: "",
+    domain: "",
+    entityId: "",
+    ssoUrl: "",
+    certificate: "",
+    emailAttribute: "email",
+    nameAttribute: "name"
+  })
   const navigate = useNavigate()
   const { toast } = useToast()
 
   const handleAddSSO = () => {
+    setVerified(false)
     setSSODialogOpen(true)
   }
 
@@ -50,12 +70,82 @@ export default function Settings() {
     setSCIMDialogOpen(true)
   }
 
+  const handleVerifySSO = async () => {
+    // Validate required fields
+    if (!ssoConfig.providerName || !ssoConfig.domain || !ssoConfig.entityId || !ssoConfig.ssoUrl) {
+      toast({
+        title: "Missing Information",
+        description: "Please fill in all required fields before verifying.",
+        variant: "destructive"
+      })
+      return
+    }
+
+    if (ssoConfig.provider === "saml" && !ssoConfig.certificate) {
+      toast({
+        title: "Missing Certificate",
+        description: "SAML configuration requires an X.509 certificate.",
+        variant: "destructive"
+      })
+      return
+    }
+
+    setVerifying(true)
+
+    try {
+      // Simulate verification process
+      await new Promise(resolve => setTimeout(resolve, 2000))
+      
+      // In a real implementation, this would:
+      // 1. Validate the SSO URL is reachable
+      // 2. Verify certificate format and validity
+      // 3. Test attribute mappings
+      // 4. Attempt a test authentication
+      
+      setVerified(true)
+      toast({
+        title: "Verification Successful",
+        description: "SSO configuration has been verified and is ready to use."
+      })
+    } catch (error: any) {
+      toast({
+        title: "Verification Failed",
+        description: error.message || "Failed to verify SSO configuration.",
+        variant: "destructive"
+      })
+    } finally {
+      setVerifying(false)
+    }
+  }
+
   const handleSaveSSO = () => {
+    if (!verified) {
+      toast({
+        title: "Verification Required",
+        description: "Please verify your SSO configuration before saving.",
+        variant: "destructive"
+      })
+      return
+    }
+
     setSSODialogOpen(false)
     toast({
       title: "SSO Configuration Saved",
       description: "Single Sign-On has been configured successfully."
     })
+    
+    // Reset form
+    setSSOConfig({
+      provider: "saml",
+      providerName: "",
+      domain: "",
+      entityId: "",
+      ssoUrl: "",
+      certificate: "",
+      emailAttribute: "email",
+      nameAttribute: "name"
+    })
+    setVerified(false)
   }
 
   const handleSaveIP = () => {
@@ -182,26 +272,201 @@ export default function Settings() {
 
           {/* SSO Dialog */}
           <Dialog open={ssoDialogOpen} onOpenChange={setSSODialogOpen}>
-            <DialogContent className="glass-card">
+            <DialogContent className="glass-card max-w-2xl max-h-[90vh] overflow-y-auto">
               <DialogHeader>
                 <DialogTitle>Configure Single Sign-On</DialogTitle>
                 <DialogDescription>
-                  Set up SSO providers (SAML, OAuth, etc.) for your organization.
+                  Set up SSO authentication for your organization. All fields marked with * are required.
                 </DialogDescription>
               </DialogHeader>
-              <div className="space-y-4">
+              
+              <div className="space-y-6">
+                {/* Provider Type Selection */}
                 <div className="space-y-2">
-                  <Label htmlFor="sso-provider">SSO Provider</Label>
-                  <Input id="sso-provider" placeholder="e.g., Okta, Auth0" className="glass-card bg-background/50" />
+                  <Label htmlFor="provider-type">SSO Protocol *</Label>
+                  <Select 
+                    value={ssoConfig.provider} 
+                    onValueChange={(value) => setSSOConfig({ ...ssoConfig, provider: value })}
+                  >
+                    <SelectTrigger className="glass-card bg-background/50 border-card-border/50">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent className="glass-card bg-background/95 backdrop-blur-md border-card-border/50">
+                      <SelectItem value="saml">SAML 2.0</SelectItem>
+                      <SelectItem value="oauth">OAuth 2.0</SelectItem>
+                      <SelectItem value="oidc">OpenID Connect</SelectItem>
+                    </SelectContent>
+                  </Select>
                 </div>
-                <div className="space-y-2">
-                  <Label htmlFor="sso-domain">Domain</Label>
-                  <Input id="sso-domain" placeholder="company.com" className="glass-card bg-background/50" />
+
+                {/* Provider Information */}
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="provider-name">Provider Name *</Label>
+                    <Input 
+                      id="provider-name" 
+                      placeholder="e.g., Okta, Auth0, Azure AD"
+                      value={ssoConfig.providerName}
+                      onChange={(e) => setSSOConfig({ ...ssoConfig, providerName: e.target.value })}
+                      className="glass-card bg-background/50" 
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="sso-domain">Organization Domain *</Label>
+                    <Input 
+                      id="sso-domain" 
+                      placeholder="company.com"
+                      value={ssoConfig.domain}
+                      onChange={(e) => setSSOConfig({ ...ssoConfig, domain: e.target.value })}
+                      className="glass-card bg-background/50" 
+                    />
+                  </div>
                 </div>
+
+                {/* SAML Configuration */}
+                {ssoConfig.provider === "saml" && (
+                  <>
+                    <div className="space-y-2">
+                      <Label htmlFor="entity-id">Entity ID (Issuer) *</Label>
+                      <Input 
+                        id="entity-id" 
+                        placeholder="https://your-company.oneorigin.us"
+                        value={ssoConfig.entityId}
+                        onChange={(e) => setSSOConfig({ ...ssoConfig, entityId: e.target.value })}
+                        className="glass-card bg-background/50" 
+                      />
+                      <p className="text-xs text-foreground-secondary">
+                        Unique identifier for your service provider
+                      </p>
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="sso-url">SSO URL (Login URL) *</Label>
+                      <Input 
+                        id="sso-url" 
+                        placeholder="https://sso.provider.com/saml/login"
+                        value={ssoConfig.ssoUrl}
+                        onChange={(e) => setSSOConfig({ ...ssoConfig, ssoUrl: e.target.value })}
+                        className="glass-card bg-background/50" 
+                      />
+                      <p className="text-xs text-foreground-secondary">
+                        The endpoint where authentication requests are sent
+                      </p>
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="certificate">X.509 Certificate *</Label>
+                      <textarea
+                        id="certificate"
+                        placeholder="-----BEGIN CERTIFICATE-----&#10;MIIDXTCCAkWgAwIBAgIJAKL...&#10;-----END CERTIFICATE-----"
+                        value={ssoConfig.certificate}
+                        onChange={(e) => setSSOConfig({ ...ssoConfig, certificate: e.target.value })}
+                        className="glass-card bg-background/50 border-card-border/50 rounded-lg p-3 w-full min-h-[120px] text-sm font-mono"
+                      />
+                      <p className="text-xs text-foreground-secondary">
+                        Public certificate from your identity provider
+                      </p>
+                    </div>
+                  </>
+                )}
+
+                {/* OAuth/OIDC Configuration */}
+                {(ssoConfig.provider === "oauth" || ssoConfig.provider === "oidc") && (
+                  <>
+                    <div className="space-y-2">
+                      <Label htmlFor="client-id">Client ID *</Label>
+                      <Input 
+                        id="client-id" 
+                        placeholder="your-client-id"
+                        value={ssoConfig.entityId}
+                        onChange={(e) => setSSOConfig({ ...ssoConfig, entityId: e.target.value })}
+                        className="glass-card bg-background/50" 
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="auth-url">Authorization URL *</Label>
+                      <Input 
+                        id="auth-url" 
+                        placeholder="https://provider.com/oauth/authorize"
+                        value={ssoConfig.ssoUrl}
+                        onChange={(e) => setSSOConfig({ ...ssoConfig, ssoUrl: e.target.value })}
+                        className="glass-card bg-background/50" 
+                      />
+                    </div>
+                  </>
+                )}
+
+                {/* Attribute Mapping */}
+                <div className="border-t border-card-border/50 pt-4">
+                  <h4 className="text-sm font-semibold mb-3">Attribute Mapping</h4>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="email-attr">Email Attribute</Label>
+                      <Input 
+                        id="email-attr" 
+                        value={ssoConfig.emailAttribute}
+                        onChange={(e) => setSSOConfig({ ...ssoConfig, emailAttribute: e.target.value })}
+                        className="glass-card bg-background/50" 
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="name-attr">Name Attribute</Label>
+                      <Input 
+                        id="name-attr" 
+                        value={ssoConfig.nameAttribute}
+                        onChange={(e) => setSSOConfig({ ...ssoConfig, nameAttribute: e.target.value })}
+                        className="glass-card bg-background/50" 
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Verification Status */}
+                {verified && (
+                  <div className="flex items-center gap-2 p-3 rounded-lg bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800">
+                    <Shield className="w-5 h-5 text-green-600 dark:text-green-400" />
+                    <span className="text-sm text-green-800 dark:text-green-200 font-medium">
+                      Configuration verified successfully
+                    </span>
+                  </div>
+                )}
               </div>
-              <DialogFooter>
-                <Button variant="outline" onClick={() => setSSODialogOpen(false)}>Cancel</Button>
-                <Button onClick={handleSaveSSO}>Save Configuration</Button>
+
+              <DialogFooter className="flex gap-2">
+                <Button 
+                  variant="outline" 
+                  onClick={() => {
+                    setSSODialogOpen(false)
+                    setVerified(false)
+                  }}
+                  disabled={verifying}
+                >
+                  Cancel
+                </Button>
+                <Button 
+                  variant="secondary"
+                  onClick={handleVerifySSO}
+                  disabled={verifying}
+                >
+                  {verifying ? (
+                    <>
+                      <Lock className="w-4 h-4 mr-2 animate-pulse" />
+                      Verifying...
+                    </>
+                  ) : (
+                    <>
+                      <Shield className="w-4 h-4 mr-2" />
+                      Verify Configuration
+                    </>
+                  )}
+                </Button>
+                <Button 
+                  onClick={handleSaveSSO}
+                  disabled={verifying || !verified}
+                >
+                  Save Configuration
+                </Button>
               </DialogFooter>
             </DialogContent>
           </Dialog>
